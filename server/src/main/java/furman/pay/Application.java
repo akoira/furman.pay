@@ -1,8 +1,10 @@
 package furman.pay;
 
+import furman.domain.Order;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
@@ -12,8 +14,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * Time: 7:33 PM
  */
 
-@ComponentScan(basePackages = {"furman.domain"})
-@EnableJpaRepositories(basePackages = {"furman.domain"})
+@ComponentScan(basePackages = {"furman.pay", "furman.domain"})
+@EnableJpaRepositories(basePackages = {"furman.pay", "furman.domain"})
+@EntityScan("furman.domain")
 @EnableAutoConfiguration
 @SpringBootApplication
 public class Application
