@@ -1,5 +1,20 @@
+plugins {
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.5"
+}
+
 dependencies {
-    compile 'javax.persistence:persistence-api:1.0.2'
+    compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
+    compile 'com.mysema.querydsl:querydsl-jpa:3.6.7'
+
+     //compile "com.querydsl:querydsl-jpa:4.0.4"
+     //compile "com.querydsl:querydsl-apt:4.0.4"
+}
+
+querydsl {
+    jpa = true
+    library = "com.mysema.querydsl:querydsl-apt:3.6.7"
+    //library = "com.querydsl:querydsl-apt:4.0.4"
+    querydslSourcesDir = "src/querydsl/java"
 }
 
 jar {
