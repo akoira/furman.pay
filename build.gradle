@@ -1,0 +1,32 @@
+buildscript {
+    ext {
+        springBootVersion = '1.2.5.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "com.eriwen.gradle.js" version "1.12.1"
+    id "com.github.ben-manes.versions" version "0.11.1"
+}
+
+allprojects {
+    apply plugin: 'maven'
+    apply plugin: 'java'
+    apply plugin: 'com.github.ben-manes.versions'
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        testCompile "junit:junit:4.+"
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.6'
+}

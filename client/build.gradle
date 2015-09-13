@@ -1,0 +1,59 @@
+ext {
+    env = "dev"
+
+    webjarconfig = [
+            sources : "${projectDir}/src/webapp",
+            baseDir: "META-INF/resources/",
+    ]
+}
+
+apply plugin: "com.eriwen.gradle.js"
+
+dependencies {
+    compile 'org.webjars.bower:jquery:2.1.4'
+    compile 'org.webjars.bower:angularjs:1.4.5'
+    compile 'org.webjars.bower:angular-route:1.4.5'
+    compile 'org.webjars.bower:angular-mocks:1.4.5'
+    compile 'org.webjars.bower:angular-ui-grid:3.0.6'
+    compile 'org.webjars.bower:angular-ui-layout:1.1.0'
+    compile 'org.webjars:momentjs:2.10.6'
+    compile 'org.webjars.bower:html5-boilerplate-bower:4.3.0'
+}
+
+javascript.source {
+    dev {
+        js {
+            srcDir "src/webapp"
+            include "*.js"
+            exclude "*.min.js"
+        }
+    }
+    prod {
+        js {
+            srcDir "src/js"
+            include "*.min.js"
+        }
+    }
+}
+
+task combinejs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
+    if (env == 'prod') {
+        source = javascript.source.prod.js.files
+    } else {
+        source = javascript.source.dev.js.files
+    }
+    dest = file("${buildDir}/all.js")
+}
+
+task minifyjs(type: com.eriwen.gradle.js.tasks.MinifyJsTask) {
+    source = combinejs
+    dest = file("${buildDir}/all-min.js")
+    closure {
+        warningLevel = 'QUIET'
+    }
+}
+
+task gzipjs(type: com.eriwen.gradle.js.tasks.GzipJsTask) {
+    source = minifyjs
+    dest = file("${buildDir}/all-min.js")
+}

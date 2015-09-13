@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'spring-boot'
+
+dependencies {
+    compile project(':client')
+    compile project(':model')
+    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
+    compile "org.springframework.data:spring-data-mongodb:1.8.0.RELEASE"
+    
+    compile "org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE"
+    compile "org.apache.commons:commons-lang3:3.+"
+
+    testCompile "junit:junit:4.12"
+    testCompile "org.springframework:spring-test:4.1.7.RELEASE"
+}
+
+compileJava.dependsOn(processResources)
+
+jar {
+    version =  '0.0.1'
+}
+
+war {
+    version =  '0.0.1'
+}

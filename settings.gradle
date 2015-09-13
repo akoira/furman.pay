@@ -1,0 +1,3 @@
+rootProject.name = 'furman.pay'
+include 'server',
+	'client', 'model'
