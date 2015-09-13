@@ -1,4 +1,4 @@
-package furman.model;
+package furman.domain;
 
 
 import javax.persistence.Column;
@@ -15,8 +15,6 @@ import javax.persistence.Table;
 
 @Table(name = "CUSTOMER")
 public class Customer extends AObject {
-    public static final String PROPERTY_name = "name";
-
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
 

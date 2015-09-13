@@ -2,8 +2,14 @@ mongoDbHost: 127.0.0.1
 mongoDbName: furman
 
 spring:
-  datasource"
-    url: jdbc:mysql://localhost/test
-    username: dbuser
-    password: dbpass
+  packagesToScan:
+    furman.domain
+  datasource:
+    url: jdbc:mysql://localhost/w2test_college
+    username: root
+    password: whatsup
     driver-class-name: com.mysql.jdbc.Driver
+
+hibernate:
+  ejb:
+    naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy

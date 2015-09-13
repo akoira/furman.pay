@@ -9,7 +9,7 @@
 /**
  * Licensee: Anonymous License Type: Purchased
  */
-package furman.model;
+package furman.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,6 @@ import java.sql.Date;
 @Table(name = "DAILY_SHEET")
 public class Dailysheet extends AObject
 {
-    public static final String PROPERTY_date = "date";
     @Column(name = "DATE", nullable = false)
     private Date date;
 

@@ -3,8 +3,10 @@ package furman.pay.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
+@MappedSuperclass
 public abstract class AObject {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

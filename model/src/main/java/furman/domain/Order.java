@@ -1,4 +1,4 @@
-package furman.model;
+package furman.domain;
 
 import javax.persistence.*;
 
@@ -10,14 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @DiscriminatorValue(value = "Order")
-
-
 public class Order extends AOrder
 {
-    public static final String PROPERTY_orderStatus = "status";
-    public static final String PROPERTY_number = "number";
-    public static final String PROPERTY_workedDailySheet = "workedDailySheet";
-
     @ManyToOne(cascade =
             {
                     CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH

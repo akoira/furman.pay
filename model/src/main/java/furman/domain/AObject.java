@@ -1,4 +1,4 @@
-package furman.model;
+package furman.domain;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,11 +11,6 @@ import java.util.Date;
  */
 @MappedSuperclass
 public abstract class AObject {
-    public static final String PROPERTY_id = "id";
-    public static final String PROPERTY_deleted = "deleted";
-    public static final String PROPERTY_created = "created";
-    public static final String PROPERTY_modified = "modified";
-
     @Id
     @SequenceGenerator(name = "IDGenerator", sequenceName = "HIBERNATE_SEQUENCE")
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "IDGenerator")

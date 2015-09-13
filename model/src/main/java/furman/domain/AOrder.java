@@ -1,4 +1,4 @@
-package furman.model;
+package furman.domain;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -9,27 +9,10 @@ import java.sql.Date;
  * Time: 14:57
  */
 @Entity
-
 @Table(name = "FURN_ORDER")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "DISCRIMINATOR")
 public abstract class AOrder extends AObject {
-    public static final String PROPERTY_orderItems = "orderItems";
-    public static final String PROPERTY_name = "name";
-    public static final String PROPERTY_orderNumber = "orderNumber";
-    public static final String PROPERTY_description = "description";
-    public static final String PROPERTY_fileUuid = "fileUuid";
-
-    public static final String PROPERTY_customer = "customer";
-    public static final String PROPERTY_readyDate = "readyDate";
-    public static final String PROPERTY_cost = "cost";
-    public static final String PROPERTY_designer = "designer";
-    public static final String PROPERTY_dialerCost = "dialerCost";
-
-    public static final String PROPERTY_createdDailySheet = "createdDailySheet";
-    public static final String PROPERTY_orderGroup = "orderGroup";
-
-
     @Column(name = "NAME", nullable = false, length = 255)
     private String name;
     @Column(name = "DESCRIPTION", nullable = true, columnDefinition = "longtext")

@@ -1,4 +1,4 @@
-package furman.model;
+package furman.domain;
 
 /**
  * User: akoyro
