@@ -1,11 +1,13 @@
 package furman.pay.repository;
 
-import furman.domain.Order;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import furman.pay.model.Order;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /**
- * Created by akoiro on 9/13/15.
+ * Created by akoiro on 9/14/15.
  */
-
-public interface OrderRepository extends PagingAndSortingRepository<Order, Long>{
+@RepositoryRestResource(collectionResourceRel = "porder", path = "porders")
+public interface OrderRepository extends MongoRepository<Order, Long>, QueryDslPredicateExecutor<Order> {
 }

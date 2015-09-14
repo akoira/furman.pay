@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 
 /**
- * Created by akoiro on 6/1/14.
+ * Created by akoiro on 9/14/15.
  */
 @Configuration
 @ConfigurationProperties(prefix = "mongodb")
-public class MongoConfig extends AbstractMongoConfiguration {
+public class PayConfig extends AbstractMongoConfiguration {
 
     @Value(value = "${mongoDbName}")
     private String mongoDbName;
@@ -21,12 +21,12 @@ public class MongoConfig extends AbstractMongoConfiguration {
     @Value(value = "${mongoDbHost}")
     private String mongoDbHost;
 
-    @Override
+    //@Override
     protected String getDatabaseName() {
         return mongoDbName;
     }
 
-    @Override
+    //@Override
     @Bean
     public Mongo mongo() throws Exception {
         return new MongoClient(mongoDbHost);

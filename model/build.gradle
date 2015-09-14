@@ -4,9 +4,12 @@ plugins {
 
 dependencies {
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    compile 'com.mysema.querydsl:querydsl-jpa:3.6.7'
+    compile 'org.springframework.data:spring-data-mongodb:1.7.2.RELEASE'
 
-     //compile "com.querydsl:querydsl-jpa:4.0.4"
+    compile 'com.mysema.querydsl:querydsl-jpa:3.6.7'
+    compile 'com.mysema.querydsl:querydsl-mongodb:3.6.7'
+
+    //compile "com.querydsl:querydsl-jpa:4.0.4"
      //compile "com.querydsl:querydsl-apt:4.0.4"
 }
 

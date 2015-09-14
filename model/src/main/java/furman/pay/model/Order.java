@@ -1,12 +1,14 @@
 package furman.pay.model;
 
-import javax.persistence.Entity;
+import org.springframework.data.annotation.Persistent;
+
 import java.util.Date;
 
 /**
  * Created by akoiro on 9/13/15.
  */
-@Entity
+
+@Persistent
 public class Order extends AObject {
 
     private String number;

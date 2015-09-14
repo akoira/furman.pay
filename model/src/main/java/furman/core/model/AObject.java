@@ -1,14 +1,8 @@
-package furman.domain;
+package furman.core.model;
 
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * @author dkoyro
- * @version 0.1 26.09.2008
- * @introduced [Furniture constructor | Iteration 1]
- * @since 2.0.0
- */
 @MappedSuperclass
 public abstract class AObject {
     @Id

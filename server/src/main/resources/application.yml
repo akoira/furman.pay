@@ -1,11 +1,9 @@
 mongoDbHost: 127.0.0.1
 mongoDbName: furman
 
-spring:
-  packagesToScan:
-    furman.domain
+core:
   datasource:
-    url: jdbc:mysql://localhost/w2test_college
+    url: jdbc:mysql://localhost/public
     username: root
     password: whatsup
     driver-class-name: com.mysql.jdbc.Driver

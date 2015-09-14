@@ -11,7 +11,7 @@
 /**
  * Licensee: Anonymous License Type: Purchased
  */
-package furman.domain;
+package furman.core.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
