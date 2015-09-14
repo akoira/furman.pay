@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('myApp.orders', ['ngRoute',
-    'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.grid.pinning', 'ui.grid.selection', 'ui.grid.grouping', 'ui.grid.autoResize',
-    'shagstrom.angular-split-pane',
+    'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav',
+    'ui.grid.resizeColumns', 'ui.grid.pinning', 'ui.grid.selection',
+    'ui.grid.grouping', 'ui.grid.autoResize',
     'ui.layout'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/orders', {
-            templateUrl: 'orders/orders.html',
+            templateUrl: 'app/orders/orders.html',
             controller: 'OrdersCtrl'
         });
     }])
