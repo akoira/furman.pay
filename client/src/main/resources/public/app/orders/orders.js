@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.orders', ['ngRoute',
+angular.module('app.orders', ['ngRoute',
     'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav',
     'ui.grid.resizeColumns', 'ui.grid.pinning', 'ui.grid.selection',
     'ui.grid.grouping', 'ui.grid.autoResize',
@@ -9,11 +9,11 @@ angular.module('myApp.orders', ['ngRoute',
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/orders', {
             templateUrl: 'app/orders/orders.html',
-            controller: 'OrdersCtrl'
+            controller: 'OrdersController'
         });
     }])
 
-    .controller('OrdersCtrl', ['$scope', '$http', function ($scope, $http) {
+    .controller('OrdersController', ['$scope', '$http', function ($scope, $http) {
 
         function initOrdersGrid() {
             $scope.gridOptions = {};

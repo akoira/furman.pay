@@ -1,51 +1,62 @@
 'use strict';
 
-angular.module('myApp.employee', ['ui.layout', 'ui.grid', "ui.grid.selection"])
+angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection", 'app.service.employee'])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/employee', {
             templateUrl: 'app/employee/employee.html',
-            controller: 'EmployeeCtrl'
+            controller: 'EmployeeController',
+            controllerAs: 'employee'
         });
     }])
 
-    .controller('EmployeeCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
-        $scope.gridOptions = {};
+    .controller('EmployeeController', ['$scope', '$http', '$timeout', '$location', 'EmployeeService',
+        function ($scope, $http, $timeout, $location, EmployeeService) {
+            var employee = this;
 
-        $scope.gridOptions.onRegisterApi = function(gridApi) {
-            //set gridApi on scope
-            $scope.gridApi = gridApi;
-        };
+            $scope.gridOptions = {};
 
-        $http.get('app/data/services.columns.json')
-            .success(function (data) {
-                $scope.gridOptions.columnDefs = data;
-            });
+            $scope.gridOptions.onRegisterApi = function (gridApi) {
+                //set gridApi on scope
+                $scope.gridApi = gridApi;
+            };
 
-        $http.get('app/data/services.json')
-            .success(function (data) {
-                $scope.gridOptions.data = data;
-                $timeout(function() {
-                    angular.forEach($scope.user.services, function(id){
-                        var values = jQuery.grep($scope.gridOptions.data,
-                            function(e){
-                                return e.id == id;
-                            });
-                        if (values.length > 0) {
-                            $scope.gridApi.selection.selectRow(values[0]);
-                        }
-                    })
+            $http.get('app/data/services.columns.json')
+                .success(function (data) {
+                    $scope.gridOptions.columnDefs = data;
                 });
-            });
 
-        $scope.user = {
-            firstName: "Andrey",
-            lastName: "Koyro",
-            services: [
-                "cutting",
-                "directGlueing",
-                "patch"
-            ]
-        }
+            $http.get('app/data/services.json')
+                .success(function (data) {
+                    $scope.gridOptions.data = data;
+                    $timeout(function () {
+                        angular.forEach($scope.user.services, function (id) {
+                            var values = jQuery.grep($scope.gridOptions.data,
+                                function (e) {
+                                    return e.id == id;
+                                });
+                            if (values.length > 0) {
+                                $scope.gridApi.selection.selectRow(values[0]);
+                            }
+                        })
+                    });
+                });
 
-    }]);
+            $scope.saveEmployee = function () {
+                employee.dataLoading = true;
+                EmployeeService.create($scope.user);
+                employee.dataLoading = false;
+                $location.path("/");
+            };
+
+            $scope.user = {
+                firstName: "Andrey",
+                lastName: "Koyro",
+                services: [
+                    "cutting",
+                    "directGlueing",
+                    "patch"
+                ]
+            }
+
+        }]);

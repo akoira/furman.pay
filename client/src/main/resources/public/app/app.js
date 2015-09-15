@@ -1,15 +1,26 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+angular.module('app', [
     'ngRoute',
     'ui.grid', 'ui.grid.edit',
     'ui.layout',
-    'myApp.employee',
-    'myApp.orders',
-    'myApp.view2',
-    'myApp.version'
+    'app.employee',
+    'app.orders',
+    'app.version'
 ]).
     config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.otherwise({redirectTo: '/employee'});
+        $routeProvider
+            .when('/', {
+                controller: 'OrdersController',
+                templateUrl: 'app/orders/orders.html',
+                controllerAs: 'orders'
+            })
+            .when('/employee', {
+                controller: 'EmployeeController',
+                templateUrl: 'app/employee/employee.html',
+                controllerAs: 'employee'
+            })
+
+            .otherwise({redirectTo: '/employee'});
     }]);

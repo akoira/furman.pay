@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.employee', ['ui.layout', 'ui.grid', "ui.grid.selection"])
+angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection"])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/employee', {

@@ -1,34 +1,26 @@
 package furman.pay;
 
-import com.mongodb.Mongo;
-import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
+import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
 /**
  * Created by akoiro on 9/14/15.
  */
 @Configuration
-@ConfigurationProperties(prefix = "mongodb")
-public class PayConfig extends AbstractMongoConfiguration {
+@ConfigurationProperties(prefix = "pay")
+@ComponentScan(basePackages = "furman.pay")
+public class PayConfig extends RepositoryRestMvcConfiguration {
+    @Value(value = "${pay.baseUri}")
+    private String baseUri;
 
-    @Value(value = "${mongoDbName}")
-    private String mongoDbName;
-
-    @Value(value = "${mongoDbHost}")
-    private String mongoDbHost;
-
-    //@Override
-    protected String getDatabaseName() {
-        return mongoDbName;
-    }
-
-    //@Override
-    @Bean
-    public Mongo mongo() throws Exception {
-        return new MongoClient(mongoDbHost);
+    @Override
+    public RepositoryRestConfiguration config() {
+        RepositoryRestConfiguration config = super.config();
+        config.setBaseUri(baseUri);
+        return config;
     }
 }
