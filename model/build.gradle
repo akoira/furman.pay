@@ -4,10 +4,13 @@ plugins {
 
 dependencies {
     compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
-    compile 'org.springframework.data:spring-data-mongodb:1.7.2.RELEASE'
+    compile ('org.springframework.data:spring-data-mongodb:1.7.2.RELEASE') {
+        exclude group: 'org.springframework'
+    }
 
     compile 'com.mysema.querydsl:querydsl-jpa:3.6.7'
     compile 'com.mysema.querydsl:querydsl-mongodb:3.6.7'
+    compile 'org.mongodb.morphia:morphia:1.0.1'
 
     //compile "com.querydsl:querydsl-jpa:4.0.4"
      //compile "com.querydsl:querydsl-apt:4.0.4"
@@ -15,6 +18,7 @@ dependencies {
 
 querydsl {
     jpa = true
+    morphia = true
     library = "com.mysema.querydsl:querydsl-apt:3.6.7"
     //library = "com.querydsl:querydsl-apt:4.0.4"
     querydslSourcesDir = "src/querydsl/java"

@@ -1,6 +1,8 @@
 package furman.pay.model;
 
+import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.annotation.Persistent;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
@@ -8,7 +10,7 @@ import java.util.Date;
  * Created by akoiro on 9/13/15.
  */
 
-@Persistent
+@Entity
 public class Order extends AObject {
 
     private String number;

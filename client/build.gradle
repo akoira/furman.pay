@@ -1,6 +1,8 @@
 dependencies {
+    compile 'org.webjars:requirejs:2.1.20'
     compile 'org.webjars.bower:jquery:2.1.4'
     compile 'org.webjars.bower:angularjs:1.4.5'
+    compile 'org.webjars:angular-ui-bootstrap:0.13.3'
     compile 'org.webjars.bower:angular-route:1.4.5'
     compile 'org.webjars.bower:angular-mocks:1.4.5'
     compile 'org.webjars.bower:angular-ui-grid:3.0.6'
@@ -9,4 +11,6 @@ dependencies {
     compile 'org.webjars.bower:html5-boilerplate-bower:4.3.0'
     compile 'org.webjars.bower:normalize-css:3.0.3'
     compile 'org.webjars:modernizr:2.8.3'
+
+    compile 'org.webjars:bootstrap:3.3.5'
 }

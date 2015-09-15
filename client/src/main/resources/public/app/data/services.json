@@ -1,0 +1,38 @@
+[
+  {
+    "id": "cutting",
+    "name": "Распил"
+  },
+  {
+    "id": "directGlueing",
+    "name": "Оклейка прямолинейная"
+  },
+  {
+    "id": "curveGlueing",
+    "name": "Оклейка криволинейная"
+  },
+  {
+    "id": "milling",
+    "name": "Фрезеровка"
+  },
+  {
+    "id": "drilling",
+    "name": "Фрезеровка под петли"
+  },
+  {
+    "id": "groove",
+    "name": "Паз"
+  },
+  {
+    "id": "angle",
+    "name": "Угол. распил"
+  },
+  {
+    "id": "patch",
+    "name": "Склейка"
+  },
+  {
+    "id": "cutoff",
+    "name": "Срез"
+  }
+]

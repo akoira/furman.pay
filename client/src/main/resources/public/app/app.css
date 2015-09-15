@@ -50,6 +50,10 @@ html, body {
     text-align: right;
 }
 
+#employee-editor .ui-grid {
+    text-align: left;
+}
+
 input[type="number"] {
     text-align: right;
 }
