@@ -6,6 +6,7 @@ angular.module('app', [
     'ui.grid', 'ui.grid.edit',
     'ui.layout',
     'app.employee',
+    'app.employee.list',
     'app.orders',
     'app.version'
 ]).
@@ -21,6 +22,12 @@ angular.module('app', [
                 templateUrl: 'app/employee/employee.html',
                 controllerAs: 'employee'
             })
+            .when('/employee.list', {
+                controller: 'EmployeeListController',
+                templateUrl: 'app/employee/list.html',
+                controllerAs: 'employeeList'
+            })
+
 
             .otherwise({redirectTo: '/employee'});
     }]);

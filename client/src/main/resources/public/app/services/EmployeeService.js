@@ -5,9 +5,14 @@ angular.module('app.service.employee', []).factory('EmployeeService', ['$http', 
     var service = {};
 
     service.create = create;
+    service.getAll = getAll;
 
     function create(employee) {
         return $http.post('/api/pay/employee', employee).then(handleSuccess, handleError('Ошибка'));
+    }
+
+    function getAll() {
+        return $http.get('/api/pay/employee');
     }
 
     // private functions

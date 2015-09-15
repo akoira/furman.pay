@@ -54,6 +54,18 @@ html, body {
     text-align: left;
 }
 
+#employee-list .ui-grid {
+    text-align: center;
+}
+
+#employee-list .row-button {
+    float: left;
+}
+
+#employee-list .glyphicon {
+    font-size: 10px;
+}
+
 input[type="number"] {
     text-align: right;
 }
