@@ -8,6 +8,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 /**
  * Created by akoiro on 9/14/15.
  */
-@RepositoryRestResource(collectionResourceRel = "porder", path = "porders")
-public interface OrderRepository extends MongoRepository<Order, Long>, QueryDslPredicateExecutor<Order> {
+public interface OrderRepository {
 }
