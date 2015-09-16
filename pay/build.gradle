@@ -23,7 +23,7 @@ dependencies {
 compileJava.dependsOn(processResources)
 
 querydsl {
-    jpa = true
+    morphia = true
     library = "com.mysema.querydsl:querydsl-apt:3.6.7"
     //library = "com.querydsl:querydsl-apt:4.0.4"
     querydslSourcesDir = "src/querydsl/java"

@@ -1,15 +1,19 @@
-pay:
-  mongoDbHost: 127.0.0.1
-  mongoDbName: furman
-  baseUri: /api/pay
+furman:
+  rest:
+    base-path: api
 
-core:
-  baseUri: /api/core
-  datasource:
-    url: jdbc:mysql://localhost/public
-    username: root
-    password: whatsup
-    driver-class-name: com.mysql.jdbc.Driver
+  pay:
+    mongoDbHost: 127.0.0.1
+    mongoDbName: furman
+    path: pay
+
+  core:
+    datasource:
+      url: jdbc:mysql://localhost/public
+      username: root
+      password: whatsup
+      driver-class-name: com.mysql.jdbc.Driver
+    path: core
 
 hibernate:
   ejb:

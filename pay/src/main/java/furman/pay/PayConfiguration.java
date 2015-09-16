@@ -11,16 +11,14 @@ import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguratio
  * Created by akoiro on 9/14/15.
  */
 @Configuration
-@ConfigurationProperties(prefix = "pay")
-@ComponentScan(basePackages = "furman.pay")
-public class PayConfig extends RepositoryRestMvcConfiguration {
-    @Value(value = "${pay.baseUri}")
-    private String baseUri;
-
-    @Override
-    public RepositoryRestConfiguration config() {
-        RepositoryRestConfiguration config = super.config();
-        config.setBaseUri(baseUri);
-        return config;
-    }
+public class PayConfiguration extends RepositoryRestMvcConfiguration {
+//    @Value(value = "${pay.baseUri}")
+//    private String baseUri;
+//
+//    @Override
+//    public RepositoryRestConfiguration config() {
+//        RepositoryRestConfiguration config = super.config();
+//        config.setBaseUri(baseUri);
+//        return config;
+//    }
 }

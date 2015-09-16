@@ -13,10 +13,10 @@ import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
 @Configuration
 public class MongoConfig extends AbstractMongoConfiguration {
 
-    @Value(value = "${pay.mongoDbName}")
+    @Value(value = "${furman.pay.mongoDbName}")
     private String mongoDbName;
 
-    @Value(value = "${pay.mongoDbHost}")
+    @Value(value = "${furman.pay.mongoDbHost}")
     private String mongoDbHost;
 
     //@Override
