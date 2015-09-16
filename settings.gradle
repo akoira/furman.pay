@@ -1,3 +1,2 @@
 rootProject.name = 'furman.pay'
-include 'server',
-	'client', 'model'
+include 'core', 'pay', 'server', 'client'

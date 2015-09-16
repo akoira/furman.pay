@@ -4,6 +4,7 @@ pay:
   baseUri: /api/pay
 
 core:
+  baseUri: /api/core
   datasource:
     url: jdbc:mysql://localhost/public
     username: root

@@ -9,7 +9,9 @@ import java.util.List;
  */
 @Entity
 public class Employee extends AObject {
+
     private String firstName;
+
     private String lastName;
 
     private List<String> services;

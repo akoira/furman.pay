@@ -1,23 +1,9 @@
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
-    }
+plugins {
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.5"
 }
-
 apply plugin: 'java'
-apply plugin: 'war'
-apply plugin: 'spring-boot'
 
 dependencies {
-    compile project(':client')
-    compile project(':core')
-    compile project(':pay')
-
     compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
 //    compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
@@ -25,22 +11,24 @@ dependencies {
     compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
     compile 'org.springframework.data:spring-data-mongodb:1.7.2.RELEASE'
 
-    compile "org.thymeleaf:thymeleaf-spring4:2.1.4.RELEASE"
+    compile 'org.mongodb.morphia:morphia:1.0.1'
+
+    compile 'com.mysema.querydsl:querydsl-mongodb:3.6.7'
 
     compile "org.apache.commons:commons-lang3:3.+"
-
-    compile 'mysql:mysql-connector-java:5.1.36'
 
     testCompile "junit:junit:4.12"
     testCompile "org.springframework:spring-test:4.1.7.RELEASE"
 }
-
 compileJava.dependsOn(processResources)
 
-jar {
-    version =  '0.0.1'
+querydsl {
+    jpa = true
+    library = "com.mysema.querydsl:querydsl-apt:3.6.7"
+    //library = "com.querydsl:querydsl-apt:4.0.4"
+    querydslSourcesDir = "src/querydsl/java"
 }
 
-war {
+jar {
     version =  '0.0.1'
 }

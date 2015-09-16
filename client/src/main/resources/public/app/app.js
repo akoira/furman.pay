@@ -8,6 +8,7 @@ angular.module('app', [
     'app.employee',
     'app.employee.list',
     'app.orders',
+    'app.order.assign',
     'app.version'
 ]).
     config(['$routeProvider', function ($routeProvider) {
@@ -27,6 +28,12 @@ angular.module('app', [
                 templateUrl: 'app/employee/list.html',
                 controllerAs: 'employeeList'
             })
+            .when('/orders.assign', {
+                controller: 'AssignOrdersController',
+                templateUrl: 'app/orders/assign/list.html',
+                controllerAs: 'assignOrders'
+            })
+
 
 
             .otherwise({redirectTo: '/employee'});

@@ -1,8 +1,6 @@
 package furman.pay.model;
 
 import org.mongodb.morphia.annotations.Entity;
-import org.springframework.data.annotation.Persistent;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
