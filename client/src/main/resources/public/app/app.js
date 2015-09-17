@@ -12,18 +12,24 @@ angular.module('app', [
     'app.version'
 ]).
     config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise('/employee');
+
         $stateProvider
             .state('employee', {
                 url: '/employee',
                 views: {
-                    'employee': {
-                        templateUrl: 'app/employee/employee.html',
-                        controller: "EmployeeController"
+                    '': {
+                        templateUrl: 'app/employee/main.html'
                     },
-                    'employee.list': {
+                    'list@employee': {
                         templateUrl: 'app/employee/list.html',
-                        controller: "EmployeeListController"
+                        controller: 'EmployeeListController'
+                    },
+                    'edit@employee': {
+                        templateUrl: 'app/employee/edit.html',
+                        controller: 'EmployeeEditController'
                     }
+
                 }
             })
     }]);

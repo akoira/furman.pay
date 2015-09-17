@@ -2,7 +2,7 @@
 
 angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection", 'app.service.employee'])
 
-    .controller('EmployeeController', ['$scope', '$http', '$timeout', '$location', 'EmployeeService',
+    .controller('EmployeeEditController', ['$scope', '$http', '$timeout', '$location', 'EmployeeService',
         function ($scope, $http, $timeout, $location, EmployeeService) {
             var employee = this;
 
