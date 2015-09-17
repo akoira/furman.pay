@@ -2,13 +2,6 @@
 
 angular.module('app.employee.list', ['ui.grid', "ui.grid.selection", 'app.service.employee'])
 
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/employee.list', {
-            templateUrl: 'app/employee/list.html',
-            controller: 'EmployeeListController',
-            controllerAs: 'employeeList'
-        });
-    }])
     .controller('EmployeeListController', ['$scope', '$http', '$timeout', '$location', 'EmployeeService',
         function ($scope, $http, $timeout, $location, EmployeeService) {
             var employeeList = this;

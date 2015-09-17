@@ -2,13 +2,6 @@
 
 angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection"])
 
-    .config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/employee', {
-            templateUrl: 'app/employee/employee.html',
-            controller: 'EmployeeCtrl'
-        });
-    }])
-
     .controller('EmployeeCtrl', ['$scope', '$http', '$timeout', function ($scope, $http, $timeout) {
         $scope.gridOptions = {};
 

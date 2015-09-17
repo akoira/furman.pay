@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on views, and components
 angular.module('app', [
-    'ngRoute',
+    'ui.router',
     'ui.grid', 'ui.grid.edit',
     'ui.layout',
     'app.employee',
@@ -11,30 +11,19 @@ angular.module('app', [
     'app.order.assign',
     'app.version'
 ]).
-    config(['$routeProvider', function ($routeProvider) {
-        $routeProvider
-            .when('/', {
-                controller: 'OrdersController',
-                templateUrl: 'app/orders/orders.html',
-                controllerAs: 'orders'
+    config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+        $stateProvider
+            .state('employee', {
+                url: '/employee',
+                views: {
+                    'employee': {
+                        templateUrl: 'app/employee/employee.html',
+                        controller: "EmployeeController"
+                    },
+                    'employee.list': {
+                        templateUrl: 'app/employee/list.html',
+                        controller: "EmployeeListController"
+                    }
+                }
             })
-            .when('/employee', {
-                controller: 'EmployeeController',
-                templateUrl: 'app/employee/employee.html',
-                controllerAs: 'employee'
-            })
-            .when('/employee.list', {
-                controller: 'EmployeeListController',
-                templateUrl: 'app/employee/list.html',
-                controllerAs: 'employeeList'
-            })
-            .when('/orders.assign', {
-                controller: 'AssignOrdersController',
-                templateUrl: 'app/orders/assign/list.html',
-                controllerAs: 'assignOrders'
-            })
-
-
-
-            .otherwise({redirectTo: '/employee'});
     }]);

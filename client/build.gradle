@@ -3,7 +3,8 @@ dependencies {
     compile 'org.webjars.bower:jquery:2.1.4'
     compile 'org.webjars.bower:angularjs:1.4.5'
     compile 'org.webjars:angular-ui-bootstrap:0.13.3'
-    compile 'org.webjars.bower:angular-route:1.4.5'
+    compile 'org.webjars:angular-ui-router:0.2.15'
+
     compile 'org.webjars.bower:angular-mocks:1.4.5'
     compile 'org.webjars.bower:angular-ui-grid:3.0.6'
 //    compile 'org.webjars.bower:angular-ui-layout:1.2.0'
