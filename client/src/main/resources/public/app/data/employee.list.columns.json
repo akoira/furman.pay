@@ -13,7 +13,7 @@
     "enableColumnMenu": false,
     "enableFiltering": false,
     "enableSorting": false,
-    "cellTemplate": "<button class='btn btn-success glyphicon glyphicon-pencil row-button'></button> <button class='btn btn-danger glyphicon glyphicon-trash row-button'></button>",
+    "cellTemplate": "<button class='btn btn-success glyphicon glyphicon-pencil row-button'></button> <button class='btn btn-danger glyphicon glyphicon-trash row-button' ng-click='grid.appScope.delete()'></button>",
     "width": 80,
     "maxWidth": 80
   }

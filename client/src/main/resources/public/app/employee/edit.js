@@ -1,10 +1,11 @@
 'use strict';
 
-angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection", 'app.service.employee'])
+angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection", 'app.rest.employee'])
 
-    .controller('EmployeeEditController', ['$scope', '$http', '$timeout', '$location', 'EmployeeService',
-        function ($scope, $http, $timeout, $location, EmployeeService) {
-            var employee = this;
+    .controller('EmployeeEditController', ['$scope', '$http', '$timeout', '$location', '$log', 'EmployeeRest',
+        function ($scope, $http, $timeout, $location, $log, rest) {
+            $scope.dataLoading = false;
+            $scope.value = null;
 
             $scope.gridOptions = {};
 
@@ -21,34 +22,35 @@ angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection", 'ap
             $http.get('app/data/services.json')
                 .success(function (data) {
                     $scope.gridOptions.data = data;
-                    $timeout(function () {
-                        angular.forEach($scope.user.services, function (id) {
-                            var values = jQuery.grep($scope.gridOptions.data,
-                                function (e) {
-                                    return e.id == id;
-                                });
-                            if (values.length > 0) {
-                                $scope.gridApi.selection.selectRow(values[0]);
-                            }
-                        })
-                    });
                 });
 
-            $scope.saveEmployee = function () {
-                employee.dataLoading = true;
-                EmployeeService.create($scope.user);
-                employee.dataLoading = false;
-                $location.path("/");
+            $scope.save = function () {
+                $scope.dataLoading = true;
+                if ($scope.value._links) {
+                    rest.save($scope.value);
+                } else {
+                    rest.create($scope.value);
+                }
+                $scope.dataLoading = false;
             };
 
-            $scope.user = {
-                firstName: "Andrey",
-                lastName: "Koyro",
-                services: [
-                    "cutting",
-                    "directGlueing",
-                    "patch"
-                ]
-            }
+            $scope.$on('employeeSelected', function (event, data) {
+                $log.debug(event);
+                $scope.value = data;
+                updateView();
+            });
 
+            var updateView = function () {
+                if ($scope.value) {
+                    angular.forEach($scope.value.services, function (id) {
+                        var values = jQuery.grep($scope.gridOptions.data,
+                            function (e) {
+                                return e.id == id;
+                            });
+                        if (values.length > 0) {
+                            $scope.gridApi.selection.selectRow(values[0]);
+                        }
+                    })
+                }
+            };
         }]);

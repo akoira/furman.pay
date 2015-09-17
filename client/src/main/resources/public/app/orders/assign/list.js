@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('app.order.assign', ['ui.grid', 'app.service.order'])
-    .controller('AssignOrdersController', ['$scope', '$http', 'OrderService',  function ($scope, $http, OrdersService) {
+angular.module('app.order.assign', ['ui.grid', 'app.rest.order'])
+    .controller('AssignOrdersController', ['$scope', '$http', 'OrderRest', function ($scope, $http, rest) {
 
         function initOrdersGrid() {
             $scope.gridOptions = {};
@@ -13,7 +13,7 @@ angular.module('app.order.assign', ['ui.grid', 'app.service.order'])
                 $scope.gridApi = gridApi;
             };
 
-            OrdersService.getAll().success(function (data) {
+            rest.getAll().success(function (data) {
                 $scope.gridOptions.data = data._embedded.order;
             }).error(function (data) {
 

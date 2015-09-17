@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.service.order', []).factory('OrderService', ['$http', function ($http) {
+angular.module('app.rest.order', []).factory('OrderRest', ['$http', function ($http) {
 
     var service = {};
 
