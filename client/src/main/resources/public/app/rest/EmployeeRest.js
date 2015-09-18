@@ -11,7 +11,8 @@ angular.module('app.rest.employee', []).factory('EmployeeRest', ['$http', functi
 
 
     function archive(employee) {
-        return $http.patch(employee._links.self.href, "{delete: true}").then(handleSuccess, handleError('Ошибка'));
+        employee.archived = true;
+        return $http.patch(employee._links.self.href, employee).then(handleSuccess, handleError('Ошибка'));
     }
 
     function save(employee) {
@@ -23,7 +24,7 @@ angular.module('app.rest.employee', []).factory('EmployeeRest', ['$http', functi
     }
 
     function getAll() {
-        return $http.get('/api/pay/employee?search=delete:true');
+        return $http.get('/api/pay/employee?archived=false');
     }
 
     // private functions

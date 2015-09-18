@@ -18,7 +18,7 @@ public abstract class AObject {
     @LastModifiedDate
     private Date modified = new Date();
 
-    private boolean deleted = false;
+    private boolean archived = false;
 
     private String name;
 
@@ -38,14 +38,6 @@ public abstract class AObject {
 
     public void setModified(Date modified) {
         this.modified = modified;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     public String getName() {
@@ -70,5 +62,13 @@ public abstract class AObject {
 
     public void setId(BigInteger id) {
         this.id = id;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }

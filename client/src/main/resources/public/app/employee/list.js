@@ -22,7 +22,9 @@ angular.module('app.employee.list', ['ui.grid', "ui.grid.selection", 'app.rest.e
             $scope.delete = function () {
                 var rows = $scope.gridApi.selection.getSelectedRows();
                 if (rows.length) {
-                    rest.archive(rows[0].entity);
+                    rest.archive(rows[0]);
+                    var index = $scope.gridOptions.data.indexOf(rows[0]);
+                    $scope.gridOptions.data.splice(index, 1);
                 }
             };
 

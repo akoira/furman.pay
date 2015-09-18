@@ -11,8 +11,8 @@ public abstract class AObject {
     @Column(name = "ID", nullable = false, insertable = true, updatable = false, unique = true)
     private Long id;
 
-    @Column(nullable = false, columnDefinition = "bit default 0")
-    private boolean deleted = false;
+    @Column(name = "deleted", nullable = false, columnDefinition = "bit default 0")
+    private boolean archived = false;
 
     @Column
     private Date created;
@@ -29,14 +29,6 @@ public abstract class AObject {
     }
 
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
     public Date getCreated() {
         return created;
     }
@@ -51,5 +43,13 @@ public abstract class AObject {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public boolean isArchived() {
+        return archived;
+    }
+
+    public void setArchived(boolean archived) {
+        this.archived = archived;
     }
 }

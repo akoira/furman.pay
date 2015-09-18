@@ -1,15 +1,8 @@
-plugins {
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.5"
-}
-
 apply plugin: 'java'
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
-//    compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
     compile "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
-    compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
+    compile 'org.springframework.data:spring-data-jpa:1.9.0.RELEASE'
 
     compile 'com.mysema.querydsl:querydsl-jpa:3.6.7'
 
@@ -20,8 +13,6 @@ dependencies {
     testCompile "junit:junit:4.12"
     testCompile "org.springframework:spring-test:4.1.7.RELEASE"
 }
-
-compileJava.dependsOn(processResources)
 
 querydsl {
     jpa = true
