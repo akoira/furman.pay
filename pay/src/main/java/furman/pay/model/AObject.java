@@ -4,13 +4,12 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 public abstract class AObject {
 
     @Id
-    private BigInteger id;
+    private String id;
 
     @CreatedDate
     private Date created = new Date();
@@ -23,6 +22,14 @@ public abstract class AObject {
     private String name;
 
     private String uuid;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Date getCreated() {
         return created;
@@ -56,13 +63,6 @@ public abstract class AObject {
         this.uuid = uuid;
     }
 
-    public BigInteger getId() {
-        return id;
-    }
-
-    public void setId(BigInteger id) {
-        this.id = id;
-    }
 
     public boolean isArchived() {
         return archived;
