@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection", 'app.rest.employee'])
+angular.module('app.employee.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", 'app.rest.employee'])
 
     .controller('EmployeeEditController', ['$scope', '$http', '$timeout', '$location', '$log', 'EmployeeRest',
         function ($scope, $http, $timeout, $location, $log, rest) {
@@ -30,6 +30,7 @@ angular.module('app.employee', ['ui.layout', 'ui.grid', "ui.grid.selection", 'ap
                     rest.save($scope.value);
                 } else {
                     rest.create($scope.value);
+                    $scope.$parent.$broadcast('employeeAdded', $scope.value);
                 }
                 $scope.dataLoading = false;
             };

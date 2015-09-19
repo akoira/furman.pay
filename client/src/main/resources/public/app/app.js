@@ -4,9 +4,10 @@
 angular.module('app', [
     'ui.router',
     'ui.grid', 'ui.grid.edit',
-    'ui.layout',
-    'app.employee',
+    'app.employee.edit',
     'app.employee.list',
+    'app.shift.edit',
+    'app.shift.list',
     'app.orders',
     'app.order.assign',
     'app.version'
@@ -32,4 +33,22 @@ angular.module('app', [
 
                 }
             })
+            .state('shift', {
+                url: '/shift',
+                views: {
+                    '': {
+                        templateUrl: 'app/shift/main.html'
+                    },
+                    'list@shift': {
+                        templateUrl: 'app/shift/list.html',
+                        controller: 'ShiftListController'
+                    },
+                    'edit@shift': {
+                        templateUrl: 'app/shift/edit.html',
+                        controller: 'ShiftEditController'
+                    }
+
+                }
+            })
+
     }]);

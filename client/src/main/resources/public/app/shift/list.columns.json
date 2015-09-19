@@ -1,0 +1,16 @@
+[
+  {
+    "field": "name",
+    "displayName": "Название"
+  },
+  {
+    "field": "id",
+    "displayName": "",
+    "enableColumnMenu": false,
+    "enableFiltering": false,
+    "enableSorting": false,
+    "cellTemplate": "<button class='btn btn-danger glyphicon glyphicon-trash row-button' ng-click='grid.appScope.delete()'></button>",
+    "width": 80,
+    "maxWidth": 80
+  }
+]

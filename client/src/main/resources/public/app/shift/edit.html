@@ -1,21 +1,25 @@
-<span id="employee-editor">
-    <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
+<span id="shift-editor">
+    <div ng-show="error" class="alert alert-danger">{{error}}</div>
     <form name="form" role="form">
-        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-            <label for="firstName">Имя</label>
-            <input type="text" name="firstName" id="firstName" class="form-control" ng-model="value.firstName"
+        <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
+            <label for="name">Имя</label>
+            <input type="text" name="name" id="name" class="form-control" ng-model="value.name"
                    required/>
-            <span ng-show="form.firstName.$dirty && form.firstName.$error.required" class="help-block">First name is required</span>
+            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block">Обязательное поле</span>
         </div>
-        <div class="form-group" ng-class="{ 'has-error': form.lastName.$dirty && form.lastName.$error.required }">
-            <label for="lastName">Фамилия</label>
-            <input type="text" name="lastName" id="Text1" class="form-control" ng-model="value.lastName" required/>
-            <span ng-show="form.lastName.$dirty && form.lastName.$error.required" class="help-block">Last name is required</span>
-        </div>
-        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-            <label for="services">Специализация</label>
-            <div class="grid" ui-grid="gridOptions" ui-grid-selection></div>
-        </div>
+        <dev class="row">
+            <div class="form-group col-md-6">
+                <label for="employees">Работники</label>
+
+                <div class="grid" ui-grid="gridOptionsE" ui-grid-selection></div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="services">Специализация</label>
+
+                <div class="grid" ui-grid="gridOptionsS" ui-grid-selection></div>
+            </div>
+        </dev>
+
         <div class="form-actions">
             <button type="submit" ng-click="save()" ng-disabled="form.$invalid || dataLoading"
                     class="btn btn-primary">Сохранить

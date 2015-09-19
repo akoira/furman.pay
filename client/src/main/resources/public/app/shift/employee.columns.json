@@ -1,0 +1,10 @@
+[
+  {
+    "field": "firstName",
+    "displayName": "Имя"
+  },
+  {
+    "field": "lastName",
+    "displayName": "Фамилия"
+  }
+]

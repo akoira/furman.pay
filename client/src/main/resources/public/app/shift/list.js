@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('app.employee.list', ['ui.grid', "ui.grid.selection", 'app.rest.employee'])
+angular.module('app.shift.list', ['ui.grid', "ui.grid.selection", 'app.rest.shift'])
 
-    .controller('EmployeeListController', ['$scope', '$http', '$timeout', '$location', '$log', 'EmployeeRest',
+    .controller('ShiftListController', ['$scope', '$http', '$timeout', '$location', '$log', 'ShiftRest',
         function ($scope, $http, $timeout, $location, $log, rest) {
             $scope.gridOptions = {
                 enableRowSelection: true,
@@ -15,7 +15,7 @@ angular.module('app.employee.list', ['ui.grid', "ui.grid.selection", 'app.rest.e
             $scope.gridOptions.onRegisterApi = function (gridApi) {
                 $scope.gridApi = gridApi;
                 gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-                    $scope.$parent.$broadcast('employeeSelected', row.entity);
+                    $scope.$parent.$broadcast('shiftSelected', row.entity);
                 });
             };
 
@@ -29,18 +29,15 @@ angular.module('app.employee.list', ['ui.grid', "ui.grid.selection", 'app.rest.e
             };
 
 
-            $http.get('app/employee/list.columns.json')
+            $http.get('app/shift/list.columns.json')
                 .success(function (data) {
                     $scope.gridOptions.columnDefs = data;
                 });
 
             rest.getAll().success(function (data) {
-                $scope.gridOptions.data = data._embedded.employee;
+                $scope.gridOptions.data = data._embedded.shift;
             }).error(function (data) {
+                $scope.gridOptions.data = [];
                 $log.log(data);
-            });
-
-            $scope.$on('employeeAdded', function (event, data) {
-                $scope.gridOptions.data.push(data);
             });
         }]);

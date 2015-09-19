@@ -66,6 +66,23 @@ html, body {
     font-size: 10px;
 }
 
+#shift-editor .ui-grid {
+    text-align: left;
+}
+
+#shift-list .ui-grid {
+    text-align: center;
+}
+
+#shift-list .row-button {
+    float: left;
+}
+
+#shift-list .glyphicon {
+    font-size: 10px;
+}
+
+
 input[type="number"] {
     text-align: right;
 }
