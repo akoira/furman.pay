@@ -1,6 +1,7 @@
 package furman.pay.model;
 
 import org.mongodb.morphia.annotations.Entity;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
@@ -8,6 +9,7 @@ import java.util.List;
  * Created by akoiro on 9/15/15.
  */
 @Entity
+@Document
 public class Employee extends AObject {
 
     private String firstName;

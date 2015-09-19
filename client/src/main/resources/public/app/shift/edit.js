@@ -7,7 +7,7 @@ angular.module('app.shift.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", '
 
             $scope.editor = this;
             $scope.dataLoading = false;
-            $scope.value = null;
+            $scope.value = {};
 
             this.initServices = function () {
                 var gridOptions = {};
@@ -16,6 +16,14 @@ angular.module('app.shift.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", '
                 gridOptions.onRegisterApi = function (api) {
                     //set gridApi on scope
                     gridApi = api;
+                    gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                        if ($scope.value) {
+                            var rows = gridApi.selection.getSelectedRows();
+                            $scope.value.services = rows.map(function (row) {
+                                return row.id;
+                            });
+                        }
+                    });
                 };
 
 
@@ -30,8 +38,9 @@ angular.module('app.shift.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", '
                     });
 
                 gridOptions.updateView = function () {
-                    if ($scope.value) {
-                        angular.forEach($scope.value.employees, function (id) {
+                    gridApi.selection.clearSelectedRows();
+                    if ($scope.value && $scope.value.services) {
+                        angular.forEach($scope.value.services, function (id) {
                             var values = jQuery.grep(gridOptions.data,
                                 function (e) {
                                     return e.id == id;
@@ -52,6 +61,15 @@ angular.module('app.shift.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", '
                 gridOptions.onRegisterApi = function (api) {
                     //set gridApi on scope
                     gridApi = api;
+                    gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                        if ($scope.value) {
+                            var rows = gridApi.selection.getSelectedRows();
+                            $scope.value.employees = rows.map(function (row) {
+                                var path = row._links.employee.href.split('/');
+                                return path[path.length - 2] + "/" + path[path.length - 1];
+                            });
+                        }
+                    });
                 };
 
 
@@ -67,18 +85,24 @@ angular.module('app.shift.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", '
                 });
 
                 gridOptions.updateView = function () {
-                    if ($scope.value) {
-                        angular.forEach($scope.value.employees, function (id) {
-                            var values = jQuery.grep(gridOptions.data,
-                                function (e) {
-                                    return e.id == id;
-                                });
-                            if (values.length > 0) {
-                                gridApi.selection.selectRow(values[0]);
-                            }
-                        })
+                    gridApi.selection.clearSelectedRows();
+                    if ($scope.value && $scope.value._links && $scope.value._links.employees) {
+                        $http.get($scope.value._links.employees.href).success(function (data) {
+                            var employees = data._embedded.employee;
+                            angular.forEach(employees, function (emp) {
+                                var values = jQuery.grep(gridOptions.data,
+                                    function (e) {
+                                        return e.id == emp.id;
+                                    });
+                                if (values.length > 0) {
+                                    gridApi.selection.selectRow(values[0]);
+                                }
+                            })
+
+                        });
                     }
                 };
+
                 $scope.gridOptionsE = gridOptions;
                 $scope.gridApiE = gridApi;
             };
@@ -99,6 +123,7 @@ angular.module('app.shift.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", '
             $scope.$on('shiftSelected', function (event, data) {
                 $scope.value = data;
                 $scope.gridOptionsS.updateView();
+                $scope.gridOptionsE.updateView();
             });
 
         }]);
