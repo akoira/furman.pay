@@ -6,6 +6,7 @@ angular.module('app', [
     'pascalprecht.translate',
     'ui.router',
     'ui.grid', 'ui.grid.edit',
+    'ui.bootstrap.datepicker',
     'app.employee.edit',
     'app.employee.list',
     'app.shift.edit',

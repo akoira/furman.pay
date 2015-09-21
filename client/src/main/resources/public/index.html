@@ -30,7 +30,7 @@
     <script src="webjars/angular/1.4.6/angular.js"></script>
 
     <script src="webjars/angular-translate/2.7.2/angular-translate.js"></script>
-    <script src="webjars/angular-bootstrap/0.13.4/ui-bootstrap-tpls.js"></script>
+    <script src="webjars/angular-bootstrap/0.13.4/ui-bootstrap.js"></script>
     <script src="webjars/eeh-navigation/4.1.2/dist/eeh-navigation.js"></script>
     <script src="webjars/eeh-navigation/4.1.2/dist/eeh-navigation.tpl.js"></script>
 
@@ -60,6 +60,11 @@
     <script src="app/components/version/interpolate-filter.js"></script>
 </head>
 <body>
+<datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"
+            custom-class="getDayClass(date, mode)"></datepicker>
+<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened"
+       min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+       ng-required="true" close-text="Close"/>
 
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
@@ -67,7 +72,8 @@
 <![endif]-->
 
 <eeh-slideout is-open="slideOutMenuIsOpen" panel-selector="'#panel'" menu-selector="'#menu'">
-    <eeh-navigation-navbar menu-name="'top'"></eeh-navigation-navbar>
+    <eeh-navigation-navbar menu-name="'top'" brand-text="'Текущая дата:'" brand-click="openDate">
+    </eeh-navigation-navbar>
     <eeh-navigation-sidebar menu-name="'leftMenu'">
         <ui-view></ui-view>
     </eeh-navigation-sidebar>
