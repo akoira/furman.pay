@@ -2,8 +2,7 @@
 
 angular.module('app.orders', ['ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav',
     'ui.grid.resizeColumns', 'ui.grid.pinning', 'ui.grid.selection',
-    'ui.grid.grouping', 'ui.grid.autoResize',
-    'ui.layout'])
+    'ui.grid.grouping', 'ui.grid.autoResize'])
 
     .controller('OrdersController', ['$scope', '$http', function ($scope, $http) {
 

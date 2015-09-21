@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.shift.edit', ['ui.layout', 'ui.grid', "ui.grid.selection", 'app.rest.shift', 'app.rest.employee'])
+angular.module('app.shift.edit', ['ui.grid', "ui.grid.selection", 'app.rest.shift', 'app.rest.employee'])
 
     .controller('ShiftEditController', ['$scope', '$http', '$timeout', '$location', '$log', 'ShiftRest', 'EmployeeRest',
         function ($scope, $http, $timeout, $location, $log, rest, employeeRest) {

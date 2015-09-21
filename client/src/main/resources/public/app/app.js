@@ -2,6 +2,8 @@
 
 // Declare app level module which depends on views, and components
 angular.module('app', [
+    'eehNavigation',
+    'pascalprecht.translate',
     'ui.router',
     'ui.grid', 'ui.grid.edit',
     'app.employee.edit',
@@ -12,10 +14,39 @@ angular.module('app', [
     'app.order.assign',
     'app.version'
 ]).
-    config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-        $urlRouterProvider.otherwise('/employee');
+    config(['eehNavigationProvider', '$stateProvider', '$urlRouterProvider', function (eehNavigationProvider, $stateProvider, $urlRouterProvider) {
+
+
+        eehNavigationProvider.iconBaseClass('glyphicon');
+
+        eehNavigationProvider
+            .menuItem('leftMenu.orders', {
+                text: 'Заказы',
+                iconClass: 'glyphicon-home',
+                state: 'shift',
+                weight: 0
+            })
+            .menuItem('leftMenu.shifts', {
+                text: 'Смены',
+                iconClass: 'glyphicon-home',
+                state: 'shift',
+                weight: 0
+            })
+            .menuItem('leftMenu.employees', {
+                text: 'Работники',
+                iconClass: 'glyphicon-star',
+                state: 'employee'
+            });
+
+
+        $urlRouterProvider.otherwise('/');
+
 
         $stateProvider
+            .state('main', {
+                url: '/',
+                templateUrl: "app/main/main.html"
+            })
             .state('employee', {
                 url: '/employee',
                 views: {
