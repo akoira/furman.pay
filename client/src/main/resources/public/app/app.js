@@ -7,6 +7,7 @@ angular.module('app', [
     'ui.router',
     'ui.grid', 'ui.grid.edit',
     'ui.bootstrap.datepicker',
+    'app.dashboard',
     'app.employee.edit',
     'app.employee.list',
     'app.shift.edit',
@@ -24,19 +25,19 @@ angular.module('app', [
             .menuItem('leftMenu.orders', {
                 text: 'Заказы',
                 iconClass: 'glyphicon-home',
-                state: 'shift',
+                state: 'dashboard.shift',
                 weight: 0
             })
             .menuItem('leftMenu.shifts', {
                 text: 'Смены',
                 iconClass: 'glyphicon-home',
-                state: 'shift',
+                state: 'dashboard.shift',
                 weight: 0
             })
             .menuItem('leftMenu.employees', {
                 text: 'Работники',
                 iconClass: 'glyphicon-star',
-                state: 'employee'
+                state: 'dashboard.employee'
             });
 
 
@@ -44,38 +45,39 @@ angular.module('app', [
 
 
         $stateProvider
-            .state('main', {
+            .state('dashboard', {
                 url: '/',
-                templateUrl: "app/main/main.html"
+                templateUrl: "app/dashboard/dashboard.html",
+                controller: 'DashboardController'
             })
-            .state('employee', {
-                url: '/employee',
+            .state('dashboard.employee', {
+                url: '/dashboard/employee',
                 views: {
                     '': {
                         templateUrl: 'app/employee/main.html'
                     },
-                    'list@employee': {
+                    'list@dashboard.employee': {
                         templateUrl: 'app/employee/list.html',
                         controller: 'EmployeeListController'
                     },
-                    'edit@employee': {
+                    'edit@dashboard.employee': {
                         templateUrl: 'app/employee/edit.html',
                         controller: 'EmployeeEditController'
                     }
 
                 }
             })
-            .state('shift', {
-                url: '/shift',
+            .state('dashboard.shift', {
+                url: '/dashboard/shift',
                 views: {
                     '': {
                         templateUrl: 'app/shift/main.html'
                     },
-                    'list@shift': {
+                    'list@dashboard.shift': {
                         templateUrl: 'app/shift/list.html',
                         controller: 'ShiftListController'
                     },
-                    'edit@shift': {
+                    'edit@dashboard.shift': {
                         templateUrl: 'app/shift/edit.html',
                         controller: 'ShiftEditController'
                     }

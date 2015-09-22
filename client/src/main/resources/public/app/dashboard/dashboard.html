@@ -1,0 +1,14 @@
+<eeh-slideout is-open="slideOutMenuIsOpen" panel-selector="'#panel'" menu-selector="'#menu'">
+    <eeh-navigation-navbar menu-name="'top'" brand-text="'Дата:'+currentDate" brand-click="openDate">
+    </eeh-navigation-navbar>
+    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened"
+           min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
+           ng-required="true" close-text="Close"/>
+
+    <datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"
+                custom-class="getDayClass(date, mode)"></datepicker>
+
+    <eeh-navigation-sidebar menu-name="'leftMenu'">
+        <ui-view></ui-view>
+    </eeh-navigation-sidebar>
+</eeh-slideout>

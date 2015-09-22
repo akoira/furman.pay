@@ -41,6 +41,7 @@
 
     <script src="app/testData.js"></script>
     <script src="app/app.js"></script>
+    <script src="app/dashboard/dashboard.js"></script>
 
     <script src="app/employee/edit.js"></script>
     <script src="app/employee/list.js"></script>
@@ -60,24 +61,12 @@
     <script src="app/components/version/interpolate-filter.js"></script>
 </head>
 <body>
-<datepicker ng-model="dt" min-date="minDate" show-weeks="true" class="well well-sm"
-            custom-class="getDayClass(date, mode)"></datepicker>
-<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened"
-       min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)"
-       ng-required="true" close-text="Close"/>
-
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>
 <![endif]-->
 
-<eeh-slideout is-open="slideOutMenuIsOpen" panel-selector="'#panel'" menu-selector="'#menu'">
-    <eeh-navigation-navbar menu-name="'top'" brand-text="'Текущая дата:'" brand-click="openDate">
-    </eeh-navigation-navbar>
-    <eeh-navigation-sidebar menu-name="'leftMenu'">
-        <ui-view></ui-view>
-    </eeh-navigation-sidebar>
-</eeh-slideout>
+<ui-view></ui-view>
 
 <div>Angular seed app: v<span app-version></span></div>
 
