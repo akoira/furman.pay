@@ -14,7 +14,8 @@ angular.module('app', [
     'app.shift.list',
     'app.orders',
     'app.order.assign',
-    'app.version'
+    'app.version',
+    'app.day.edit'
 ]).
     config(['eehNavigationProvider', '$stateProvider', '$urlRouterProvider', function (eehNavigationProvider, $stateProvider, $urlRouterProvider) {
 
@@ -22,6 +23,12 @@ angular.module('app', [
         eehNavigationProvider.iconBaseClass('glyphicon');
 
         eehNavigationProvider
+            .menuItem('leftMenu.day', {
+                text: 'День',
+                iconClass: 'glyphicon-tasks',
+                state: 'dashboard.day-edit',
+                weight: 0
+            })
             .menuItem('leftMenu.orders', {
                 text: 'Заказы',
                 iconClass: 'glyphicon-home',
@@ -49,6 +56,14 @@ angular.module('app', [
                 url: '/',
                 templateUrl: "app/dashboard/dashboard.html",
                 controller: 'DashboardController'
+            })
+            .state('dashboard.day-edit', {
+                url: "/dashboard/day",
+                views: {
+                    '': {
+                        templateUrl: 'app/day/edit.html',
+                    }
+                }
             })
             .state('dashboard.employee', {
                 url: '/dashboard/employee',

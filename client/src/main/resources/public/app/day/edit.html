@@ -1,0 +1,23 @@
+<div ng-controller="DayEditController as vm">
+    <div class="panel panel-default ">
+        Дата: {{vm.value.day | date:'yyyy-MM-dd'}}
+    </div>
+    <div class="row">
+        <div class="col-md-6 panel-info">
+            <div class="panel-heading">
+                Заказы
+            </div>
+            <div class="panel-body">
+                <div class="grid" ui-grid="vm.gridOptionsO" ui-grid-selection ui-grid-resize-columns></div>
+            </div>
+        </div>
+        <div class="col-md-6 panel-info">
+            <div class="panel-heading">
+                Смены
+            </div>
+            <div class="panel-body">
+                <div class="grid" ui-grid="vm.gridOptionsS" ui-grid-selection ui-grid-resize-columns></div>
+            </div>
+        </div>
+    </div>
+</div>
