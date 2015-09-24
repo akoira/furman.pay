@@ -8,6 +8,18 @@
                 Заказы
             </div>
             <div class="panel-body">
+                <p class="input-group">
+                    <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
+                           ng-model="vm.orderDate.date"
+                           is-open="vm.orderDate.opened" min-date="vm.orderDate.minDate" max-date="vm.orderDate.maxDate"
+                           datepicker-options="vm.orderDate.options" date-disabled="vm.orderDate.disabled(date, mode)"
+                           ng-required="true"
+                           close-text="Закрыть" ng-change="vm.dateChanged()" custom-class="vm.getDayClass(date, mode)"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.orderDate.open($event)"><i
+                                class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </p>
                 <div class="grid" ui-grid="vm.gridOptionsO" ui-grid-selection ui-grid-resize-columns></div>
             </div>
         </div>

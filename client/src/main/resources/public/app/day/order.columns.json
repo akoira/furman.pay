@@ -1,0 +1,22 @@
+[
+  {
+    "field": "orderNumber",
+    "displayName": "Номер",
+    "cellTemplate": "<div>{{row.entity.createdDailySheet.date | date:'MM'}}-{{row.entity.orderNumber}}</div>"
+  },
+  {
+    "field": "createdDailySheet.date",
+    "displayName": "Дата соз-я",
+    "cellTemplate": "<div>{{row.entity.createdDailySheet.date | date:'yyyy-MM-dd'}}</div>"
+  },
+  {
+    "field": "createdDailySheet.date",
+    "displayName": "Дата пр-ва",
+    "cellTemplate": "<div>{{row.entity.workedDailySheet.date | date:'yyyy-MM-dd'}}</div>"
+  },
+  {
+    "field": "createdDailySheet.date",
+    "displayName": "Дата г-ти",
+    "cellTemplate": "<div>{{row.entity.readyDate | date:'yyyy-MM-dd'}}</div>"
+  }
+]
