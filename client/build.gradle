@@ -5,6 +5,7 @@ dependencies {
     compile 'org.webjars.bower:angularjs:1.4.6'
     compile 'org.webjars.bower:angular-i18n:1.4.6'
     compile 'org.webjars.bower:angular-mocks:1.4.6'
+    compile 'org.webjars.bower:angular-resource:1.4.6'
 
     compile 'org.webjars:angular-translate:2.7.2'
     compile 'org.webjars:angular-ui-bootstrap:0.13.3'

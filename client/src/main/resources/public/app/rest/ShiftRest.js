@@ -11,24 +11,6 @@ angular.module('app.rest.shift', []).factory('ShiftRest', ['$http', function ($h
     service.save = save;
     service.archive = archive;
 
-
-    function archive(employee) {
-        employee.archived = true;
-        return $http.patch(employee._links.self.href, employee).then(handleSuccess, handleError('Ошибка'));
-    }
-
-    function save(employee) {
-        return $http.patch(employee._links.self.href, employee).then(handleSuccess, handleError('Ошибка'));
-    }
-
-    function create(employee) {
-        return $http.post(baseUri, employee).then(handleSuccess, handleError('Ошибка'));
-    }
-
-    function getAll() {
-        return $http.get(baseUri + '?archived=false');
-    }
-
     // private functions
 
     function handleSuccess(data) {
@@ -39,6 +21,24 @@ angular.module('app.rest.shift', []).factory('ShiftRest', ['$http', function ($h
         return function () {
             return {success: false, message: error};
         };
+    }
+
+
+    function archive(employee) {
+        employee.archived = true;
+        return $http.patch(employee._links.self.href, employee).then(handleSuccess, handleError);
+    }
+
+    function save(employee) {
+        return $http.patch(employee._links.self.href, employee).then(handleSuccess, handleError);
+    }
+
+    function create(employee) {
+        return $http.post(baseUri, employee).then(handleSuccess, handleError);
+    }
+
+    function getAll() {
+        return $http.get(baseUri + '?archived=false');
     }
 
     return service;

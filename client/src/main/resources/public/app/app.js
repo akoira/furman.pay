@@ -7,6 +7,7 @@ angular.module('app', [
     'ui.router',
     'ui.grid', 'ui.grid.edit',
     'ui.bootstrap.datepicker',
+    'ngResource',
     'app.dashboard',
     'app.employee.edit',
     'app.employee.list',
