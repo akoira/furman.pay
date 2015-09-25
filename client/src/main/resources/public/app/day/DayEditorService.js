@@ -9,9 +9,14 @@ function DayEditorService($http, $log) {
     var service = {};
 
     service.getOrders = getOrders;
+    service.getOrderCountsPerDay = getOrderCountsPerDay;
 
     function getOrders(date) {
         return $http.get(baseUrl + '/getOrders?date=' + moment(date).format("YYYY-MM-DD"));
+    }
+
+    function getOrderCountsPerDay() {
+        return $http.get(baseUrl + '/getOrderCountsPerDay').then();
     }
 
     // private functions

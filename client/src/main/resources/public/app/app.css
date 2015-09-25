@@ -91,3 +91,9 @@ input[type="number"] {
 .stretch {
     top: 28px;
 }
+
+.has-orders button span {
+    background-color: #5cb85c;
+    border-radius: 32px;
+    color: black;
+}

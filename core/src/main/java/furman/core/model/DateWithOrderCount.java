@@ -7,7 +7,12 @@ import java.util.Date;
  */
 public class DateWithOrderCount {
     private Date date;
-    private int count;
+    private long count;
+
+    public DateWithOrderCount(long count, Date date) {
+        this.count = count;
+        this.date = date;
+    }
 
     public Date getDate() {
         return date;
@@ -17,11 +22,11 @@ public class DateWithOrderCount {
         this.date = date;
     }
 
-    public int getCount() {
+    public long getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(long count) {
         this.count = count;
     }
 }

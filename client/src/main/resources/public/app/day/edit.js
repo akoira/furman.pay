@@ -5,7 +5,7 @@ angular.module('app.day.edit', ['ui.grid', 'ui.bootstrap.datepicker'])
 
 //DayEditController.$inject = ['$http', '$log', 'DayEditorService'];
 
-function DayEditController($http, $log, DayEditorService) {
+function DayEditController($http, $log, $filter, DayEditorService) {
     var vm = this;
 
     vm.orderDate = {
@@ -19,13 +19,19 @@ function DayEditController($http, $log, DayEditorService) {
             return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
         },
         getDayClass: function (date, mode) {
-            return "";
+            return $filter('filter')(vm.orderDate.orderCountsPerDay, {date: moment(date).format("YYYY-MM-DD")}).length ? "has-orders" : "";
         },
         options: {
             formatYear: 'yy',
             startingDay: 1
         }
     };
+
+    DayEditorService.getOrderCountsPerDay().success(function (data) {
+        vm.orderDate.orderCountsPerDay = data;
+    }).error(function (data) {
+        $log.log(data);
+    });
 
     vm.value = {
         day: new Date()

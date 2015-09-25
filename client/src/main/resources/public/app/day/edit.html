@@ -14,7 +14,8 @@
                            is-open="vm.orderDate.opened" min-date="vm.orderDate.minDate" max-date="vm.orderDate.maxDate"
                            datepicker-options="vm.orderDate.options" date-disabled="vm.orderDate.disabled(date, mode)"
                            ng-required="true"
-                           close-text="Закрыть" ng-change="vm.dateChanged()" custom-class="vm.getDayClass(date, mode)"/>
+                           close-text="Закрыть" ng-change="vm.dateChanged()"
+                           custom-class="vm.orderDate.getDayClass(date, mode)"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.orderDate.open($event)"><i
                                 class="glyphicon glyphicon-calendar"></i></button>
