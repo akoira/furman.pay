@@ -69,16 +69,17 @@ function DayEditController($scope, $http, $log, $filter, $resource, $timeout, Da
                 vm.gridOptionsS.columnDefs = data;
             });
 
+        var rowSelectionChanged = function (row) {
+            if (row.isSelected) {
+                vm.day.shifts.push(row.entity);
+            } else {
+                var index = vm.day.shifts.indexOf(row.entity);
+                vm.day.shifts.splice(index, 1);
+            }
+        };
+
         vm.gridOptionsS.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
-
-            var rowSelectionChanged = function (row) {
-                if (row.isSelected) {
-                    $log.log("shift add");
-                } else {
-                    $log.log("shift remove");
-                }
-            };
             vm.registerRowSelection(gridApi, rowSelectionChanged);
         };
 
@@ -108,17 +109,18 @@ function DayEditController($scope, $http, $log, $filter, $resource, $timeout, Da
                 vm.gridOptionsO.columnDefs = data;
             });
 
+        var rowSelectionChanged = function (row) {
+            if (row.isSelected) {
+                vm.day.orders.push(row.entity);
+            } else {
+                var index = vm.day.shifts.indexOf(row.entity);
+                vm.day.orders.splice(index, 1);
+            }
+        };
+
 
         vm.gridOptionsO.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
-            var rowSelectionChanged = function (row) {
-                if (row.isSelected) {
-                    $log.log("order add");
-                } else {
-                    $log.log("order remove");
-                }
-            };
-
             vm.registerRowSelection(gridApi, rowSelectionChanged);
         };
 

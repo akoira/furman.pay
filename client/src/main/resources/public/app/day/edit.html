@@ -1,11 +1,17 @@
 <div ng-controller="DayEditController as vm">
     <div class="panel panel-info">
-        <div class="panel-heading">Дата: {{vm.day.date | date:'yyyy-MM-dd'}}</div>
+        <div class="panel-heading">
+            <span>Дата: {{vm.day.date | date:'yyyy-MM-dd'}}</span>
+            <button ng-click="" ng-disabled="vm.day.shifts.length < 1 || vm.day.orders.length < 1"
+                    class="btn btn-info glyphicon glyphicon-floppy-save"></button>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="panel panel-info">
-                <div class="panel-heading">Заказы</div>
+                <div class="panel-heading">Заказы <span class="label"
+                                                        ng-class="{'label-primary':vm.day.orders.length, 'label-warning': !vm.day.orders.length}">{{vm.day.orders.length}}</span>
+                </div>
                 <div class="panel-body">
                     <p class="input-group input-group-sm">
                         <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
@@ -28,7 +34,9 @@
         </div>
         <div class="col-md-6">
             <div class=" panel panel-info">
-                <div class="panel-heading">Смены</div>
+                <div class="panel-heading">Смены <span class="label"
+                                                       ng-class="{'label-warning': vm.day.shifts.length < 1, 'label-primary': vm.day.shifts.length > 0}">{{vm.day.shifts.length}}</span>
+                </div>
                 <div class="panel-body">
                     <p class="input-group-sm">
                         <input type="text" class="form-control"/>

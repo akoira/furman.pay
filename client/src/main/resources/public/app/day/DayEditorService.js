@@ -10,6 +10,7 @@ function DayEditorService($http, $log) {
 
     service.getOrders = getOrders;
     service.getOrderCountsPerDay = getOrderCountsPerDay;
+    service.createDayShiftFrom = createDayShiftFrom;
 
     function getOrders(date) {
         return $http.get(baseUrl + '/getOrders?date=' + moment(date).format("YYYY-MM-DD"));
@@ -29,6 +30,13 @@ function DayEditorService($http, $log) {
         return function () {
             return {success: false, message: error};
         };
+    }
+
+    function createDayShiftFrom(shift) {
+        var result = {
+            employees: shift.employees
+        };
+        return result;
     }
 
     return service;
