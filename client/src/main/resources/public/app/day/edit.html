@@ -2,7 +2,7 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <span>Дата: {{vm.day.date | date:'yyyy-MM-dd'}}</span>
-            <button ng-click="" ng-disabled="vm.day.shifts.length < 1 || vm.day.orders.length < 1"
+            <button ng-click="vm.save()" ng-disabled="vm.day.shifts.length < 1 || vm.day.orders.length < 1"
                     class="btn btn-info glyphicon glyphicon-floppy-save"></button>
         </div>
     </div>

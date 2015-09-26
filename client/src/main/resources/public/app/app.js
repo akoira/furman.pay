@@ -16,7 +16,8 @@ angular.module('app', [
     'app.orders',
     'app.order.assign',
     'app.version',
-    'app.day.edit'
+    'app.day.edit',
+    'app.rest'
 ]).
     config(['eehNavigationProvider', '$stateProvider', '$urlRouterProvider', function (eehNavigationProvider, $stateProvider, $urlRouterProvider) {
 

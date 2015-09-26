@@ -8,7 +8,7 @@ angular.module('app.day.edit', ['ui.grid', 'ui.bootstrap.datepicker'])
 function DayEditController($scope, $http, $log, $filter, $resource, $timeout, DayEditorService, ShiftRest) {
     var vm = this;
     vm.day = {
-        date: new Date(),
+        date: moment("22-08-2013", "DD-MM-YYYY").toDate(),
         shifts: [],
         orders: []
     }
@@ -129,6 +129,10 @@ function DayEditController($scope, $http, $log, $filter, $resource, $timeout, Da
         }).error(function (data) {
             $log.log(data);
         });
+    };
+
+    vm.save = function () {
+        DayEditorService.save(vm.day);
     };
 
     vm.initOrderDate();
