@@ -10,7 +10,7 @@ angular.module('app.rest.shift', []).factory('ShiftRest', ['$http', function ($h
     service.getAll = getAll;
     service.save = save;
     service.archive = archive;
-    service.employees = employees;
+    service.getEmployees = getEmployees;
 
     // private functions
 
@@ -24,8 +24,9 @@ angular.module('app.rest.shift', []).factory('ShiftRest', ['$http', function ($h
         };
     }
 
-    function employees(shift) {
-        return $http.get("/api/pay/shift/" + shift.id + "/employees");
+    function getEmployees(shift) {
+        var url = "/api/pay/shift/" + shift.id + "/employees";
+        return $http.get(url);
     }
 
     function archive(shift) {

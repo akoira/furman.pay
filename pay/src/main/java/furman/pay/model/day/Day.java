@@ -14,7 +14,8 @@ public class Day {
     @DBRef
     private List<DayShift> shifts;
 
-    private List<DayOrder> dayOrders;
+    @DBRef
+    private List<DayOrder> orders;
 
 
     public Date getDate() {
