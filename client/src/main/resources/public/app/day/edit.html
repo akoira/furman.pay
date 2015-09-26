@@ -1,35 +1,41 @@
 <div ng-controller="DayEditController as vm">
-    <div class="panel panel-default ">
-        Дата: {{vm.value.day | date:'yyyy-MM-dd'}}
+    <div class="panel panel-info">
+        <div class="panel-heading">Дата: {{vm.value.day | date:'yyyy-MM-dd'}}</div>
     </div>
     <div class="row">
-        <div class="col-md-6 panel-info">
-            <div class="panel-heading">
-                Заказы
-            </div>
-            <div class="panel-body">
-                <p class="input-group">
-                    <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
-                           ng-model="vm.orderDate.date"
-                           is-open="vm.orderDate.opened" min-date="vm.orderDate.minDate" max-date="vm.orderDate.maxDate"
-                           datepicker-options="vm.orderDate.options" date-disabled="vm.orderDate.disabled(date, mode)"
-                           ng-required="true"
-                           close-text="Закрыть" ng-change="vm.dateChanged()"
-                           custom-class="vm.orderDate.getDayClass(date, mode)"/>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Заказы</div>
+                <div class="panel-body">
+                    <p class="input-group input-group-sm">
+                        <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
+                               ng-model="vm.orderDate.date"
+                               is-open="vm.orderDate.opened" min-date="vm.orderDate.minDate"
+                               max-date="vm.orderDate.maxDate"
+                               datepicker-options="vm.orderDate.options"
+                               date-disabled="vm.orderDate.disabled(date, mode)"
+                               ng-required="true"
+                               close-text="Закрыть" ng-change="vm.dateChanged()"
+                               custom-class="vm.orderDate.getDayClass(date, mode)"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.orderDate.open($event)"><i
                                 class="glyphicon glyphicon-calendar"></i></button>
                     </span>
-                </p>
-                <div class="grid" ui-grid="vm.gridOptionsO" ui-grid-selection ui-grid-resize-columns></div>
+                    </p>
+                    <div class="grid" ui-grid="vm.gridOptionsO" ui-grid-selection ui-grid-resize-columns></div>
+                </div>
             </div>
         </div>
-        <div class="col-md-6 panel-info">
-            <div class="panel-heading">
-                Смены
-            </div>
-            <div class="panel-body">
-                <div class="grid" ui-grid="vm.gridOptionsS" ui-grid-selection ui-grid-resize-columns></div>
+        <div class="col-md-6">
+            <div class=" panel panel-info">
+                <div class="panel-heading">Смены</div>
+                <div class="panel-body">
+                    <p class="input-group-sm">
+                        <input type="text" class="form-control"/>
+                    </p>
+
+                    <div class="grid" ui-grid="vm.gridOptionsS" ui-grid-selection ui-grid-resize-columns></div>
+                </div>
             </div>
         </div>
     </div>

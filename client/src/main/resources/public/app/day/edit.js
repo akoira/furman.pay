@@ -5,12 +5,8 @@ angular.module('app.day.edit', ['ui.grid', 'ui.bootstrap.datepicker'])
 
 //DayEditController.$inject = ['$http', '$log', 'DayEditorService'];
 
-function DayEditController($http, $log, $filter, $resource, DayEditorService, ShiftRest) {
+function DayEditController($scope, $http, $log, $filter, $resource, DayEditorService, ShiftRest) {
     var vm = this;
-
-    var Shift = $resource('/api/pay/shift:id');
-    var data = Shift.get();
-
 
     vm.orderDate = {
         date: moment("2014-02-19").toDate(),
@@ -83,6 +79,12 @@ function DayEditController($http, $log, $filter, $resource, DayEditorService, Sh
 
     vm.initOrderGrid();
     vm.initShiftGrid();
+
+    $scope.employees = function (entity) {
+        ShiftRest.employees(entity).then(function (data) {
+            $log.log(data);
+        });
+    };
 }
 
 

@@ -49,17 +49,17 @@ angular.module('app', [
             });
 
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/day');
 
 
         $stateProvider
             .state('dashboard', {
-                url: '/',
+                abstract: true,
                 templateUrl: "app/dashboard/dashboard.html",
                 controller: 'DashboardController'
             })
             .state('dashboard.day-edit', {
-                url: "/dashboard/day",
+                url: "/day",
                 views: {
                     '': {
                         templateUrl: 'app/day/edit.html',
@@ -67,7 +67,7 @@ angular.module('app', [
                 }
             })
             .state('dashboard.employee', {
-                url: '/dashboard/employee',
+                url: '/employee',
                 views: {
                     '': {
                         templateUrl: 'app/employee/main.html'
@@ -84,7 +84,7 @@ angular.module('app', [
                 }
             })
             .state('dashboard.shift', {
-                url: '/dashboard/shift',
+                url: '/shift',
                 views: {
                     '': {
                         templateUrl: 'app/shift/main.html'

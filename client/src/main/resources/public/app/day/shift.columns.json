@@ -2,5 +2,10 @@
   {
     "field": "name",
     "displayName": "Название"
+  },
+  {
+    "field": "name",
+    "displayName": "Название",
+    "cellTemplate": "<div>{{grid.appScope.employees(row.entity)}}</div>"
   }
 ]

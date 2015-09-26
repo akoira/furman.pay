@@ -10,6 +10,7 @@ angular.module('app.rest.shift', []).factory('ShiftRest', ['$http', function ($h
     service.getAll = getAll;
     service.save = save;
     service.archive = archive;
+    service.employees = employees;
 
     // private functions
 
@@ -23,10 +24,13 @@ angular.module('app.rest.shift', []).factory('ShiftRest', ['$http', function ($h
         };
     }
 
+    function employees(shift) {
+        return $http.get("/api/pay/shift/" + shift.id + "/employees");
+    }
 
-    function archive(employee) {
-        employee.archived = true;
-        return $http.patch(employee._links.self.href, employee).then(handleSuccess, handleError);
+    function archive(shift) {
+        shift.archived = true;
+        return $http.patch(shift._links.self.href, employee).then(handleSuccess, handleError);
     }
 
     function save(employee) {
