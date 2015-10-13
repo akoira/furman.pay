@@ -44,6 +44,8 @@ project(":core") {
         compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
         compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
         compile 'org.springframework.data:spring-data-rest-webmvc:2.4.0.RELEASE'
+        compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1'
+
     }
 
     compileJava.dependsOn(processResources)
@@ -59,6 +61,8 @@ project(":pay") {
         compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
         compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
         compile 'org.springframework.data:spring-data-rest-webmvc:2.4.0.RELEASE'
+        compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.1'
+
     }
 
     compileJava.dependsOn(processResources)

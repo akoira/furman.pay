@@ -14,6 +14,7 @@ import java.util.List;
 @Entity
 @Document
 public class DayShift extends AObject {
+
     @DBRef
     private List<Employee> employees;
 

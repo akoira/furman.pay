@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('app', [
+var app = angular.module('app', [
     'eehNavigation',
     'pascalprecht.translate',
     'ui.router',
@@ -17,89 +17,120 @@ angular.module('app', [
     'app.order.assign',
     'app.version',
     'app.day.edit',
-    'app.rest'
+    'app.rest',
+    'app.home'
 ]).
-    config(['eehNavigationProvider', '$stateProvider', '$urlRouterProvider', function (eehNavigationProvider, $stateProvider, $urlRouterProvider) {
+    config(['eehNavigationProvider',
+        '$stateProvider',
+        '$urlRouterProvider',
+        function (eehNavigationProvider,
+                  $stateProvider,
+                  $urlRouterProvider) {
 
+            moment.locale('ru', {
+                week: {
+                    dow: 1 // Monday is the first day of the week
+                }
+            });
 
         eehNavigationProvider.iconBaseClass('glyphicon');
 
-        eehNavigationProvider
-            .menuItem('leftMenu.day', {
-                text: 'День',
-                iconClass: 'glyphicon-tasks',
-                state: 'dashboard.day-edit',
-                weight: 0
-            })
-            .menuItem('leftMenu.orders', {
-                text: 'Заказы',
-                iconClass: 'glyphicon-home',
-                state: 'dashboard.shift',
-                weight: 0
-            })
-            .menuItem('leftMenu.shifts', {
-                text: 'Смены',
-                iconClass: 'glyphicon-home',
-                state: 'dashboard.shift',
-                weight: 0
-            })
-            .menuItem('leftMenu.employees', {
-                text: 'Работники',
-                iconClass: 'glyphicon-star',
-                state: 'dashboard.employee'
-            });
-
+            initLeftMenu();
 
         $urlRouterProvider.otherwise('/day');
 
+            initStates();
 
-        $stateProvider
-            .state('dashboard', {
-                abstract: true,
-                templateUrl: "app/dashboard/dashboard.html",
-                controller: 'DashboardController'
-            })
-            .state('dashboard.day-edit', {
-                url: "/day",
-                views: {
-                    '': {
-                        templateUrl: 'app/day/edit.html',
-                    }
-                }
-            })
-            .state('dashboard.employee', {
-                url: '/employee',
-                views: {
-                    '': {
-                        templateUrl: 'app/employee/main.html'
-                    },
-                    'list@dashboard.employee': {
-                        templateUrl: 'app/employee/list.html',
-                        controller: 'EmployeeListController'
-                    },
-                    'edit@dashboard.employee': {
-                        templateUrl: 'app/employee/edit.html',
-                        controller: 'EmployeeEditController'
-                    }
+            function initLeftMenu() {
+                eehNavigationProvider
+                    .menuItem('leftMenu.home', {
+                        text: 'Календарь',
+                        iconClass: 'glyphicon-calendar',
+                        state: 'dashboard.home'
+                    })
+                    .menuItem('leftMenu.day', {
+                        text: 'День',
+                        iconClass: 'glyphicon-tasks',
+                        state: 'dashboard.day-edit',
+                        weight: 0
+                    })
+                    .menuItem('leftMenu.orders', {
+                        text: 'Заказы',
+                        iconClass: 'glyphicon-home',
+                        state: 'dashboard.shift',
+                        weight: 0
+                    })
+                    .menuItem('leftMenu.shifts', {
+                        text: 'Смены',
+                        iconClass: 'glyphicon-home',
+                        state: 'dashboard.shift',
+                        weight: 0
+                    })
+                    .menuItem('leftMenu.employees', {
+                        text: 'Работники',
+                        iconClass: 'glyphicon-star',
+                        state: 'dashboard.employee'
+                    });
+            }
 
-                }
-            })
-            .state('dashboard.shift', {
-                url: '/shift',
-                views: {
-                    '': {
-                        templateUrl: 'app/shift/main.html'
-                    },
-                    'list@dashboard.shift': {
-                        templateUrl: 'app/shift/list.html',
-                        controller: 'ShiftListController'
-                    },
-                    'edit@dashboard.shift': {
-                        templateUrl: 'app/shift/edit.html',
-                        controller: 'ShiftEditController'
-                    }
 
-                }
-            })
+            function initStates() {
+                $stateProvider
+                    .state('dashboard', {
+                        abstract: true,
+                        templateUrl: "app/dashboard/dashboard.html",
+                        controller: 'DashboardController'
+                    })
+                    .state('dashboard.home', {
+                        url: "/",
+                        views: {
+                            '': {
+                                templateUrl: 'app/home/home.html',
+                            }
+                    }
+                    })
+                    .state('dashboard.day-edit', {
+                        url: "/day",
+                        views: {
+                            '': {
+                                templateUrl: 'app/day/edit.html',
+                            }
+                    }
+                    })
+                    .state('dashboard.employee', {
+                        url: '/employee',
+                        views: {
+                            '': {
+                                templateUrl: 'app/employee/main.html'
+                            },
+                            'list@dashboard.employee': {
+                                templateUrl: 'app/employee/list.html',
+                                controller: 'EmployeeListController'
+                            },
+                            'edit@dashboard.employee': {
+                                templateUrl: 'app/employee/edit.html',
+                                controller: 'EmployeeEditController'
+                            }
+
+                    }
+                    })
+                    .state('dashboard.shift', {
+                        url: '/shift',
+                        views: {
+                            '': {
+                                templateUrl: 'app/shift/main.html'
+                            },
+                            'list@dashboard.shift': {
+                                templateUrl: 'app/shift/list.html',
+                                controller: 'ShiftListController'
+                            },
+                            'edit@dashboard.shift': {
+                                templateUrl: 'app/shift/edit.html',
+                                controller: 'ShiftEditController'
+                            }
+
+                        }
+                    })
+            }
 
     }]);

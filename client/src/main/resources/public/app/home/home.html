@@ -1,0 +1,32 @@
+<div ng-controller="HomeController as vm">
+    <h2 class="text-center">{{vm.calendar.title}}</h2>
+
+    <div class="row">
+        <div class="col-md-6 text-center">
+            <div class="btn-group">
+                <button class="btn btn-primary ng-isolate-scope" mwl-date-modifier="" date="vm.calendar.day"
+                        decrement="vm.calendar.view">
+                    Previous
+                </button>
+                <button class="btn btn-default ng-isolate-scope" mwl-date-modifier="" date="vm.calendar.day"
+                        set-to-today="">
+                    Today
+                </button>
+                <button class="btn btn-primary ng-isolate-scope" mwl-date-modifier="" date="vm.calendar.day"
+                        increment="vm.calendar.view">
+                    Next
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <mwl-calendar
+            view="vm.calendar.view"
+            current-day="vm.calendar.day"
+            events="vm.calendar.events"
+            view-title="vm.calendar.title"
+            on-timespan-click="vm.calendar.createNewDay(calendarDate)"
+            on-event-click="vm.calendar.dayEdit(event)"
+            auto-open="true">
+    </mwl-calendar>
+</div>

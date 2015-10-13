@@ -1,12 +1,17 @@
 package furman.pay.model.day;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import furman.pay.model.AObject;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,19 +21,21 @@ import java.util.List;
 @Document
 public class Day extends AObject {
     @Indexed(unique = true)
-    private Date date;
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate date;
 
     @DBRef
-    private List<DayShift> shifts;
+    private List<DayShift> shifts = new ArrayList<>();
 
     @DBRef
-    private List<DayOrder> orders;
+    private List<DayOrder> orders = new ArrayList<>();
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

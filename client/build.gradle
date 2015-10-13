@@ -2,15 +2,16 @@ dependencies {
     compile 'org.webjars:requirejs:2.1.20'
     compile 'org.webjars.bower:jquery:2.1.4'
 
-    compile 'org.webjars.bower:angularjs:1.4.6'
-    compile 'org.webjars.bower:angular-i18n:1.4.6'
-    compile 'org.webjars.bower:angular-mocks:1.4.6'
-    compile 'org.webjars.bower:angular-resource:1.4.6'
+    compile 'org.webjars.bower:angularjs:1.4.7'
+    compile 'org.webjars.bower:angular-i18n:1.4.7'
+    compile 'org.webjars.bower:angular-mocks:1.4.7'
+    compile 'org.webjars.bower:angular-resource:1.4.7'
 
     compile 'org.webjars:angular-translate:2.7.2'
     compile 'org.webjars:angular-ui-bootstrap:0.13.3'
     compile 'org.webjars:angular-ui-router:0.2.15'
     compile 'org.webjars.bower:angular-ui-grid:3.0.6'
+    compile 'org.webjars.bower:angular-bootstrap-calendar:0.15.3'
 
 
     compile 'org.webjars:momentjs:2.10.6'

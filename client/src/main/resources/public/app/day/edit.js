@@ -3,15 +3,10 @@
 angular.module('app.day.edit', ['ui.grid', 'ui.bootstrap.datepicker'])
     .controller('DayEditController', DayEditController);
 
-//DayEditController.$inject = ['$http', '$log', 'DayEditorService'];
-
-function DayEditController($scope, $http, $log, $filter, $resource, $timeout, DayEditorService, ShiftRest) {
+function DayEditController($scope, $http, $log, $filter, $resource, $timeout, DayEditorService, ShiftRest, CurrentDay) {
     var vm = this;
-    vm.day = {
-        date: moment("22-08-2013", "DD-MM-YYYY").toDate(),
-        shifts: [],
-        orders: []
-    }
+    vm.day = CurrentDay.day;
+    vm.dayDate = CurrentDay.getDate();
 
     vm.registerRowSelection = function (gridApi, rowSelectionChanged) {
         gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
@@ -27,7 +22,7 @@ function DayEditController($scope, $http, $log, $filter, $resource, $timeout, Da
 
     vm.initOrderDate = function () {
         vm.orderDate = {
-            date: vm.day.date,
+            date: vm.dayDate,
             opened: false,
             format: 'dd-MM-yyyy',
             open: function ($event) {
@@ -132,7 +127,7 @@ function DayEditController($scope, $http, $log, $filter, $resource, $timeout, Da
     };
 
     vm.save = function () {
-        DayEditorService.save(vm.day);
+        var day = DayEditorService.save(vm.day);
     };
 
     vm.initOrderDate();

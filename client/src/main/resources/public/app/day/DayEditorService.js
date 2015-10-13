@@ -2,8 +2,8 @@
 
 angular.module('app.day.edit').service('DayEditorService', DayEditorService);
 
-DayEditorService.$inject = ['$http', '$log', 'DayRest'];
-function DayEditorService($http, $log, DayRest) {
+DayEditorService.$inject = ['$http', '$log', 'DayRest', 'ShiftRest'];
+function DayEditorService($http, $log, DayRest, ShiftRest) {
 
     var baseUrl = "/api/pay/dayEdit";
     var service = {};
@@ -11,6 +11,24 @@ function DayEditorService($http, $log, DayRest) {
     service.getOrders = getOrders;
     service.getOrderCountsPerDay = getOrderCountsPerDay;
     service.save = save;
+    service.getDay = getDay;
+    service.getOrNewDay = getOrNewDay;
+    service.getDays = getDays;
+    service.createNewDay = createNewDay;
+
+    function createNewDay(date) {
+        return $http.get(baseUrl + "/createNewDay?date=" +
+            date.format("YYYY-MM-DD"));
+    }
+
+    function getDays(startDate, endDate) {
+        return $http.get(baseUrl + "/getDays?startDate=" +
+            startDate.format("YYYY-MM-DD") + "&" + "endDate=" + endDate.format("YYYY-MM-DD"));
+    }
+
+    function getDay(date) {
+        return $http.get(baseUrl + '/getDay?date=' + date.format("YYYY-MM-DD"));
+    }
 
     function getOrders(date) {
         return $http.get(baseUrl + '/getOrders?date=' + moment(date).format("YYYY-MM-DD"));
@@ -20,12 +38,12 @@ function DayEditorService($http, $log, DayRest) {
         return $http.get(baseUrl + '/getOrderCountsPerDay').then();
     }
 
-    function save(day) {
-        var result = {
-            date: day.date
-        };
+    function getOrNewDay(date) {
+        return $http.get(baseUrl + '/getOrNewDay?date=' + moment(date).format("YYYY-MM-DD"));
+    }
 
-        DayRest.create(result).then(handleSuccess, handleError);
+    function save(day) {
+        DayRest.save(day).then(handleSuccess, handleError);
     }
 
     // private functions
