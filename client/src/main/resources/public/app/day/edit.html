@@ -2,38 +2,16 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <span>Дата: {{vm.dayDate | date:'yyyy-MM-dd'}}</span>
-            <button ng-click="vm.save()" ng-disabled="vm.day.shifts.length < 1 || vm.day.orders.length < 1"
+            <button ng-click="vm.save()" ng-disabled="vm.day.orders.length < 1"
                     class="btn btn-info glyphicon glyphicon-floppy-save"></button>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="panel panel-info">
-                <div class="panel-heading">Заказы <span class="label"
-                                                        ng-class="{'label-primary': vm.day.orders.length, 'label-warning': !vm.day.orders.length}">{{vm.day.orders.length}}</span>
-                </div>
-                <div class="panel-body">
-                    <p class="input-group input-group-sm">
-                        <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
-                               ng-model="vm.orderDate.date"
-                               is-open="vm.orderDate.opened" min-date="vm.orderDate.minDate"
-                               max-date="vm.orderDate.maxDate"
-                               datepicker-options="vm.orderDate.options"
-                               date-disabled="vm.orderDate.disabled(date, mode)"
-                               ng-required="true"
-                               close-text="Закрыть" ng-change="vm.dateChanged()"
-                               custom-class="vm.orderDate.getDayClass(date, mode)"/>
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="vm.orderDate.open($event)"><i
-                                class="glyphicon glyphicon-calendar"></i></button>
-                    </span>
-                    </p>
-                    <div class="grid" ui-grid="vm.gridOptionsO" ui-grid-selection ui-grid-resize-columns></div>
-                </div>
-            </div>
+            <ng-include src="'app/day/coreOrders.html'"/>
         </div>
         <div class="col-md-6">
-            <div class=" panel panel-info">
+            <div class="panel panel-info">
                 <div class="panel-heading">Смены <span class="label"
                                                        ng-class="{'label-warning': vm.day.shifts.length < 1, 'label-primary': vm.day.shifts.length > 0}">{{vm.day.shifts.length}}</span>
                 </div>
@@ -46,5 +24,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <ng-include src="'app/day/dayOrders.html'"/>
     </div>
 </div>

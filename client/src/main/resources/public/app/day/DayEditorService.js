@@ -1,9 +1,8 @@
 'use strict';
 
-angular.module('app.day.edit').service('DayEditorService', DayEditorService);
+angular.module('app.day').service('DayEditorService', DayEditorService);
 
-DayEditorService.$inject = ['$http', '$log', 'DayRest', 'ShiftRest'];
-function DayEditorService($http, $log, DayRest, ShiftRest) {
+function DayEditorService($http, $log, DayRepository) {
 
     var baseUrl = "/api/pay/dayEdit";
     var service = {};
@@ -15,6 +14,8 @@ function DayEditorService($http, $log, DayRest, ShiftRest) {
     service.getOrNewDay = getOrNewDay;
     service.getDays = getDays;
     service.createNewDay = createNewDay;
+    service.getOrNewDayOrder = getOrNewDayOrder;
+    service.registerRowSelection = registerRowSelection;
 
     function createNewDay(date) {
         return $http.get(baseUrl + "/createNewDay?date=" +
@@ -43,8 +44,23 @@ function DayEditorService($http, $log, DayRest, ShiftRest) {
     }
 
     function save(day) {
-        DayRest.save(day).then(handleSuccess, handleError);
+
+        day = jQuery.extend({}, day);
+
+        var orders = day.orders;
+
+        day.orders = [];
+
+        angular.forEach(orders, function (order) {
+            day.orders.push("/api/pay/dayOrder/" + order.id);
+        });
+        DayRepository.save(day).then(handleSuccess, handleError);
     }
+
+    function getOrNewDayOrder(order) {
+        return $http.get(baseUrl + '/getOrNewDayOrder?orderId=' + order.id);
+    }
+
 
     // private functions
 
@@ -57,6 +73,19 @@ function DayEditorService($http, $log, DayRest, ShiftRest) {
             return {success: false, message: error.cause.message};
         };
     }
+
+
+    function registerRowSelection($scope, gridApi, rowSelectionChanged) {
+        gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
+            angular.forEach(rows, function (row) {
+                rowSelectionChanged(row);
+            });
+        });
+        gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+            rowSelectionChanged(row);
+        });
+    };
+
 
     return service;
 }

@@ -1,10 +1,17 @@
 'use strict';
 
-angular.module('app.rest.order', []).factory('OrderRest', ['$http', function ($http) {
+angular.module('app.rest').service('OrderRepository', OrderRepository);
+
+function OrderRepository($http) {
 
     var service = {};
 
     service.getAll = getAll;
+    service.getOne = getById;
+
+    function getById(orderId) {
+        return $http.get('/api/core/order?id=' + orderId);
+    }
 
     function getAll() {
         return $http.get('/api/core/order');
@@ -23,4 +30,4 @@ angular.module('app.rest.order', []).factory('OrderRest', ['$http', function ($h
     }
 
     return service;
-}]);
+}

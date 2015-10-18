@@ -8,6 +8,7 @@ var app = angular.module('app', [
     'ui.grid', 'ui.grid.edit',
     'ui.bootstrap.datepicker',
     'ngResource',
+    'app.rest',
     'app.dashboard',
     'app.employee.edit',
     'app.employee.list',
@@ -16,8 +17,7 @@ var app = angular.module('app', [
     'app.orders',
     'app.order.assign',
     'app.version',
-    'app.day.edit',
-    'app.rest',
+    'app.day',
     'app.home'
 ]).
     config(['eehNavigationProvider',
@@ -134,3 +134,6 @@ var app = angular.module('app', [
             }
 
     }]);
+
+angular.module('app.rest', []);
+angular.module('app.day', ['ui.grid', 'ui.bootstrap.datepicker']);

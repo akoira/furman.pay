@@ -1,9 +1,8 @@
 'use strict';
 
-angular.module('app.rest', []).service('DayRest', DayRest);
+angular.module('app.rest').service('DayRepository', DayRepository);
 
-DayRest.$inject = ['$http', '$log'];
-function DayRest($http, $log) {
+function DayRepository($http, $log) {
     var basePath = '/api/pay/day';
     var service = {};
 

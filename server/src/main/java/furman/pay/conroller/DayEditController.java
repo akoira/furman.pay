@@ -6,7 +6,10 @@ import furman.core.model.OrderStatus;
 import furman.core.model.QOrder;
 import furman.core.repository.OrderRepository;
 import furman.pay.model.day.Day;
+import furman.pay.model.day.DayOrder;
 import furman.pay.model.day.QDay;
+import furman.pay.model.day.QDayOrder;
+import furman.pay.repository.day.DayOrderRepository;
 import furman.pay.repository.day.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -28,6 +32,9 @@ public class DayEditController {
 
     @Autowired
     private DayRepository dayRepository;
+
+    @Autowired
+    private DayOrderRepository dayOrderRepository;
 
 
     @RequestMapping("/dayEdit/getOrders")
@@ -73,5 +80,18 @@ public class DayEditController {
         return day;
     }
 
-
+    @RequestMapping("/dayEdit/getOrNewDayOrder")
+    public DayOrder getOrNewDayOrder(@RequestParam(value = "orderId", required = true)
+                                     Long orderId) {
+        DayOrder dayOrder = dayOrderRepository.findOne(QDayOrder.dayOrder.orderId.eq(orderId));
+        if (dayOrder == null) {
+            Order order = orderRepository.findOne(orderId);
+            dayOrder = new DayOrder();
+            dayOrder.setOrderId(order.getId());
+            dayOrder.setNumber(String.format("%s-%d", new SimpleDateFormat("MM").format(order.getCreatedDailySheet().getDate()), order.getOrderNumber()));
+            dayOrder.setName(order.getName());
+            dayOrder = dayOrderRepository.save(dayOrder);
+        }
+        return dayOrder;
+    }
 }

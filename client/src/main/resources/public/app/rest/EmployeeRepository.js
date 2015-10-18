@@ -1,6 +1,8 @@
 'use strict';
 
-angular.module('app.rest.employee', []).factory('EmployeeRest', ['$http', function ($http) {
+angular.module('app.rest').factory('EmployeeRepository', EmployeeRepository);
+
+function EmployeeRepository($http) {
 
     var service = {};
 
@@ -40,4 +42,4 @@ angular.module('app.rest.employee', []).factory('EmployeeRest', ['$http', functi
     }
 
     return service;
-}]);
+}

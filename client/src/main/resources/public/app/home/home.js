@@ -3,7 +3,7 @@
 angular.module('app.home', ['mwl.calendar', 'ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-function HomeController($scope, $location, $log, CurrentDay, DayRest, DayEditorService) {
+function HomeController($scope, $location, $log, CurrentDay, DayEditorService) {
 
     var vm = this;
 
