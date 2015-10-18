@@ -5,11 +5,11 @@ import furman.core.model.Order;
 import furman.core.model.OrderStatus;
 import furman.core.model.QOrder;
 import furman.core.repository.OrderRepository;
+import furman.pay.model.PayOrder;
+import furman.pay.model.QPayOrder;
 import furman.pay.model.day.Day;
-import furman.pay.model.day.DayOrder;
 import furman.pay.model.day.QDay;
-import furman.pay.model.day.QDayOrder;
-import furman.pay.repository.day.DayOrderRepository;
+import furman.pay.repository.PayOrderRepository;
 import furman.pay.repository.day.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * Created by akoiro on 9/24/15.
+ * akoiro - 9/24/15.
  */
 @RestController
 public class DayEditController {
@@ -34,7 +35,7 @@ public class DayEditController {
     private DayRepository dayRepository;
 
     @Autowired
-    private DayOrderRepository dayOrderRepository;
+    private PayOrderRepository payOrderRepository;
 
 
     @RequestMapping("/dayEdit/getOrders")
@@ -80,18 +81,21 @@ public class DayEditController {
         return day;
     }
 
-    @RequestMapping("/dayEdit/getOrNewDayOrder")
-    public DayOrder getOrNewDayOrder(@RequestParam(value = "orderId", required = true)
-                                     Long orderId) {
-        DayOrder dayOrder = dayOrderRepository.findOne(QDayOrder.dayOrder.orderId.eq(orderId));
-        if (dayOrder == null) {
+    @RequestMapping("/dayEdit/getOrNewOrder")
+    public PayOrder getOrNewOrder(@RequestParam(value = "orderId", required = true)
+                                  Long orderId) {
+        PayOrder payOrder = payOrderRepository.findOne(QPayOrder.payOrder.orderId.eq(orderId));
+        if (payOrder == null) {
             Order order = orderRepository.findOne(orderId);
-            dayOrder = new DayOrder();
-            dayOrder.setOrderId(order.getId());
-            dayOrder.setNumber(String.format("%s-%d", new SimpleDateFormat("MM").format(order.getCreatedDailySheet().getDate()), order.getOrderNumber()));
-            dayOrder.setName(order.getName());
-            dayOrder = dayOrderRepository.save(dayOrder);
+            payOrder = new PayOrder();
+
+            payOrder.setOrderId(order.getId());
+            payOrder.setNumber(String.format("%s-%d", new SimpleDateFormat("MM").format(order.getCreatedDailySheet().getDate()), order.getOrderNumber()));
+            payOrder.setName(order.getName());
+            payOrder.setProductionDate(order.getWorkedDailySheet().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            payOrder.setReadyDate(order.getReadyDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+            payOrder = payOrderRepository.save(payOrder);
         }
-        return dayOrder;
+        return payOrder;
     }
 }

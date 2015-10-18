@@ -15,6 +15,7 @@ public class Shift extends AObject {
 
     @DBRef
     private List<Employee> employees;
+
     private List<String> services;
 
     public List<Employee> getEmployees() {

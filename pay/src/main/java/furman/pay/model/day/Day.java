@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import furman.pay.model.AObject;
+import furman.pay.model.Shift;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -25,11 +26,10 @@ public class Day extends AObject {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
-    @DBRef
-    private List<DayShift> shifts = new ArrayList<>();
+    private List<OrderValue> orderValues = new ArrayList<>();
 
     @DBRef
-    private List<DayOrder> orders = new ArrayList<>();
+    private List<Shift> shifts = new ArrayList<>();
 
     public LocalDate getDate() {
         return date;
@@ -39,19 +39,19 @@ public class Day extends AObject {
         this.date = date;
     }
 
-    public List<DayShift> getShifts() {
+    public List<OrderValue> getOrderValues() {
+        return orderValues;
+    }
+
+    public void setOrderValues(List<OrderValue> orderValues) {
+        this.orderValues = orderValues;
+    }
+
+    public List<Shift> getShifts() {
         return shifts;
     }
 
-    public void setShifts(List<DayShift> shifts) {
+    public void setShifts(List<Shift> shifts) {
         this.shifts = shifts;
-    }
-
-    public List<DayOrder> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<DayOrder> orders) {
-        this.orders = orders;
     }
 }
