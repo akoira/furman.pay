@@ -1,9 +1,12 @@
 package furman.pay.model;
 
+import furman.pay.model.day.OrderValue;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by akoiro on 9/13/15.
@@ -20,6 +23,8 @@ public class PayOrder extends AObject {
     private LocalDate productionDate;
 
     private LocalDate readyDate;
+
+    private Map<String, OrderValue> orderValues = new HashMap<>();
 
     public String getNumber() {
         return number;
@@ -51,5 +56,13 @@ public class PayOrder extends AObject {
 
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
+    }
+
+    public Map<String, OrderValue> getOrderValues() {
+        return orderValues;
+    }
+
+    public void setOrderValues(Map<String, OrderValue> orderValues) {
+        this.orderValues = orderValues;
     }
 }

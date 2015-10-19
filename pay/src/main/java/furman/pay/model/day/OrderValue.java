@@ -1,13 +1,11 @@
 package furman.pay.model.day;
 
-import furman.pay.model.PayOrder;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by akoiro on 10/18/15.
@@ -16,24 +14,12 @@ import java.util.List;
 @Entity
 @Document
 public class OrderValue {
-
-    @DBRef
-    private PayOrder order;
-
     @Indexed(unique = true)
     private String service;
 
-    private Double value = 0d;
+    private Double value;
 
-    private List<ShiftValue> shiftValues = new ArrayList<>();
-
-    public PayOrder getOrder() {
-        return order;
-    }
-
-    public void setOrder(PayOrder order) {
-        this.order = order;
-    }
+    private Map<String, ShiftValue> shiftValues = new HashMap<>();
 
     public String getService() {
         return service;
@@ -51,11 +37,11 @@ public class OrderValue {
         this.value = value;
     }
 
-    public List<ShiftValue> getShiftValues() {
+    public Map<String, ShiftValue> getShiftValues() {
         return shiftValues;
     }
 
-    public void setShiftValues(List<ShiftValue> shiftValues) {
+    public void setShiftValues(Map<String, ShiftValue> shiftValues) {
         this.shiftValues = shiftValues;
     }
 }

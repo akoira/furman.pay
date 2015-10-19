@@ -68,8 +68,13 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
 
         var rowSelectionChanged = function (row) {
             if (row.isSelected) {
-                DayEditorService.getOrNewDayOrder(row.entity).success(function (order) {
-                    var found = $filter('filter')(vm.day.orders, {id: order.id});
+                DayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
+                    var found = $filter('filter')(vm.day.orders, {'order.id': order.id});
+
+                    var dayOrder = {
+                        order: order,
+                    }
+
                     if (found.length == 0) {
                         vm.day.orders.push(order);
                     }

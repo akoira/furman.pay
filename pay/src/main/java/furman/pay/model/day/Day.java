@@ -26,7 +26,7 @@ public class Day extends AObject {
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
-    private List<OrderValue> orderValues = new ArrayList<>();
+    private List<DayOrder> orders = new ArrayList<>();
 
     @DBRef
     private List<Shift> shifts = new ArrayList<>();
@@ -39,19 +39,19 @@ public class Day extends AObject {
         this.date = date;
     }
 
-    public List<OrderValue> getOrderValues() {
-        return orderValues;
-    }
-
-    public void setOrderValues(List<OrderValue> orderValues) {
-        this.orderValues = orderValues;
-    }
-
     public List<Shift> getShifts() {
         return shifts;
     }
 
     public void setShifts(List<Shift> shifts) {
         this.shifts = shifts;
+    }
+
+    public List<DayOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<DayOrder> orders) {
+        this.orders = orders;
     }
 }
