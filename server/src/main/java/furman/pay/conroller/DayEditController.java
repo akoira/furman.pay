@@ -89,8 +89,8 @@ public class DayEditController {
     }
 
     @RequestMapping("/dayEdit/getOrNewPayOrder")
-    public PayOrder getOrNewOrder(@RequestParam(value = "orderId", required = true)
-                                  Long orderId) {
+    public PayOrder getOrNewPayOrder(@RequestParam(value = "orderId", required = true)
+                                     Long orderId) {
         PayOrder payOrder = payOrderRepository.findOne(QPayOrder.payOrder.orderId.eq(orderId));
         if (payOrder == null) {
             Order order = orderRepository.findOne(orderId);

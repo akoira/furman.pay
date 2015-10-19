@@ -14,7 +14,7 @@ import java.util.Map;
 @Entity
 @Document
 public class OrderValue {
-    @Indexed(unique = true)
+    @Indexed(unique = false)
     private String service;
 
     private Double value;

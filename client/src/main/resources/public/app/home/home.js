@@ -3,7 +3,7 @@
 angular.module('app.home', ['mwl.calendar', 'ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-function HomeController($scope, $location, $log, CurrentDay, DayEditorService) {
+function HomeController($scope, $location, $filter, $log, CurrentDay, DayEditorService) {
 
     var vm = this;
 
@@ -20,6 +20,11 @@ function HomeController($scope, $location, $log, CurrentDay, DayEditorService) {
         createNewDay: function (calendarDate) {
             DayEditorService.getOrNewDay(calendarDate).success(function (day) {
                 CurrentDay.changeDay(day);
+                var query = {day: {id: day.id}};
+                var event = $filter('filter')(vm.calendar.events, query);
+                if (event.length == 0) {
+                    vm.calendar.events.push(day2Event(day));
+                }
             });
         },
         dayEdit: function (event) {
