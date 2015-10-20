@@ -39,22 +39,6 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
         };
     };
 
-    function loadData() {
-        DayEditorService.getOrders(vm.orderDate.date).success(function (data) {
-            vm.gridOptions.data = data;
-            $timeout(function () {
-                angular.forEach(vm.gridOptions.data, function (order) {
-                    var found = $filter('filter')(CurrentDay.day.orders, {order: {id: order.id}});
-                    if (found.length > 0) {
-                        vm.gridApi.selection.selectRow(order);
-                    }
-                });
-            });
-        }).error(function (data) {
-            $log.log(data);
-        });
-    }
-
     vm.initOrderGrid = function () {
         vm.gridOptions = {
             data: [],
@@ -66,11 +50,6 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
                 vm.gridOptions.columnDefs = data;
             });
         loadData();
-
-        var getDayOrderBy = function (coreOrderId) {
-            var found = $filter('filter')(vm.day.orders, {order: {orderId: coreOrderId}});
-            return found.length > 0 ? found[0] : null;
-        }
 
         var rowSelectionChanged = function (row) {
             if (row.isSelected) {
@@ -107,6 +86,28 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
     vm.moment = function (localDate) {
         return moment(new Date(localDate[0], localDate[1] - 1, localDate[2]));
     }
+
+    var getDayOrderBy = function (coreOrderId) {
+        var found = $filter('filter')(vm.day.orders, {order: {orderId: coreOrderId}});
+        return found.length > 0 ? found[0] : null;
+    }
+
+    function loadData() {
+        DayEditorService.getOrders(vm.orderDate.date).success(function (data) {
+            vm.gridOptions.data = data;
+            $timeout(function () {
+                angular.forEach(vm.gridOptions.data, function (order) {
+                    var dayOrder = getDayOrderBy(order.id);
+                    if (dayOrder) {
+                        vm.gridApi.selection.selectRow(order);
+                    }
+                });
+            });
+        }).error(function (data) {
+            $log.log(data);
+        });
+    }
+
 
     vm.initOrderDate();
     vm.initOrderGrid();
