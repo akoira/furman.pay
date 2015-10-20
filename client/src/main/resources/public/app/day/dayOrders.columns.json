@@ -3,7 +3,7 @@
     "field": "order",
     "displayName": "Заказ",
     "enableCellEdit": false,
-    "cellTemplate": "<div>{{row.entity.order.number}}/{{row.entity.order.name}}</div>",
+    "cellTemplate": "<div>{{('0'+row.entity.order.createdDate[1]).slice(-2)}}-{{row.entity.order.number}}/{{row.entity.order.name}}</div>",
     "pinnedLeft": true,
     "enableColumnMenu": false,
     "enableSorting": false,
@@ -93,6 +93,7 @@
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
+    "enableColumnMenu": false,
     "enableSorting": false,
     "width": 150
   },

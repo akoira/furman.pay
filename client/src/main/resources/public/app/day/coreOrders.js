@@ -6,9 +6,19 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
     var vm = this;
     vm.day = CurrentDay.day;
     vm.dayDate = CurrentDay.getDate();
-
     vm.registerRowSelection = DayEditorService.registerRowSelection;
-    vm.initOrderDate = function () {
+    vm.moment = momentFrom;
+
+    initOrderDate();
+
+    initOrderGrid();
+
+
+    function momentFrom(localDate) {
+        return moment(new Date(localDate[0], localDate[1] - 1, localDate[2]));
+    }
+
+    function initOrderDate() {
         vm.orderDate = {
             date: vm.dayDate,
             opened: false,
@@ -37,9 +47,9 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
         vm.dateChanged = function () {
             loadData();
         };
-    };
+    }
 
-    vm.initOrderGrid = function () {
+    function initOrderGrid() {
         vm.gridOptions = {
             data: [],
             appScopeProvider: vm
@@ -51,46 +61,45 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
             });
         loadData();
 
-        var rowSelectionChanged = function (row) {
-            if (row.isSelected) {
-                DayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
-                    var dayOrder = getDayOrderBy(row.entity.id);
-                    if (!dayOrder) {
-                        dayOrder = {
-                            order: order,
-                            orderValues: []
-                        };
-                        angular.forEach(order.orderValues, function (value) {
-                            var dayValue = jQuery.extend(true, {}, value);
-                            dayOrder.orderValues.push(dayValue);
-                        });
-                        vm.day.orders.push(dayOrder);
-                    }
-                });
-            } else {
-                var dayOrder = getDayOrderBy(row.entity.id);
-                if (dayOrder) {
-                    vm.day.orders.splice(vm.day.orders.indexOf(dayOrder), 1);
-                }
-            }
-        };
-
-
         vm.gridOptions.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
             vm.registerRowSelection($scope, gridApi, rowSelectionChanged);
         };
-    };
-
-
-    vm.moment = function (localDate) {
-        return moment(new Date(localDate[0], localDate[1] - 1, localDate[2]));
     }
 
-    var getDayOrderBy = function (coreOrderId) {
+    function rowSelectionChanged(row) {
+        if (row.isSelected) {
+            DayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
+                var dayOrder = getDayOrderBy(row.entity.id);
+                if (!dayOrder) {
+                    dayOrder = {
+                        order: order,
+                        orderValues: []
+                    };
+                    angular.forEach(order.orderValues, function (value) {
+                        var found = $filter('filter')(dayOrder.orderValues, {type: value.type});
+                        if (found.length > 0) {
+                            found[0].value += value.value;
+                        } else {
+                            var dayValue = jQuery.extend(true, {}, value);
+                            dayOrder.orderValues.push(dayValue);
+                        }
+                    });
+                    vm.day.orders.push(dayOrder);
+                }
+            });
+        } else {
+            var dayOrder = getDayOrderBy(row.entity.id);
+            if (dayOrder) {
+                vm.day.orders.splice(vm.day.orders.indexOf(dayOrder), 1);
+            }
+        }
+    }
+
+    function getDayOrderBy(coreOrderId) {
         var found = $filter('filter')(vm.day.orders, {order: {orderId: coreOrderId}});
         return found.length > 0 ? found[0] : null;
-    }
+    };
 
     function loadData() {
         DayEditorService.getOrders(vm.orderDate.date).success(function (data) {
@@ -107,8 +116,4 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
             $log.log(data);
         });
     }
-
-
-    vm.initOrderDate();
-    vm.initOrderGrid();
 }
