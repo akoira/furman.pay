@@ -5,8 +5,8 @@ import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by akoiro on 9/13/15.
@@ -18,28 +18,31 @@ public class PayOrder extends AObject {
     @Indexed(unique = true)
     private Long orderId;
 
-    private String number;
+    private Long number;
 
-    private LocalDate productionDate;
+    private LocalDate createdDate;
+
+    private LocalDate workedDate;
 
     private LocalDate readyDate;
 
-    private Map<String, OrderValue> orderValues = new HashMap<>();
 
-    public String getNumber() {
+    private List<OrderValue> orderValues = new ArrayList<>();
+
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(String number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 
-    public LocalDate getProductionDate() {
-        return productionDate;
+    public LocalDate getWorkedDate() {
+        return workedDate;
     }
 
-    public void setProductionDate(LocalDate productionDate) {
-        this.productionDate = productionDate;
+    public void setWorkedDate(LocalDate productionDate) {
+        this.workedDate = productionDate;
     }
 
     public LocalDate getReadyDate() {
@@ -58,11 +61,19 @@ public class PayOrder extends AObject {
         this.orderId = orderId;
     }
 
-    public Map<String, OrderValue> getOrderValues() {
+    public List<OrderValue> getOrderValues() {
         return orderValues;
     }
 
-    public void setOrderValues(Map<String, OrderValue> orderValues) {
+    public void setOrderValues(List<OrderValue> orderValues) {
         this.orderValues = orderValues;
+    }
+
+    public void setCreatedDate(LocalDate createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDate getCreatedDate() {
+        return createdDate;
     }
 }

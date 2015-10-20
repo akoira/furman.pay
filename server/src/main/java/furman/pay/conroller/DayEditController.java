@@ -17,11 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * akoiro - 9/24/15.
@@ -46,7 +43,7 @@ public class DayEditController {
 
 
     @RequestMapping("/dayEdit/getOrders")
-    public Iterable<Order> getOrders(@RequestParam(value = "date", required = true) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+    public Iterable<Order> getOrders(@RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return orderRepository.findAll(QOrder.order.workedDailySheet.date.eq(date).and(QOrder.order.status.eq(OrderStatus.production)));
     }
 
@@ -97,20 +94,23 @@ public class DayEditController {
             payOrder = new PayOrder();
 
             payOrder.setOrderId(order.getId());
-            payOrder.setNumber(String.format("%s-%d", new SimpleDateFormat("MM").format(order.getCreatedDailySheet().getDate()), order.getOrderNumber()));
+            payOrder.setNumber(order.getOrderNumber());
             payOrder.setName(order.getName());
-            payOrder.setProductionDate(order.getWorkedDailySheet().getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-            payOrder.setReadyDate(order.getReadyDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+            payOrder.setCreatedDate(order.getCreatedDailySheet().getDate());
+            payOrder.setWorkedDate(order.getWorkedDailySheet().getDate());
+            payOrder.setReadyDate(order.getReadyDate());
             payOrder = payOrderRepository.save(payOrder);
 
-            HashMap<String, OrderValue> values = new HashMap<>();
-
             Iterable<CommonData> commonDatas = commonDataRepository.findAll(QCommonData.commonData.order.eq(order));
+            ArrayList<OrderValue> values = new ArrayList<>();
             commonDatas.forEach(commonData -> {
                 OrderValue value = new OrderValue();
+                value.setType(commonData.getType());
+                value.setName(commonData.getName());
                 value.setService(commonData.getService());
                 value.setValue(commonData.getCount());
-                values.put(value.getService(), value);
+                values.add(value);
             });
             payOrder.setOrderValues(values);
             payOrder = payOrderRepository.save(payOrder);

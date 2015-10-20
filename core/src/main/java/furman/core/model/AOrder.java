@@ -1,7 +1,9 @@
 package furman.core.model;
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * User: akoyro
@@ -37,7 +39,8 @@ public abstract class AOrder extends AObject {
 
 
     @Column(name = "READY_DATE", nullable = true)
-    private Date readyDate;
+    @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+    private LocalDate readyDate;
 
     @Column(name = "ORDER_NUMBER", nullable = false)
     private Long orderNumber;
@@ -75,11 +78,11 @@ public abstract class AOrder extends AObject {
     private Dailysheet createdDailySheet;
 
 
-    public Date getReadyDate() {
+    public LocalDate getReadyDate() {
         return readyDate;
     }
 
-    public void setReadyDate(Date readyDate) {
+    public void setReadyDate(LocalDate readyDate) {
         this.readyDate = readyDate;
     }
 

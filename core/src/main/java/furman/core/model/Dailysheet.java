@@ -11,10 +11,13 @@
  */
 package furman.core.model;
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 
@@ -22,14 +25,15 @@ import java.util.Date;
 public class Dailysheet extends AObject
 {
     @Column(name = "DATE", nullable = false)
-    private Date date;
+    @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+    private LocalDate date;
 
-    public void setDate(Date date)
+    public void setDate(LocalDate date)
     {
         this.date = date;
     }
 
-    public Date getDate()
+    public LocalDate getDate()
     {
         return date;
     }

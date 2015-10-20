@@ -4,7 +4,7 @@ furman:
 
   pay:
     mongoDbHost: 127.0.0.1
-    mongoDbName: furman
+    mongoDbName: furman-pay
     path: pay
 
   core:

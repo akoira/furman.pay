@@ -97,3 +97,9 @@ input[type="number"] {
     border-radius: 32px;
     color: black;
 }
+
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

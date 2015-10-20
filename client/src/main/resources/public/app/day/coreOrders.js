@@ -44,7 +44,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
             vm.gridOptions.data = data;
             $timeout(function () {
                 angular.forEach(vm.gridOptions.data, function (order) {
-                    var found = $filter('filter')(CurrentDay.day.orders, {orderId: order.id});
+                    var found = $filter('filter')(CurrentDay.day.orders, {order: {id: order.id}});
                     if (found.length > 0) {
                         vm.gridApi.selection.selectRow(order);
                     }
@@ -57,7 +57,8 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
 
     vm.initOrderGrid = function () {
         vm.gridOptions = {
-            data: []
+            data: [],
+            appScopeProvider: vm
         };
 
         $http.get('app/day/coreOrders.columns.json')
@@ -66,22 +67,32 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
             });
         loadData();
 
+        var getDayOrderBy = function (coreOrderId) {
+            var found = $filter('filter')(vm.day.orders, {order: {orderId: coreOrderId}});
+            return found.length > 0 ? found[0] : null;
+        }
+
         var rowSelectionChanged = function (row) {
             if (row.isSelected) {
                 DayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
-                    var found = $filter('filter')(vm.day.orders, {'order.id': order.id});
-
-                    var dayOrder = {
-                        order: order,
-                    }
-
-                    if (found.length == 0) {
-                        vm.day.orders.push(order);
+                    var dayOrder = getDayOrderBy(row.entity.id);
+                    if (!dayOrder) {
+                        dayOrder = {
+                            order: order,
+                            orderValues: []
+                        };
+                        angular.forEach(order.orderValues, function (value) {
+                            var dayValue = jQuery.extend(true, {}, value);
+                            dayOrder.orderValues.push(dayValue);
+                        });
+                        vm.day.orders.push(dayOrder);
                     }
                 });
             } else {
-                var index = vm.day.orders.indexOf(row.entity);
-                vm.day.orders.splice(index, 1);
+                var dayOrder = getDayOrderBy(row.entity.id);
+                if (dayOrder) {
+                    vm.day.orders.splice(vm.day.orders.indexOf(dayOrder), 1);
+                }
             }
         };
 
@@ -92,6 +103,10 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
         };
     };
 
+
+    vm.moment = function (localDate) {
+        return moment(new Date(localDate[0], localDate[1] - 1, localDate[2]));
+    }
 
     vm.initOrderDate();
     vm.initOrderGrid();

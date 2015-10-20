@@ -15,7 +15,11 @@ import java.util.Map;
 @Document
 public class OrderValue {
     @Indexed(unique = false)
+    private String type;
+
     private String service;
+
+    private String name;
 
     private Double value;
 
@@ -43,5 +47,21 @@ public class OrderValue {
 
     public void setShiftValues(Map<String, ShiftValue> shiftValues) {
         this.shiftValues = shiftValues;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

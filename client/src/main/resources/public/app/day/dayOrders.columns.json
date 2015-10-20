@@ -3,13 +3,14 @@
     "field": "order",
     "displayName": "Заказ",
     "enableCellEdit": false,
-    "cellTemplate": "<div>{{row.entity.number}}/{{row.entity.name}}</div>",
+    "cellTemplate": "<div>{{row.entity.order.number}}/{{row.entity.order.name}}</div>",
     "pinnedLeft": true,
     "width": 200
   },
   {
-    "field": "cutting.value",
+    "field": "cutting",
     "displayName": "Распил м.п.",
+    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('cutting', row.entity)}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": "false",
@@ -18,6 +19,7 @@
   {
     "field": "directGlueing.value",
     "displayName": "Оклейка прямолинейная м.п.",
+    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('directGlueing', row.entity)}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": "false",

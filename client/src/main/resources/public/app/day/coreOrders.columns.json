@@ -2,21 +2,25 @@
   {
     "field": "orderNumber",
     "displayName": "Номер",
-    "cellTemplate": "<div>{{row.entity.createdDailySheet.date | date:'MM'}}-{{row.entity.orderNumber}}</div>"
+    "enableColumnMenu": false,
+    "cellTemplate": "<div class='truncate'>{{('0'+row.entity.createdDailySheet.date[1]).slice(-2)}}-{{row.entity.orderNumber}}/{{row.entity.name}}</div>"
   },
   {
     "field": "createdDailySheet.date",
     "displayName": "Дата соз-я",
-    "cellTemplate": "<div>{{row.entity.createdDailySheet.date | date:'yyyy-MM-dd'}}</div>"
+    "enableColumnMenu": false,
+    "cellTemplate": "<div>{{grid.appScope.moment(row.entity.createdDailySheet.date).toDate() | date:'yyyy-MM-dd'}}</div>"
   },
   {
     "field": "createdDailySheet.date",
     "displayName": "Дата пр-ва",
-    "cellTemplate": "<div>{{row.entity.workedDailySheet.date | date:'yyyy-MM-dd'}}</div>"
+    "enableColumnMenu": false,
+    "cellTemplate": "<div>{{grid.appScope.moment(row.entity.workedDailySheet.date).toDate() | date:'yyyy-MM-dd'}}</div>"
   },
   {
-    "field": "createdDailySheet.date",
+    "field": "readyDate",
     "displayName": "Дата г-ти",
-    "cellTemplate": "<div>{{row.entity.readyDate | date:'yyyy-MM-dd'}}</div>"
+    "enableColumnMenu": false,
+    "cellTemplate": "<div>{{grid.appScope.moment(row.entity.readyDate).toDate() | date:'yyyy-MM-dd'}}</div>"
   }
 ]
