@@ -16,16 +16,62 @@ function DayEditorService($http, $log, DayRepository) {
     service.createNewDay = createNewDay;
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.registerRowSelection = registerRowSelection;
+    service.round = round;
     service.services = [
-        "cutting",
-        "directGlueing",
-        "curveGlueing",
-        "milling",
-        "drilling",
-        "groove",
-        "angle",
-        "patch",
-        "cutoff"
+        {
+            type: "cutting",
+            name: "Распил",
+            unit: "м.п.",
+            index: 0
+        },
+        {
+            type: "directGlueing",
+            name: "Оклейка прямолинейная",
+            unit: "м.п.",
+            index: 1
+        },
+        {
+            type: "curveGlueing",
+            name: "Оклейка криволинейная",
+            unit: "м.п.",
+            index: 2
+        },
+        {
+            type: "milling",
+            name: "Фрезеровка",
+            unit: "м.п.",
+            index: 3
+        },
+        {
+            type: "drilling",
+            name: "Фрезеровка под петли",
+            unit: "шт.",
+            index: 4
+        },
+        {
+            type: "groove",
+            name: "Паз",
+            unit: "м.п.",
+            index: 5
+        },
+        {
+            type: "angle",
+            name: "Угол. распил",
+            unit: "м.п.",
+            index: 6
+        },
+        {
+            type: "patch",
+            name: "Склейка",
+            unit: "м.кв.",
+            index: 7
+        },
+        {
+            type: "cutoff",
+            name: "Срез.",
+            unit: "м.п.",
+            index: 8
+        }
     ];
 
     function createNewDay(date) {
@@ -91,8 +137,12 @@ function DayEditorService($http, $log, DayRepository) {
         gridApi.selection.on.rowSelectionChanged($scope, function (row) {
             rowSelectionChanged(row);
         });
-    };
+    }
 
+    function round(value, decimal) {
+        var m = Math.pow(10, decimal);
+        return Math.round(value * m) / m;
+    }
 
     return service;
 }

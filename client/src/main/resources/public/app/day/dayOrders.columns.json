@@ -13,7 +13,7 @@
     "name": "cutting",
     "displayName": "Распил м.п.",
     "editModelField": "orderValues[0].value",
-    "cellTemplate": "<div>{{row.entity.orderValues[0].value}}</div>",
+    "cellTemplate": "<div>{{grid.appScope.round(row.entity.orderValues[0].value, 3)}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,

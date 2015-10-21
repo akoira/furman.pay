@@ -134,4 +134,4 @@ var app = angular.module('app', [
     }]);
 
 angular.module('app.rest', []);
-angular.module('app.day', ['ui.grid', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);
+angular.module('app.day', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);

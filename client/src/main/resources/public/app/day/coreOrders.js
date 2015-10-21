@@ -67,34 +67,42 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
         };
     }
 
+    function removeDayOrder(row) {
+        var dayOrder = getDayOrderBy(row.entity.id);
+        if (dayOrder) {
+            vm.day.orders.splice(vm.day.orders.indexOf(dayOrder), 1);
+        }
+    }
+
     function rowSelectionChanged(row) {
         if (row.isSelected) {
             DayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
-                var dayOrder = getDayOrderBy(row.entity.id);
-                if (!dayOrder) {
-                    dayOrder = {
-                        order: order,
-                        orderValues: []
-                    };
-                    angular.forEach(DayEditorService.services, function (type) {
-                        var orderValue = {
-                            type: type,
-                            value: 0.0
-                        };
-                        dayOrder.orderValues.push(orderValue);
-                        var found = $filter('filter')(order.orderValues, {type: type});
-                        angular.forEach(found, function (value) {
-                            orderValue.value += value.value;
-                        });
-                    });
-                    vm.day.orders.push(dayOrder);
-                }
+                addDayOrder(order);
             });
         } else {
-            var dayOrder = getDayOrderBy(row.entity.id);
-            if (dayOrder) {
-                vm.day.orders.splice(vm.day.orders.indexOf(dayOrder), 1);
-            }
+            removeDayOrder(row);
+        }
+    }
+
+    function addDayOrder(order) {
+        var dayOrder = getDayOrderBy(order.orderId);
+        if (!dayOrder) {
+            dayOrder = {
+                order: order,
+                orderValues: []
+            };
+            angular.forEach(DayEditorService.services, function (service) {
+                var orderValue = {
+                    type: service.type,
+                    value: 0.0
+                };
+                dayOrder.orderValues.push(orderValue);
+                var found = $filter('filter')(order.orderValues, {type: service.type});
+                angular.forEach(found, function (value) {
+                    orderValue.value += DayEditorService.round(value.value, 3);
+                });
+            });
+            vm.day.orders.push(dayOrder);
         }
     }
 
