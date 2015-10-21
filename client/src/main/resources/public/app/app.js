@@ -5,8 +5,6 @@ var app = angular.module('app', [
     'eehNavigation',
     'pascalprecht.translate',
     'ui.router',
-    'ui.grid', 'ui.grid.edit',
-    'ui.bootstrap.datepicker',
     'ngResource',
     'app.rest',
     'app.dashboard',
@@ -136,4 +134,4 @@ var app = angular.module('app', [
     }]);
 
 angular.module('app.rest', []);
-angular.module('app.day', ['ui.grid', 'ui.bootstrap.datepicker']);
+angular.module('app.day', ['ui.grid', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);

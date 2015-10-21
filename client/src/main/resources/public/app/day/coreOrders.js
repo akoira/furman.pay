@@ -8,11 +8,11 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
     vm.dayDate = CurrentDay.getDate();
     vm.registerRowSelection = DayEditorService.registerRowSelection;
     vm.moment = momentFrom;
+    vm.isCollapsed = false;
 
     initOrderDate();
 
     initOrderGrid();
-
 
     function momentFrom(localDate) {
         return moment(new Date(localDate[0], localDate[1] - 1, localDate[2]));
@@ -76,14 +76,16 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
                         order: order,
                         orderValues: []
                     };
-                    angular.forEach(order.orderValues, function (value) {
-                        var found = $filter('filter')(dayOrder.orderValues, {type: value.type});
-                        if (found.length > 0) {
-                            found[0].value += value.value;
-                        } else {
-                            var dayValue = jQuery.extend(true, {}, value);
-                            dayOrder.orderValues.push(dayValue);
-                        }
+                    angular.forEach(DayEditorService.services, function (type) {
+                        var orderValue = {
+                            type: type,
+                            value: 0.0
+                        };
+                        dayOrder.orderValues.push(orderValue);
+                        var found = $filter('filter')(order.orderValues, {type: type});
+                        angular.forEach(found, function (value) {
+                            orderValue.value += value.value;
+                        });
                     });
                     vm.day.orders.push(dayOrder);
                 }

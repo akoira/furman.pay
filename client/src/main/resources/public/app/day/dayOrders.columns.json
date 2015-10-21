@@ -12,7 +12,8 @@
   {
     "name": "cutting",
     "displayName": "Распил м.п.",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('cutting', row.entity)}}</div>",
+    "editModelField": "orderValues[0].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[0].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -23,7 +24,8 @@
   {
     "name": "directGlueing",
     "displayName": "Оклейка прямолинейная м.п.",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('directGlueing', row.entity)}}</div>",
+    "editModelField": "orderValues[1].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[1].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -34,7 +36,8 @@
   {
     "name": "curveGlueing",
     "displayName": "Оклейка криволинейная м.п.",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('curveGlueing', row.entity)}}</div>",
+    "editModelField": "orderValues[2].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[2].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -45,7 +48,8 @@
   {
     "name": "milling",
     "displayName": "Фрезеровка м.п.",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('milling', row.entity)}}</div>",
+    "editModelField": "orderValues[3].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[3].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -56,7 +60,8 @@
   {
     "name": "drilling",
     "displayName": "Фрезеровка под петли шт.",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('drilling', row.entity)}}</div>",
+    "editModelField": "orderValues[4].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[4].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -66,8 +71,9 @@
   },
   {
     "name": "groove",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('groove', row.entity)}}</div>",
     "displayName": "Паз м.п.",
+    "editModelField": "orderValues[5].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[5].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -77,8 +83,9 @@
   },
   {
     "name": "angle",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('angle', row.entity)}}</div>",
     "displayName": "Угол. распил м.п.",
+    "editModelField": "orderValues[6].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[6].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -89,7 +96,8 @@
   {
     "name": "patch",
     "displayName": "Склейка м.кв.",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('patch', row.entity)}}</div>",
+    "editModelField": "orderValues[7].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[7].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,
@@ -100,7 +108,8 @@
   {
     "name": "cutoff",
     "displayName": "Срез м.п.",
-    "cellTemplate": "<div>{{grid.appScope.getOrderValueFor('cutoff', row.entity)}}</div>",
+    "editModelField": "orderValues[8].value",
+    "cellTemplate": "<div>{{row.entity.orderValues[8].value}}</div>",
     "enableCellEdit": true,
     "type": "number",
     "enablePinning": false,

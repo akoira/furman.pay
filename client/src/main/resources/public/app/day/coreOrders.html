@@ -1,8 +1,11 @@
 <div class="panel panel-info" ng-controller="CoreOrdersCtrl as vm">
-    <div class="panel-heading">Заказы <span class="label"
-                                            ng-class="{'label-primary': vm.day.orders.length, 'label-warning': !vm.day.orders.length}">{{vm.day.orders.length}}</span>
+    <div class="panel-heading">Заказы
+        <span class="label" ng-class="{'label-primary': vm.day.orders.length, 'label-warning': !vm.day.orders.length}">{{vm.day.orders.length}}</span>
+        <i class="pull-right glyphicon glyphicon-chevron-right"
+           ng-class="{'glyphicon-chevron-down': !vm.isCollapsed, 'glyphicon-chevron-right': vm.isCollapsed}"
+           ng-click="vm.isCollapsed = !vm.isCollapsed"></i>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" collapse="vm.isCollapsed">
         <p class="input-group input-group-sm">
             <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
                    ng-model="vm.orderDate.date"

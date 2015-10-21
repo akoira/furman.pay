@@ -16,6 +16,17 @@ function DayEditorService($http, $log, DayRepository) {
     service.createNewDay = createNewDay;
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.registerRowSelection = registerRowSelection;
+    service.services = [
+        "cutting",
+        "directGlueing",
+        "curveGlueing",
+        "milling",
+        "drilling",
+        "groove",
+        "angle",
+        "patch",
+        "cutoff"
+    ];
 
     function createNewDay(date) {
         return $http.get(baseUrl + "/createNewDay?date=" +
@@ -45,16 +56,12 @@ function DayEditorService($http, $log, DayRepository) {
 
     function save(day) {
 
-        day = jQuery.extend({}, day);
+        day = jQuery.extend(true, {}, day);
 
-        var orders = day.orderValues;
-
-        day.orderValues = [];
-
-        angular.forEach(orders, function (order) {
-            day.orders.push("/api/pay/payOrder/" + order.id);
+        angular.forEach(day.orders, function (order) {
+            order.order = "/api/pay/payOrder/" + order.order.id;
         });
-        DayRepository.save(day).then(handleSuccess, handleError);
+        return DayRepository.save(day);
     }
 
     function getOrNewPayOrder(order) {

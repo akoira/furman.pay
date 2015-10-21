@@ -5,6 +5,7 @@ import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,9 @@ import java.util.List;
 @Entity
 @Document
 public class DayOrder {
+
     @DBRef
+    @NotNull
     private PayOrder order;
 
     private List<OrderValue> orderValues = new ArrayList<>();
