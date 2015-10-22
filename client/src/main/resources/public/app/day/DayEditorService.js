@@ -2,7 +2,7 @@
 
 angular.module('app.day').service('DayEditorService', DayEditorService);
 
-function DayEditorService($http, $log, DayRepository) {
+function DayEditorService($http, $log, DayRepository, serviceRepository) {
 
     var baseUrl = "/api/pay/dayEdit";
     var service = {};
@@ -17,62 +17,9 @@ function DayEditorService($http, $log, DayRepository) {
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.registerRowSelection = registerRowSelection;
     service.round = round;
-    service.services = [
-        {
-            type: "cutting",
-            name: "Распил",
-            unit: "м.п.",
-            index: 0
-        },
-        {
-            type: "directGlueing",
-            name: "Оклейка прямолинейная",
-            unit: "м.п.",
-            index: 1
-        },
-        {
-            type: "curveGlueing",
-            name: "Оклейка криволинейная",
-            unit: "м.п.",
-            index: 2
-        },
-        {
-            type: "milling",
-            name: "Фрезеровка",
-            unit: "м.п.",
-            index: 3
-        },
-        {
-            type: "drilling",
-            name: "Фрезеровка под петли",
-            unit: "шт.",
-            index: 4
-        },
-        {
-            type: "groove",
-            name: "Паз",
-            unit: "м.п.",
-            index: 5
-        },
-        {
-            type: "angle",
-            name: "Угол. распил",
-            unit: "м.п.",
-            index: 6
-        },
-        {
-            type: "patch",
-            name: "Склейка",
-            unit: "м.кв.",
-            index: 7
-        },
-        {
-            type: "cutoff",
-            name: "Срез.",
-            unit: "м.п.",
-            index: 8
-        }
-    ];
+    serviceRepository.getAll().success(function (data) {
+        service.services = data._embedded.service;
+    });
 
     function createNewDay(date) {
         return $http.get(baseUrl + "/createNewDay?date=" +
@@ -106,6 +53,9 @@ function DayEditorService($http, $log, DayRepository) {
 
         angular.forEach(day.orders, function (order) {
             order.order = "/api/pay/payOrder/" + order.order.id;
+            angular.forEach(order.orderValues, function(value){
+                value.service = "/api/pay/service/" + value.service.id;
+            })
         });
         return DayRepository.save(day);
     }

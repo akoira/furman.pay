@@ -93,11 +93,12 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
             };
             angular.forEach(DayEditorService.services, function (service) {
                 var orderValue = {
-                    type: service.type,
-                    value: 0.0
+                    service: service,
+                    value: 0.0,
+                    rate: service.rate
                 };
                 dayOrder.orderValues.push(orderValue);
-                var found = $filter('filter')(order.orderValues, {type: service.type});
+                var found = $filter('filter')(order.orderValues, {service: {type: service.type}});
                 angular.forEach(found, function (value) {
                     orderValue.value += DayEditorService.round(value.value, 3);
                 });

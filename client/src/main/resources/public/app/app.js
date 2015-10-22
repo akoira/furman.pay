@@ -36,7 +36,7 @@ var app = angular.module('app', [
 
             initLeftMenu();
 
-        $urlRouterProvider.otherwise('/day');
+        $urlRouterProvider.otherwise('/home');
 
             initStates();
 
@@ -70,10 +70,10 @@ var app = angular.module('app', [
                         iconClass: 'glyphicon-star',
                         state: 'dashboard.employee'
                     })
-                    .menuItem('leftMenu.rate', {
+                    .menuItem('leftMenu.service', {
                         text: 'Ставки',
                         iconClass: 'fa fa-money fa-2',
-                        state: 'dashboard.rate'
+                        state: 'dashboard.service'
                     });
             }
 
@@ -93,11 +93,11 @@ var app = angular.module('app', [
                             }
                     }
                     })
-                    .state('dashboard.rate', {
-                        url: "/rate",
+                    .state('dashboard.service', {
+                        url: "/service",
                         views: {
                             '': {
-                                templateUrl: 'app/rate/service.html'
+                                templateUrl: 'app/service/service.html'
                             }
                         }
                     })

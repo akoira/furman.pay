@@ -21,10 +21,10 @@ public class Service extends AObject {
     private String unit;
 
     @NotNull
-    private int index;
+    private Integer index;
 
     @NotNull
-    private double rate;
+    private Double rate;
 
     public String getType() {
         return type;
@@ -43,19 +43,30 @@ public class Service extends AObject {
         this.unit = unit;
     }
 
-    public int getIndex() {
+    public Integer getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(Integer index) {
         this.index = index;
     }
 
-    public double getRate() {
+    public Double getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(Double rate) {
         this.rate = rate;
+    }
+
+
+    public static Service valueOf(String type, String name, String unit, int index) {
+        Service service = new Service();
+        service.setType(type);
+        service.setName(name);
+        service.setUnit(unit);
+        service.setIndex(index);
+        service.setRate(0.0);
+        return service;
     }
 }

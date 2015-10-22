@@ -24,7 +24,7 @@ public class OrderValue {
     private Double value;
 
     @NotNull
-    private Double rateValue;
+    private Double rate;
 
     private Map<String, ShiftValue> shiftValues = new HashMap<>();
 
@@ -42,6 +42,14 @@ public class OrderValue {
 
     public void setValue(Double value) {
         this.value = value;
+    }
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
     }
 
     public Map<String, ShiftValue> getShiftValues() {

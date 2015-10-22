@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.rest').service('ServiceRepository', ServiceRepository);
+angular.module('app.rest').service('serviceRepository', ServiceRepository);
 
 function ServiceRepository($http, $log) {
     var basePath = '/api/pay/service';
@@ -11,4 +11,5 @@ function ServiceRepository($http, $log) {
     function getAll() {
         return $http.get(basePath + '?archived=false');
     }
+    return service;
 }

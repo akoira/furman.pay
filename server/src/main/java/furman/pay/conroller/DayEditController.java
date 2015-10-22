@@ -106,13 +106,12 @@ public class DayEditController {
             payOrder.setCreatedDate(order.getCreatedDailySheet().getDate());
             payOrder.setWorkedDate(order.getWorkedDailySheet().getDate());
             payOrder.setReadyDate(order.getReadyDate());
-            payOrder = payOrderRepository.save(payOrder);
 
             Iterable<CommonData> commonDatas = commonDataRepository.findAll(QCommonData.commonData.order.eq(order));
             ArrayList<OrderValue> values = new ArrayList<>();
             commonDatas.forEach(commonData -> {
                 OrderValue value = new OrderValue();
-                Service service = serviceRepository.findOne(QService.service.type.eq(commonData.getService()));
+                Service service = serviceRepository.findOne(QService.service.type.eq(commonData.getType()));
                 value.setService(service);
                 value.setValue(commonData.getCount());
                 values.add(value);

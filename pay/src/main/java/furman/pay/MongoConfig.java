@@ -1,5 +1,6 @@
 package furman.pay;
 
+import com.github.mongobee.Mongobee;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,5 +31,12 @@ public class MongoConfig extends AbstractMongoConfiguration {
     @Bean
     public Mongo mongo() throws Exception {
         return new MongoClient(mongoDbHost);
+    }
+
+    @Bean
+    public Mongobee mongobee(){
+        Mongobee runner = new Mongobee(String.format("mongodb://%s:27017/%s", mongoDbHost, mongoDbName));
+        runner.setChangeLogsScanPackage("furman.pay.changelogs");
+        return runner;
     }
 }

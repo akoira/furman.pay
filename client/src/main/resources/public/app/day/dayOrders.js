@@ -47,13 +47,14 @@ function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, DayEditorS
             result += value;
         });
         result = vm.round(result, 3);
-        self.rateValue = vm.round(result * 0.2, 3);
+        self.rateValue = vm.round(result * self.colDef.service.rate, 3);
         return result;
     }
 
     function createColumnDef(service) {
         return {
             name: service.type,
+            service: service,
             displayName: service.name + " " + service.unit,
             editModelField: "orderValues[" + service.index + "].value",
             cellTemplate: "<div>{{grid.appScope.round(row.entity.orderValues[" + service.index + "].value, 3)}}</div>",

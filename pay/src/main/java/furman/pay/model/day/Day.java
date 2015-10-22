@@ -6,11 +6,13 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import furman.pay.model.AObject;
 import furman.pay.model.Shift;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +20,13 @@ import java.util.List;
 /**
  * Created by akoiro on 9/19/15.
  */
-@Entity
 @Document
+@Entity
 public class Day extends AObject {
     @Indexed(unique = true)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
+    @NotNull
     private LocalDate date;
 
     private List<DayOrder> orders = new ArrayList<>();
