@@ -3,6 +3,7 @@ package furman.pay.model;
 import furman.pay.model.day.OrderValue;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
  */
 
 @Entity
+@Document
 public class PayOrder extends AObject {
 
     @Indexed(unique = true)

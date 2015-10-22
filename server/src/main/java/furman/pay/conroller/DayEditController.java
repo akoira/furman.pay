@@ -5,10 +5,13 @@ import furman.core.repository.CommonDataRepository;
 import furman.core.repository.OrderRepository;
 import furman.pay.model.PayOrder;
 import furman.pay.model.QPayOrder;
+import furman.pay.model.QService;
+import furman.pay.model.Service;
 import furman.pay.model.day.Day;
 import furman.pay.model.day.OrderValue;
 import furman.pay.model.day.QDay;
 import furman.pay.repository.PayOrderRepository;
+import furman.pay.repository.ServiceRepository;
 import furman.pay.repository.day.DayOrderRepository;
 import furman.pay.repository.day.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +43,9 @@ public class DayEditController {
 
     @Autowired
     private CommonDataRepository commonDataRepository;
+
+    @Autowired
+    private ServiceRepository serviceRepository;
 
 
     @RequestMapping("/dayEdit/getOrders")
@@ -106,9 +112,8 @@ public class DayEditController {
             ArrayList<OrderValue> values = new ArrayList<>();
             commonDatas.forEach(commonData -> {
                 OrderValue value = new OrderValue();
-                value.setType(commonData.getType());
-                value.setName(commonData.getName());
-                value.setService(commonData.getService());
+                Service service = serviceRepository.findOne(QService.service.type.eq(commonData.getService()));
+                value.setService(service);
                 value.setValue(commonData.getCount());
                 values.add(value);
             });

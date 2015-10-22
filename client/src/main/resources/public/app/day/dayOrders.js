@@ -2,7 +2,7 @@
 
 angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 
-function DayOrdersCtrl($scope, $http, $log, $filter, DayEditorService, CurrentDay) {
+function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, DayEditorService, CurrentDay) {
     var vm = this;
     vm.round = DayEditorService.round;
 
@@ -14,7 +14,9 @@ function DayOrdersCtrl($scope, $http, $log, $filter, DayEditorService, CurrentDa
         vm.gridOptions = {
             data: [],
             appScopeProvider: vm,
-            minRowsToShow: 20
+            minRowsToShow: 20,
+            showGridFooter: true,
+            showColumnFooter: true
         };
         vm.gridOptions.columnDefs = [];
         vm.gridOptions.columnDefs.push({
@@ -38,18 +40,32 @@ function DayOrdersCtrl($scope, $http, $log, $filter, DayEditorService, CurrentDa
         };
     }
 
+    function aggregationType(visibleRows, self) {
+        var result = 0;
+        angular.forEach(visibleRows, function (row) {
+            var value = eval("row.entity." + self.colDef.editModelField);
+            result += value;
+        });
+        result = vm.round(result, 3);
+        self.rateValue = vm.round(result * 0.2, 3);
+        return result;
+    }
+
     function createColumnDef(service) {
         return {
-            "name": service.type,
-            "displayName": service.name + " " + service.unit,
-            "editModelField": "orderValues[" + service.index + "].value",
-            "cellTemplate": "<div>{{grid.appScope.round(row.entity.orderValues[" + service.index + "].value, 3)}}</div>",
-            "enableCellEdit": true,
-            "type": "number",
-            "enablePinning": false,
-            "enableColumnMenu": false,
-            "enableSorting": false,
-            "width": 150
+            name: service.type,
+            displayName: service.name + " " + service.unit,
+            editModelField: "orderValues[" + service.index + "].value",
+            cellTemplate: "<div>{{grid.appScope.round(row.entity.orderValues[" + service.index + "].value, 3)}}</div>",
+            footerCellTemplate: "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div> {{ col.getAggregationText() + ( col.getAggregationValue() CUSTOM_FILTERS )}}/{{ col.rateValue }}</div></div>",
+            aggregationType: aggregationType,
+            aggregationHideLabel: true,
+            enableCellEdit: true,
+            type: "number",
+            enablePinning: false,
+            enableColumnMenu: false,
+            enableSorting: false,
+            width: 150
         };
     }
 }

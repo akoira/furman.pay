@@ -16,7 +16,8 @@ var app = angular.module('app', [
     'app.order.assign',
     'app.version',
     'app.day',
-    'app.home'
+    'app.home',
+    'app.rate'
 ]).
     config(['eehNavigationProvider',
         '$stateProvider',
@@ -68,6 +69,11 @@ var app = angular.module('app', [
                         text: 'Работники',
                         iconClass: 'glyphicon-star',
                         state: 'dashboard.employee'
+                    })
+                    .menuItem('leftMenu.rate', {
+                        text: 'Ставки',
+                        iconClass: 'fa fa-money fa-2',
+                        state: 'dashboard.rate'
                     });
             }
 
@@ -83,9 +89,17 @@ var app = angular.module('app', [
                         url: "/",
                         views: {
                             '': {
-                                templateUrl: 'app/home/home.html',
+                                templateUrl: 'app/home/home.html'
                             }
                     }
+                    })
+                    .state('dashboard.rate', {
+                        url: "/rate",
+                        views: {
+                            '': {
+                                templateUrl: 'app/rate/service.html'
+                            }
+                        }
                     })
                     .state('dashboard.day-edit', {
                         url: "/day",
@@ -135,3 +149,4 @@ var app = angular.module('app', [
 
 angular.module('app.rest', []);
 angular.module('app.day', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);
+angular.module('app.rate', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.collapse']);
