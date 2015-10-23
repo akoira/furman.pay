@@ -1,6 +1,7 @@
 package furman.pay;
 
 import furman.pay.model.Employee;
+import furman.pay.model.Service;
 import furman.pay.model.Shift;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,9 @@ public class PayConfiguration extends RepositoryRestConfigurerAdapter {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Shift.class, Employee.class);
+        config.exposeIdsFor(Shift.class,
+                Employee.class,
+                Service.class);
     }
 
     @Bean

@@ -36,7 +36,7 @@ var app = angular.module('app', [
 
             initLeftMenu();
 
-        $urlRouterProvider.otherwise('/home');
+            $urlRouterProvider.otherwise('/');
 
             initStates();
 

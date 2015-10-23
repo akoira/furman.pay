@@ -6,9 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-/**
- * Created by akoiro on 9/19/15.
- */
 @Entity
 @Document
 public class Shift extends AObject {
@@ -16,7 +13,8 @@ public class Shift extends AObject {
     @DBRef
     private List<Employee> employees;
 
-    private List<String> services;
+    @DBRef
+    private List<Service> services;
 
     public List<Employee> getEmployees() {
         return employees;
@@ -26,11 +24,11 @@ public class Shift extends AObject {
         this.employees = employees;
     }
 
-    public List<String> getServices() {
+    public List<Service> getServices() {
         return services;
     }
 
-    public void setServices(List<String> services) {
+    public void setServices(List<Service> services) {
         this.services = services;
     }
 }

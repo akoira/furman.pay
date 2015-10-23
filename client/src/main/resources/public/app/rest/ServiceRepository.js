@@ -7,9 +7,15 @@ function ServiceRepository($http, $log) {
 
     var service = {};
     service.getAll = getAll;
+    service.save = save;
 
     function getAll() {
         return $http.get(basePath + '?archived=false');
     }
+
+    function save(service) {
+        return $http.patch(basePath + "/" + service.id, service);
+    }
+
     return service;
 }

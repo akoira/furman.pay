@@ -12,14 +12,14 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 public class PredefinedEntities {
     @ChangeSet(order = "001", id = "createDefaultServices", author = "akoyro")
     public void createDefaultServices(MongoTemplate mongoTemplate) {
-        mongoTemplate.save(Service.valueOf("cutting", "Распил", "м.п.", 0));
-        mongoTemplate.save(Service.valueOf("directGlueing", "Оклейка прямолинейная", "м.п.", 1));
-        mongoTemplate.save(Service.valueOf("curveGlueing", "Оклейка криволинейная", "м.п.", 2));
-        mongoTemplate.save(Service.valueOf("milling", "Фрезеровка", "м.п.", 3));
-        mongoTemplate.save(Service.valueOf("drilling", "Фрезеровка под петли", "шт.", 4));
-        mongoTemplate.save(Service.valueOf("groove", "Паз", "м.п.", 5));
-        mongoTemplate.save(Service.valueOf("angle", "Угол. распил", "м.п.", 6));
-        mongoTemplate.save(Service.valueOf("patch", "Склейка", "м.кв.", 7));
-        mongoTemplate.save(Service.valueOf("cutoff", "Срез", "м.п.", 8));
+        mongoTemplate.insert(Service.valueOf("cutting", "Распил", "м.п.", 0));
+        mongoTemplate.insert(Service.valueOf("directGlueing", "Оклейка прямолинейная", "м.п.", 1));
+        mongoTemplate.insert(Service.valueOf("curveGlueing", "Оклейка криволинейная", "м.п.", 2));
+        mongoTemplate.insert(Service.valueOf("milling", "Фрезеровка", "м.п.", 3));
+        mongoTemplate.insert(Service.valueOf("drilling", "Фрезеровка под петли", "шт.", 4));
+        mongoTemplate.insert(Service.valueOf("groove", "Паз", "м.п.", 5));
+        mongoTemplate.insert(Service.valueOf("angle", "Угол. распил", "м.п.", 6));
+        mongoTemplate.insert(Service.valueOf("patch", "Склейка", "м.кв.", 7));
+        mongoTemplate.insert(Service.valueOf("cutoff", "Срез", "м.п.", 8));
     }
 }

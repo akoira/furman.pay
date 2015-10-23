@@ -2,29 +2,35 @@
 
 angular.module('app.rate').controller('serviceCtrl', ServiceCtrl);
 
-function ServiceCtrl($scope, $http, $filter, $timeout, $log, serviceRepository) {
+function ServiceCtrl($scope, $http, $filter, $timeout, $log, $interval, serviceRepository) {
     var vm = this;
 
     vm.gridOptions = {
         appScopeProvider: vm
     };
 
+
     serviceRepository.getAll().success(function (data) {
         vm.gridOptions.data = data._embedded.service;
     });
+
 
     vm.gridOptions.columnDefs = [
         {
             field: "name",
             displayName: "Услуга",
             enableColumnMenu: false,
-            enableSorting: false
+            enableSorting: false,
+            enableCellEdit: false,
+            width: '20%'
         },
         {
             field: "unit",
             displayName: "Единица изм.",
             enableColumnMenu: false,
-            enableSorting: false
+            enableSorting: false,
+            enableCellEdit: false,
+            width: '10%'
         },
         {
             field: "rate",
@@ -32,7 +38,20 @@ function ServiceCtrl($scope, $http, $filter, $timeout, $log, serviceRepository) 
             enableColumnMenu: false,
             enableSorting: false,
             enableCellEdit: true,
-            type: "number"
+            type: "number",
+            width: '70%'
         }
     ];
+
+    vm.saveRow = saveRow;
+
+    vm.gridOptions.onRegisterApi = function (gridApi) {
+        vm.gridApi = gridApi;
+        vm.gridApi.rowEdit.on.saveRow($scope, vm.saveRow);
+    };
+
+
+    function saveRow(rowEntity) {
+        vm.gridApi.rowEdit.setSavePromise(rowEntity, serviceRepository.save(rowEntity));
+    }
 }
