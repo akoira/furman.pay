@@ -1,5 +1,5 @@
 <div class="panel panel-info" ng-controller="CoreOrdersCtrl as vm">
-    <div class="panel-heading">Заказы
+    <div class="panel-heading">Заказы в производстве. Выбрано:
         <span class="label" ng-class="{'label-primary': vm.day.orders.length, 'label-warning': !vm.day.orders.length}">{{vm.day.orders.length}}</span>
         <i class="pull-right glyphicon glyphicon-chevron-right"
            ng-class="{'glyphicon-chevron-down': !vm.isCollapsed, 'glyphicon-chevron-right': vm.isCollapsed}"
@@ -21,6 +21,6 @@
                                 class="glyphicon glyphicon-calendar"></i></button>
                     </span>
         </p>
-        <div class="grid" ui-grid="vm.gridOptions" ui-grid-selection ui-grid-resize-columns></div>
+        <div class="grid" ui-grid="vm.gridOptions" ui-grid-selection ui-grid-auto-resize></div>
     </div>
 </div>

@@ -8,7 +8,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
     vm.dayDate = CurrentDay.getDate();
     vm.registerRowSelection = DayEditorService.registerRowSelection;
     vm.moment = momentFrom;
-    vm.isCollapsed = false;
+    vm.isCollapsed = true;
 
     initOrderDate();
 
@@ -55,10 +55,37 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
             appScopeProvider: vm
         };
 
-        $http.get('app/day/coreOrders.columns.json')
-            .success(function (data) {
-                vm.gridOptions.columnDefs = data;
-            });
+        vm.gridOptions.columnDefs = [
+            {
+                field: "orderNumber",
+                displayName: "Номер",
+                enableColumnMenu: false,
+                cellTemplate: "<div class='truncate'>{{('0'+row.entity.createdDailySheet.date[1]).slice(-2)}}-{{row.entity.orderNumber}}/{{row.entity.name}}</div>",
+                width: "40%"
+            },
+            {
+                field: "createdDailySheet.date",
+                displayName: "Дата соз-я",
+                enableColumnMenu: false,
+                cellTemplate: "<div>{{grid.appScope.moment(row.entity.createdDailySheet.date).toDate() | date:'yyyy-MM-dd'}}</div>",
+                width: "20%"
+            },
+            {
+                field: "createdDailySheet.date",
+                displayName: "Дата пр-ва",
+                enableColumnMenu: false,
+                cellTemplate: "<div>{{grid.appScope.moment(row.entity.workedDailySheet.date).toDate() | date:'yyyy-MM-dd'}}</div>",
+                width: "20%"
+            },
+            {
+                field: "readyDate",
+                displayName: "Дата г-ти",
+                enableColumnMenu: false,
+                cellTemplate: "<div>{{grid.appScope.moment(row.entity.readyDate).toDate() | date:'yyyy-MM-dd'}}</div>",
+                width: "20%"
+            }
+        ];
+
         loadData();
 
         vm.gridOptions.onRegisterApi = function (gridApi) {

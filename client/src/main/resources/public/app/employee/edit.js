@@ -3,52 +3,55 @@
 angular.module('app.employee.edit', ['ui.grid', "ui.grid.selection"]).controller('EmployeeEditController', EmployeeEditController);
 
 function EmployeeEditController($scope, $http, $log, EmployeeRepository) {
-    $scope.dataLoading = false;
-    $scope.value = null;
+    var vm = this;
+    vm.dataLoading = false;
+    vm.value = null;
 
-    $scope.gridOptions = {};
+    vm.gridOptions = {};
 
-    $scope.gridOptions.onRegisterApi = function (gridApi) {
+    vm.isCollapsed = true;
+
+    vm.gridOptions.onRegisterApi = function (gridApi) {
         //set gridApi on scope
-        $scope.gridApi = gridApi;
+        vm.gridApi = gridApi;
     };
 
     $http.get('app/data/services.columns.json')
         .success(function (data) {
-            $scope.gridOptions.columnDefs = data;
+            vm.gridOptions.columnDefs = data;
         });
 
     $http.get('app/data/services.json')
         .success(function (data) {
-            $scope.gridOptions.data = data;
+            vm.gridOptions.data = data;
         });
 
-    $scope.save = function () {
-        $scope.dataLoading = true;
-        if ($scope.value._links) {
-            EmployeeRepository.save($scope.value);
+    vm.save = function () {
+        vm.dataLoading = true;
+        if (vm.value._links) {
+            EmployeeRepository.save(vm.value);
         } else {
-            EmployeeRepository.create($scope.value);
-            $scope.$parent.$broadcast('employeeAdded', $scope.value);
+            EmployeeRepository.create(vm.value);
+            vm.$parent.$broadcast('employeeAdded', vm.value);
         }
-        $scope.dataLoading = false;
+        vm.dataLoading = false;
     };
 
-    $scope.$on('employeeSelected', function (event, data) {
+    vm.$on('employeeSelected', function (event, data) {
         $log.debug(event);
-        $scope.value = data;
+        vm.value = data;
         updateView();
     });
 
     var updateView = function () {
-        if ($scope.value) {
-            angular.forEach($scope.value.services, function (id) {
-                var values = jQuery.grep($scope.gridOptions.data,
+        if (vm.value) {
+            angular.forEach(vm.value.services, function (id) {
+                var values = jQuery.grep(vm.gridOptions.data,
                     function (e) {
                         return e.id == id;
                     });
                 if (values.length > 0) {
-                    $scope.gridApi.selection.selectRow(values[0]);
+                    vm.gridApi.selection.selectRow(values[0]);
                 }
             })
         }

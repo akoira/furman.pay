@@ -53,21 +53,15 @@ var app = angular.module('app', [
                         state: 'dashboard.day-edit',
                         weight: 0
                     })
-                    .menuItem('leftMenu.orders', {
-                        text: 'Заказы',
-                        iconClass: 'glyphicon-home',
-                        state: 'dashboard.shift',
-                        weight: 0
-                    })
                     .menuItem('leftMenu.shifts', {
                         text: 'Смены',
-                        iconClass: 'glyphicon-home',
+                        iconClass: 'fa fa-clock-o fa-2',
                         state: 'dashboard.shift',
                         weight: 0
                     })
                     .menuItem('leftMenu.employees', {
                         text: 'Работники',
-                        iconClass: 'glyphicon-star',
+                        iconClass: 'fa fa-users fa-2',
                         state: 'dashboard.employee'
                     })
                     .menuItem('leftMenu.service', {
