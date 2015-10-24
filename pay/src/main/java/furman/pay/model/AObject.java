@@ -21,8 +21,6 @@ public abstract class AObject {
 
     private String name;
 
-    private String uuid;
-
     public String getId() {
         return id;
     }
@@ -54,15 +52,6 @@ public abstract class AObject {
     public void setName(String name) {
         this.name = name;
     }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
 
     public boolean isArchived() {
         return archived;

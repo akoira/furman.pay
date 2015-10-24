@@ -16,12 +16,12 @@ function EmployeeEditController($scope, $http, $log, EmployeeRepository) {
         vm.gridApi = gridApi;
     };
 
-    $http.get('app/data/services.columns.json')
+    $http.get('app/data/works.columns.json')
         .success(function (data) {
             vm.gridOptions.columnDefs = data;
         });
 
-    $http.get('app/data/services.json')
+    $http.get('app/data/works.json')
         .success(function (data) {
             vm.gridOptions.data = data;
         });
@@ -45,7 +45,7 @@ function EmployeeEditController($scope, $http, $log, EmployeeRepository) {
 
     var updateView = function () {
         if (vm.value) {
-            angular.forEach(vm.value.services, function (id) {
+            angular.forEach(vm.value.works, function (id) {
                 var values = jQuery.grep(vm.gridOptions.data,
                     function (e) {
                         return e.id == id;

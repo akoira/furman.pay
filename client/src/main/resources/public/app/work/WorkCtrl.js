@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('app.rate').controller('serviceCtrl', ServiceCtrl);
+angular.module('app.rate').controller('workCtrl', WorkCtrl);
 
-function ServiceCtrl($scope, $http, $filter, $timeout, $log, $interval, serviceRepository) {
+function WorkCtrl($scope, $http, $filter, $timeout, $log, $interval, serviceRepository) {
     var vm = this;
 
     vm.gridOptions = {

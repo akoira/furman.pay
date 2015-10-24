@@ -2,11 +2,11 @@
 
 angular.module('app.day').controller('CoreOrdersCtrl', CoreOrdersCtrl);
 
-function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService, CurrentDay) {
+function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayEditorService, currentDayService) {
     var vm = this;
-    vm.day = CurrentDay.day;
-    vm.dayDate = CurrentDay.getDate();
-    vm.registerRowSelection = DayEditorService.registerRowSelection;
+    vm.day = currentDayService.day;
+    vm.dayDate = currentDayService.getDate();
+    vm.registerRowSelection = dayEditorService.registerRowSelection;
     vm.moment = momentFrom;
     vm.isCollapsed = true;
 
@@ -38,7 +38,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
             }
         };
 
-        DayEditorService.getOrderCountsPerDay().success(function (data) {
+        dayEditorService.getOrderCountsPerDay().success(function (data) {
             vm.orderDate.orderCountsPerDay = data;
         }).error(function (data) {
             $log.log(data);
@@ -103,7 +103,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
 
     function rowSelectionChanged(row) {
         if (row.isSelected) {
-            DayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
+            dayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
                 addDayOrder(order);
             });
         } else {
@@ -111,25 +111,10 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
         }
     }
 
-    function addDayOrder(order) {
-        var dayOrder = getDayOrderBy(order.orderId);
+    function addDayOrder(payOrder) {
+        var dayOrder = getDayOrderBy(payOrder.orderId);
         if (!dayOrder) {
-            dayOrder = {
-                order: order,
-                orderValues: []
-            };
-            angular.forEach(DayEditorService.services, function (service) {
-                var orderValue = {
-                    service: service,
-                    value: 0.0,
-                    rate: service.rate
-                };
-                dayOrder.orderValues.push(orderValue);
-                var found = $filter('filter')(order.orderValues, {service: {type: service.type}});
-                angular.forEach(found, function (value) {
-                    orderValue.value += DayEditorService.round(value.value, 3);
-                });
-            });
+            dayOrder = dayEditorService.convertPayOrder2DayOrder(payOrder);
             vm.day.orders.push(dayOrder);
         }
     }
@@ -140,7 +125,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, DayEditorService
     };
 
     function loadData() {
-        DayEditorService.getOrders(vm.orderDate.date).success(function (data) {
+        dayEditorService.getOrders(vm.orderDate.date).success(function (data) {
             vm.gridOptions.data = data;
             $timeout(function () {
                 angular.forEach(vm.gridOptions.data, function (order) {

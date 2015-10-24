@@ -1,17 +1,13 @@
 package furman.pay.model;
 
-import furman.pay.model.day.OrderValue;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by akoiro on 9/13/15.
- */
 
 @Entity
 @Document
@@ -28,8 +24,10 @@ public class PayOrder extends AObject {
 
     private LocalDate readyDate;
 
+    @DBRef
+    private PayCustomer customer;
 
-    private List<OrderValue> orderValues = new ArrayList<>();
+    private List<WorkValue> workValues = new ArrayList<>();
 
     public Long getNumber() {
         return number;
@@ -63,12 +61,12 @@ public class PayOrder extends AObject {
         this.orderId = orderId;
     }
 
-    public List<OrderValue> getOrderValues() {
-        return orderValues;
+    public List<WorkValue> getWorkValues() {
+        return workValues;
     }
 
-    public void setOrderValues(List<OrderValue> orderValues) {
-        this.orderValues = orderValues;
+    public void setWorkValues(List<WorkValue> workValues) {
+        this.workValues = workValues;
     }
 
     public void setCreatedDate(LocalDate createdDate) {
@@ -77,5 +75,13 @@ public class PayOrder extends AObject {
 
     public LocalDate getCreatedDate() {
         return createdDate;
+    }
+
+    public PayCustomer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(PayCustomer customer) {
+        this.customer = customer;
     }
 }

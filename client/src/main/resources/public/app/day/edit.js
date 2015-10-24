@@ -2,13 +2,13 @@
 
 angular.module('app.day').controller('DayEditController', DayEditController);
 
-function DayEditController($scope, $http, $log, $filter, DayEditorService, ShiftRepository, CurrentDay) {
+function DayEditController($scope, $http, $log, $filter, dayEditorService, shiftRepository, currentDayService) {
     var vm = this;
-    vm.registerRowSelection = DayEditorService.registerRowSelection;
+    vm.registerRowSelection = dayEditorService.registerRowSelection;
 
 
-    vm.day = CurrentDay.day;
-    vm.dayDate = CurrentDay.getDate();
+    vm.day = currentDayService.day;
+    vm.dayDate = currentDayService.getDate();
 
     vm.initShiftGrid = function () {
         vm.gridOptionsS = {
@@ -35,7 +35,7 @@ function DayEditController($scope, $http, $log, $filter, DayEditorService, Shift
 
         var initEmployees = function () {
             angular.forEach(vm.gridOptionsS.data, function (shift) {
-                ShiftRepository.getEmployees(shift).success(function (data) {
+                shiftRepository.getEmployees(shift).success(function (data) {
                     shift.employees = "";
                     angular.forEach(data._embedded.employee, function (employee) {
                         shift.employees = shift.employees + employee.firstName + " " + employee.lastName + ",";
@@ -43,14 +43,14 @@ function DayEditController($scope, $http, $log, $filter, DayEditorService, Shift
                 });
             })
         };
-        ShiftRepository.getAll().then(function (data) {
+        shiftRepository.getAll().then(function (data) {
             vm.gridOptionsS.data = data.data._embedded.shift;
             initEmployees(data);
         });
     };
 
     vm.save = function () {
-        DayEditorService.save(vm.day);
+        dayEditorService.save(vm.day);
     };
     vm.initShiftGrid();
 }

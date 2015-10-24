@@ -14,7 +14,7 @@ public class Shift extends AObject {
     private List<Employee> employees;
 
     @DBRef
-    private List<Service> services;
+    private List<Work> works;
 
     public List<Employee> getEmployees() {
         return employees;
@@ -24,11 +24,11 @@ public class Shift extends AObject {
         this.employees = employees;
     }
 
-    public List<Service> getServices() {
-        return services;
+    public List<Work> getWorks() {
+        return works;
     }
 
-    public void setServices(List<Service> services) {
-        this.services = services;
+    public void setWorks(List<Work> works) {
+        this.works = works;
     }
 }

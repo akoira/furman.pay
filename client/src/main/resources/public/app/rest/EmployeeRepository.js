@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.rest').factory('EmployeeRepository', EmployeeRepository);
+angular.module('app.rest').factory('employeeRepository', EmployeeRepository);
 
 function EmployeeRepository($http) {
 

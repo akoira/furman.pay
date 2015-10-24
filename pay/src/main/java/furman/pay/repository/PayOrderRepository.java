@@ -9,7 +9,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  * Created by akoiro on 9/14/15.
  */
 
-@RepositoryRestResource(collectionResourceRel = "order", path = "order")
+@RepositoryRestResource(collectionResourceRel = "payOrder", path = "payOrder")
 public interface PayOrderRepository extends MongoRepository<PayOrder, String>,
         QueryDslPredicateExecutor<PayOrder> {
 }

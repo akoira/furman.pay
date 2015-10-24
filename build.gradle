@@ -30,6 +30,7 @@ allprojects {
     }
 
     dependencies {
+        compile 'commons-beanutils:commons-beanutils:1.9.2'
         testCompile "junit:junit:4.+"
     }
 }

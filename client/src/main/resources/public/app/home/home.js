@@ -3,23 +3,23 @@
 angular.module('app.home', ['mwl.calendar', 'ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-function HomeController($scope, $location, $filter, $log, CurrentDay, DayEditorService) {
+function HomeController($scope, $location, $filter, $log, currentDayService, dayEditorService) {
 
     var vm = this;
 
-    if (!CurrentDay.day) {
-        DayEditorService.getOrNewDay(new Date()).success(function (day) {
-            CurrentDay.changeDay(day);
+    if (!currentDayService.day) {
+        dayEditorService.getOrNewDay(new Date()).success(function (day) {
+            currentDayService.changeDay(day);
         });
     }
 
     vm.calendar = {
         view: "month",
-        day: CurrentDay.day ? CurrentDay.getDate() : new Date(),
+        day: currentDayService.day ? currentDayService.getDate() : new Date(),
         events: [],
         createNewDay: function (calendarDate) {
-            DayEditorService.getOrNewDay(calendarDate).success(function (day) {
-                CurrentDay.changeDay(day);
+            dayEditorService.getOrNewDay(calendarDate).success(function (day) {
+                currentDayService.changeDay(day);
                 var query = {day: {id: day.id}};
                 var event = $filter('filter')(vm.calendar.events, query);
                 if (event.length == 0) {
@@ -42,7 +42,7 @@ function HomeController($scope, $location, $filter, $log, CurrentDay, DayEditorS
 
     function loadAllDays(date) {
         vm.calendar.events = [];
-        DayEditorService.getDays(moment(date).startOf('month'),
+        dayEditorService.getDays(moment(date).startOf('month'),
             moment(date).endOf('month')).success(function (days) {
                 angular.forEach(days, function (day) {
                     vm.calendar.events.push(day2Event(day));
@@ -61,7 +61,7 @@ function HomeController($scope, $location, $filter, $log, CurrentDay, DayEditorS
                 return ((this.day.shifts == null || this.day.shifts.length < 1) && (this.day.orders == null || this.day.orders.length < 1));
             }
         };
-        var date = moment(CurrentDay.dateOf(day));
+        var date = moment(currentDayService.dateOf(day));
         event.title = date.format('YYYY-MM-DD');
         event.type = event.isWarning() ? 'warning' : 'info';
         event.startsAt = date.toDate();

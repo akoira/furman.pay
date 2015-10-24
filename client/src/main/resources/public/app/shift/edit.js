@@ -18,7 +18,7 @@ function ShiftEditController($scope, $http, $timeout, $location, $log, ShiftRepo
             gridApi.selection.on.rowSelectionChanged($scope, function (row) {
                 if ($scope.value) {
                     var rows = gridApi.selection.getSelectedRows();
-                    $scope.value.services = rows.map(function (row) {
+                    $scope.value.works = rows.map(function (row) {
                         return row.id;
                     });
                 }
@@ -26,20 +26,20 @@ function ShiftEditController($scope, $http, $timeout, $location, $log, ShiftRepo
         };
 
 
-        $http.get('app/data/services.columns.json')
+        $http.get('app/data/works.columns.json')
             .success(function (data) {
                 gridOptions.columnDefs = data;
             });
 
-        $http.get('app/data/services.json')
+        $http.get('app/data/works.json')
             .success(function (data) {
                 gridOptions.data = data;
             });
 
         gridOptions.updateView = function () {
             gridApi.selection.clearSelectedRows();
-            if ($scope.value && $scope.value.services) {
-                angular.forEach($scope.value.services, function (id) {
+            if ($scope.value && $scope.value.works) {
+                angular.forEach($scope.value.works, function (id) {
                     var values = jQuery.grep(gridOptions.data,
                         function (e) {
                             return e.id == id;

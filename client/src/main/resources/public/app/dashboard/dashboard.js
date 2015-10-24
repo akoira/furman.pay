@@ -3,9 +3,9 @@
 angular.module('app.dashboard', [])
     .controller('DashboardController', DashboardController);
 
-function DashboardController($scope, CurrentDay) {
+function DashboardController($scope, currentDayService) {
     var vm = this;
-    CurrentDay.addListener(function (day) {
-        vm.currentDate = CurrentDay.getDate();
+    currentDayService.addListener(function (day) {
+        vm.currentDate = currentDayService.getDate();
     });
 }

@@ -32,7 +32,7 @@ var app = angular.module('app', [
                 }
             });
 
-        eehNavigationProvider.iconBaseClass('glyphicon');
+            eehNavigationProvider.iconBaseClass('glyphicon');
 
             initLeftMenu();
 
@@ -77,7 +77,14 @@ var app = angular.module('app', [
                     .state('dashboard', {
                         abstract: true,
                         templateUrl: "app/dashboard/dashboard.html",
-                        controller: 'DashboardController'
+                        controller: 'DashboardController',
+                        resolve: {
+                            init: function ($q, currentDayService, dayEditorService) {
+                                dayEditorService.getOrNewDay(new Date()).success(function (day) {
+                                    currentDayService.changeDay(day);
+                                });
+                            }
+                        }
                     })
                     .state('dashboard.home', {
                         url: "/",
@@ -85,13 +92,13 @@ var app = angular.module('app', [
                             '': {
                                 templateUrl: 'app/home/home.html'
                             }
-                    }
+                        }
                     })
                     .state('dashboard.service', {
                         url: "/service",
                         views: {
                             '': {
-                                templateUrl: 'app/service/service.html'
+                                templateUrl: 'app/service/work.html'
                             }
                         }
                     })
@@ -101,7 +108,7 @@ var app = angular.module('app', [
                             '': {
                                 templateUrl: 'app/day/edit.html',
                             }
-                    }
+                        }
                     })
                     .state('dashboard.employee', {
                         url: '/employee',
@@ -118,7 +125,7 @@ var app = angular.module('app', [
                                 controller: 'EmployeeEditController'
                             }
 
-                    }
+                        }
                     })
                     .state('dashboard.shift', {
                         url: '/shift',
@@ -139,7 +146,8 @@ var app = angular.module('app', [
                     })
             }
 
-    }]);
+        }]);
+
 
 angular.module('app.rest', []);
 angular.module('app.day', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);

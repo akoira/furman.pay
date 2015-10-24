@@ -1,7 +1,5 @@
-package furman.pay.model.day;
+package furman.pay.model;
 
-import furman.pay.model.Shift;
-import furman.pay.model.Work;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,31 +7,23 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by akoiro on 10/18/15.
+ * akoiro - 10/23/15.
  */
 
 @Entity
 @Document
-public class ShiftValue {
-
-    @DBRef
+public class WorkValue extends AObject {
     @NotNull
-    private Shift shift;
+    private String type;
 
-    @DBRef
     @NotNull
-    private Work work;
+    private String displayName;
 
     @NotNull
     private Double value;
 
-    public Shift getShift() {
-        return shift;
-    }
-
-    public void setShift(Shift shift) {
-        this.shift = shift;
-    }
+    @DBRef
+    private Work work;
 
     public Double getValue() {
         return value;
@@ -49,5 +39,21 @@ public class ShiftValue {
 
     public void setWork(Work work) {
         this.work = work;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

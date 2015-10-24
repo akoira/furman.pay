@@ -1,8 +1,8 @@
 package furman.pay;
 
 import furman.pay.model.Employee;
-import furman.pay.model.Service;
 import furman.pay.model.Shift;
+import furman.pay.model.Work;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
@@ -22,7 +22,7 @@ public class PayConfiguration extends RepositoryRestConfigurerAdapter {
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(Shift.class,
                 Employee.class,
-                Service.class);
+                Work.class);
     }
 
     @Bean

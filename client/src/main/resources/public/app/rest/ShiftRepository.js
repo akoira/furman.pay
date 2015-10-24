@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.rest').factory('ShiftRepository', ShiftRepository);
+angular.module('app.rest').factory('shiftRepository', ShiftRepository);
 
 function ShiftRepository($http) {
     var baseUri = '/api/pay/shift';

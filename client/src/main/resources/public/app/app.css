@@ -50,6 +50,16 @@ html, body {
     text-align: right;
 }
 
+#day-orders .grid .ui-grid-header-cell .ui-grid-cell-contents {
+    height: 64px;
+    white-space: normal;
+    -ms-text-overflow: clip;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    overflow: visible;
+    text-align: center;
+}
+
 #employee-editor .ui-grid {
     text-align: left;
 }
@@ -81,7 +91,6 @@ html, body {
 #shift-list .glyphicon {
     font-size: 10px;
 }
-
 
 input[type="number"] {
     text-align: right;

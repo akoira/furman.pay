@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('app').service('CurrentDay', CurrentDay);
+angular.module('app').service('currentDayService', CurrentDayService);
 
-function CurrentDay() {
+function CurrentDayService() {
     var service = {};
     var listeners = [];
 

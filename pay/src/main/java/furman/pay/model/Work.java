@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Document
-public class Service extends AObject {
+public class Work extends AObject {
     @Indexed(unique = false)
     @NotNull
     private String type;
@@ -25,6 +25,8 @@ public class Service extends AObject {
 
     @NotNull
     private Double rate;
+
+    private String description;
 
     public String getType() {
         return type;
@@ -60,13 +62,21 @@ public class Service extends AObject {
     }
 
 
-    public static Service valueOf(String type, String name, String unit, int index) {
-        Service service = new Service();
-        service.setType(type);
-        service.setName(name);
-        service.setUnit(unit);
-        service.setIndex(index);
-        service.setRate(0.0);
-        return service;
+    public static Work valueOf(String type, String name, String unit, int index) {
+        Work work = new Work();
+        work.setType(type);
+        work.setName(name);
+        work.setUnit(unit);
+        work.setIndex(index);
+        work.setRate(0.0);
+        return work;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

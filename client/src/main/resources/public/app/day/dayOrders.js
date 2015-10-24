@@ -2,13 +2,13 @@
 
 angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 
-function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, DayEditorService, CurrentDay) {
+function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, dayEditorService, currentDayService) {
     var vm = this;
-    vm.round = DayEditorService.round;
+    vm.round = dayEditorService.round;
 
     initGridOptions();
 
-    vm.gridOptions.data = CurrentDay.day.orders;
+    vm.gridOptions.data = currentDayService.day.orders;
 
     function initGridOptions() {
         vm.gridOptions = {
@@ -31,8 +31,8 @@ function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, DayEditorS
             }
         );
 
-        angular.forEach(DayEditorService.services, function (service) {
-            vm.gridOptions.columnDefs.push(createColumnDef(service));
+        angular.forEach(dayEditorService.works, function (work) {
+            vm.gridOptions.columnDefs.push(createColumnDef(work));
         });
 
         vm.gridOptions.onRegisterApi = function (gridApi) {
@@ -47,18 +47,18 @@ function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, DayEditorS
             result += value;
         });
         result = vm.round(result, 3);
-        self.rateValue = vm.round(result * self.colDef.service.rate, 3);
+        self.rateValue = vm.round(result * self.colDef.work.rate, 3);
         return result;
     }
 
-    function createColumnDef(service) {
+    function createColumnDef(work) {
         return {
-            name: service.type,
-            service: service,
-            displayName: service.name + " " + service.unit,
-            editModelField: "orderValues[" + service.index + "].value",
-            cellTemplate: "<div>{{grid.appScope.round(row.entity.orderValues[" + service.index + "].value, 3)}}</div>",
-            footerCellTemplate: "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div> {{ col.getAggregationText() + ( col.getAggregationValue() CUSTOM_FILTERS )}}/{{ col.rateValue }}</div></div>",
+            name: work.type,
+            work: work,
+            displayName: work.name + " (" + work.unit + ")",
+            editModelField: "orderValues[" + work.index + "].value",
+            cellTemplate: "<div>{{grid.appScope.round(row.entity.orderValues[" + work.index + "].value, 3)}}</div>",
+            footerCellTemplate: "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div> {{ col.getAggregationText() + ( col.getAggregationValue() CUSTOM_FILTERS )}}</div></div>",
             aggregationType: aggregationType,
             aggregationHideLabel: true,
             enableCellEdit: true,

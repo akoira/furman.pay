@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.rest').service('OrderRepository', OrderRepository);
+angular.module('app.rest').service('orderRepository', OrderRepository);
 
 function OrderRepository($http) {
 

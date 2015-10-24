@@ -1,6 +1,6 @@
 package furman.pay.model.day;
 
-import furman.pay.model.Service;
+import furman.pay.model.Work;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,7 +18,7 @@ import java.util.Map;
 public class OrderValue {
     @DBRef
     @NotNull
-    private Service service;
+    private Work work;
 
     @NotNull
     private Double value;
@@ -28,12 +28,12 @@ public class OrderValue {
 
     private Map<String, ShiftValue> shiftValues = new HashMap<>();
 
-    public Service getService() {
-        return service;
+    public Work getWork() {
+        return work;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setWork(Work work) {
+        this.work = work;
     }
 
     public Double getValue() {

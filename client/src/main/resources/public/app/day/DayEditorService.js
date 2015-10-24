@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('app.day').service('DayEditorService', DayEditorService);
+angular.module('app.day').service('dayEditorService', dayEditorService);
 
-function DayEditorService($http, $log, DayRepository, serviceRepository) {
+function dayEditorService($http, $filter, $log, dayRepository, workRepository) {
 
-    var baseUrl = "/api/pay/dayEdit";
+    var baseUrl = "/api/pay/dayEditorService";
     var service = {};
 
     service.getOrders = getOrders;
@@ -16,9 +16,12 @@ function DayEditorService($http, $log, DayRepository, serviceRepository) {
     service.createNewDay = createNewDay;
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.registerRowSelection = registerRowSelection;
+    service.convertPayOrder2DayOrder = convertPayOrder2DayOrder;
     service.round = round;
-    serviceRepository.getAll().success(function (data) {
-        service.services = data._embedded.service;
+    workRepository.getAll().success(function (data) {
+        /** @namespace data._embedded.work */
+        /** @namespace data._embedded */
+        service.works = data._embedded.work;
     });
 
     function createNewDay(date) {
@@ -47,17 +50,39 @@ function DayEditorService($http, $log, DayRepository, serviceRepository) {
         return $http.get(baseUrl + '/getOrNewDay?date=' + moment(date).format("YYYY-MM-DD"));
     }
 
+    function convertPayOrder2DayOrder(payOrder) {
+        var dayOrder = {
+            order: payOrder,
+            orderValues: []
+        };
+        angular.forEach(service.works, function (work) {
+            var orderValue = {
+                work: work,
+                value: 0.0,
+                rate: service.rate
+            };
+            /** @namespace dayOrder.orderValues */
+            dayOrder.orderValues.push(orderValue);
+
+            var workValues = $filter('filter')(payOrder.workValues, {work: {type: work.type}});
+            angular.forEach(workValues, function (workValue) {
+                orderValue.value += service.round(workValue.value, 3);
+            });
+        });
+        return dayOrder;
+    }
+
     function save(day) {
 
         day = jQuery.extend(true, {}, day);
 
         angular.forEach(day.orders, function (order) {
             order.order = "/api/pay/payOrder/" + order.order.id;
-            angular.forEach(order.orderValues, function(value){
-                value.service = "/api/pay/service/" + value.service.id;
+            angular.forEach(order.orderValues, function (value) {
+                value.work = "/api/pay/work/" + value.work.id;
             })
         });
-        return DayRepository.save(day);
+        return dayRepository.save(day);
     }
 
     function getOrNewPayOrder(order) {
