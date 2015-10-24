@@ -10,7 +10,21 @@ function DayEditController($scope, $http, $log, $filter, dayEditorService, shift
     vm.day = currentDayService.day;
     vm.dayDate = currentDayService.getDate();
 
-    vm.initShiftGrid = function () {
+    vm.save = save;
+
+    initShiftGrid();
+
+
+    function rowSelectionChanged(row) {
+        if (row.isSelected) {
+            vm.day.shifts.push(row.entity);
+        } else {
+            var index = vm.day.shifts.indexOf(row.entity);
+            vm.day.shifts.splice(index, 1);
+        }
+    }
+
+    function initShiftGrid() {
         vm.gridOptionsS = {
             data: []
         };
@@ -19,14 +33,6 @@ function DayEditController($scope, $http, $log, $filter, dayEditorService, shift
                 vm.gridOptionsS.columnDefs = data;
             });
 
-        var rowSelectionChanged = function (row) {
-            if (row.isSelected) {
-                vm.day.shifts.push(row.entity);
-            } else {
-                var index = vm.day.shifts.indexOf(row.entity);
-                vm.day.shifts.splice(index, 1);
-            }
-        };
 
         vm.gridOptionsS.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
@@ -49,10 +55,9 @@ function DayEditController($scope, $http, $log, $filter, dayEditorService, shift
         });
     };
 
-    vm.save = function () {
+    function save() {
         dayEditorService.save(vm.day);
     };
-    vm.initShiftGrid();
 }
 
 

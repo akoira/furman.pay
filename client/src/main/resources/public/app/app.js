@@ -8,8 +8,7 @@ var app = angular.module('app', [
     'ngResource',
     'app.rest',
     'app.dashboard',
-    'app.employee.edit',
-    'app.employee.list',
+    'app.employee',
     'app.shift.edit',
     'app.shift.list',
     'app.orders',
@@ -64,10 +63,10 @@ var app = angular.module('app', [
                         iconClass: 'fa fa-users fa-2',
                         state: 'dashboard.employee'
                     })
-                    .menuItem('leftMenu.service', {
+                    .menuItem('leftMenu.work', {
                         text: 'Ставки',
                         iconClass: 'fa fa-money fa-2',
-                        state: 'dashboard.service'
+                        state: 'dashboard.work'
                     });
             }
 
@@ -77,7 +76,6 @@ var app = angular.module('app', [
                     .state('dashboard', {
                         abstract: true,
                         templateUrl: "app/dashboard/dashboard.html",
-                        controller: 'DashboardController',
                         resolve: {
                             init: function ($q, currentDayService, dayEditorService) {
                                 dayEditorService.getOrNewDay(new Date()).success(function (day) {
@@ -94,11 +92,11 @@ var app = angular.module('app', [
                             }
                         }
                     })
-                    .state('dashboard.service', {
-                        url: "/service",
+                    .state('dashboard.work', {
+                        url: "/work",
                         views: {
                             '': {
-                                templateUrl: 'app/service/work.html'
+                                templateUrl: 'app/work/work.html'
                             }
                         }
                     })
@@ -118,11 +116,9 @@ var app = angular.module('app', [
                             },
                             'list@dashboard.employee': {
                                 templateUrl: 'app/employee/list.html',
-                                controller: 'EmployeeListController'
                             },
                             'edit@dashboard.employee': {
                                 templateUrl: 'app/employee/edit.html',
-                                controller: 'EmployeeEditController'
                             }
 
                         }
@@ -152,3 +148,4 @@ var app = angular.module('app', [
 angular.module('app.rest', []);
 angular.module('app.day', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);
 angular.module('app.rate', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.collapse']);
+angular.module('app.employee', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);

@@ -1,9 +1,8 @@
-<div ng-controller="DayEditController as vm">
+<div class="well-sm" ng-controller="DayEditController as vm">
     <div class="panel panel-info">
         <div class="panel-heading">
-            <span>Дата: {{vm.dayDate | date:'yyyy-MM-dd'}}</span>
             <button ng-click="vm.save()" ng-disabled="vm.day.orders.length < 1"
-                    class="btn btn-info glyphicon glyphicon-floppy-save"></button>
+                    class="btn btn-info btn-sm">Сохранить <i class="glyphicon glyphicon-floppy-save"/></button>
         </div>
     </div>
     <div class="row">

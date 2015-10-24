@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.day').controller('CoreOrdersCtrl', CoreOrdersCtrl);
+angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 
 function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayEditorService, currentDayService) {
     var vm = this;

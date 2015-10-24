@@ -1,8 +1,9 @@
-<span ng-controller="DashboardController as vm"
-<eeh-slideout is-open="slideOutMenuIsOpen" panel-selector="'#panel'" menu-selector="'#menu'">
-    <eeh-navigation-navbar menu-name="'top'" brand-text="'Дата: '+ (vm.currentDate | date:'yyyy-MM-dd')"
-                           brand-click="openDate"></eeh-navigation-navbar>
-    <eeh-navigation-sidebar menu-name="'leftMenu'">
-        <ui-view></ui-view>
-    </eeh-navigation-sidebar>
-</eeh-slideout>
+<span ng-controller="dashboardCtrl as vm">
+    <eeh-slideout is-open="slideOutMenuIsOpen" panel-selector="'#panel'" menu-selector="'#menu'">
+        <eeh-navigation-navbar menu-name="'top'" brand-text="'Текущая дата: '+ (vm.currentDate | date:'yyyy-MM-dd')"
+                               brand-click="openDate"></eeh-navigation-navbar>
+        <eeh-navigation-sidebar menu-name="'leftMenu'">
+            <ui-view></ui-view>
+        </eeh-navigation-sidebar>
+    </eeh-slideout>
+</span>

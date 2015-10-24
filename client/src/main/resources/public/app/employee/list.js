@@ -1,44 +1,79 @@
 'use strict';
 
-angular.module('app.employee.list', ['ui.grid', "ui.grid.selection"]).controller('EmployeeListController', EmployeeListController);
+angular.module('app.employee').controller('employeeListCtrl', EmployeeListCtrl);
 
-function EmployeeListController($scope, $http, $log, EmployeeRepository) {
-    $scope.gridOptions = {
-        enableRowSelection: true,
-        enableRowHeaderSelection: false,
-        multiSelect: false,
-        modifierKeysToMultiSelect: false,
-        noUnselect: true
-    };
+function EmployeeListCtrl($scope, $timeout, $log, employeeEditorService, employeeRepository) {
+    var vm = this;
+    vm.remove = remove;
 
-    $scope.gridOptions.onRegisterApi = function (gridApi) {
-        $scope.gridApi = gridApi;
-        gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            $scope.$parent.$broadcast('employeeSelected', row.entity);
+    initGridOptions();
+    initData();
+
+    employeeEditorService.addEmployeeAddedListener(function (employee) {
+        vm.gridOptions.data.push(employee);
+        $timeout(function () {
+            vm.gridApi.selection.selectRow(employee);
         });
-    };
+    });
 
-    $scope.delete = function () {
-        var rows = $scope.gridApi.selection.getSelectedRows();
+    function initGridOptions() {
+        vm.gridOptions = {
+            appScopeProvider: vm,
+            enableRowSelection: true,
+            enableRowHeaderSelection: false,
+            multiSelect: false,
+            modifierKeysToMultiSelect: false,
+            noUnselect: true
+        };
+        vm.gridOptions.onRegisterApi = function (gridApi) {
+            vm.gridApi = gridApi;
+            vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+                employeeEditorService.employeeSelected(row.entity);
+            });
+        };
+        vm.gridOptions.columnDefs = [
+            {
+                field: "name",
+                displayName: "Имя",
+                enableColumnMenu: false
+            },
+            {
+                field: "lastName",
+                displayName: "Фамилия",
+                enableColumnMenu: false
+            },
+            {
+                field: "phoneNumber",
+                displayName: "Телефон",
+                enableColumnMenu: false
+            },
+            {
+                field: "id",
+                displayName: "",
+                enableColumnMenu: false,
+                enableFiltering: false,
+                enableSorting: false,
+                cellTemplate: "<button class='btn btn-danger btn-sm glyphicon glyphicon-trash row-button' ng-click='grid.appScope.remove()'></button>",
+                width: 80,
+                maxWidth: 80
+            }
+        ];
+    }
+
+    function remove() {
+        var rows = vm.gridApi.selection.getSelectedRows();
         if (rows.length) {
-            EmployeeRepository.archive(rows[0]);
-            var index = $scope.gridOptions.data.indexOf(rows[0]);
-            $scope.gridOptions.data.splice(index, 1);
+            employeeRepository.archive(rows[0]);
+            var index = vm.gridOptions.data.indexOf(rows[0]);
+            vm.gridOptions.data.splice(index, 1);
         }
-    };
+    }
 
-    $http.get('app/employee/list.columns.json')
-        .success(function (data) {
-            $scope.gridOptions.columnDefs = data;
+    function initData() {
+        employeeRepository.getAll().success(function (data) {
+            vm.gridOptions.data = data._embedded.employee;
+        }).error(function (data) {
+            $log.log(data);
         });
-
-    EmployeeRepository.getAll().success(function (data) {
-        $scope.gridOptions.data = data._embedded.employee;
-    }).error(function (data) {
-        $log.log(data);
-    });
-
-    $scope.$on('employeeAdded', function (event, data) {
-        $scope.gridOptions.data.push(data);
-    });
+    }
 }

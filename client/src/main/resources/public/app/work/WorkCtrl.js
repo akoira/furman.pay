@@ -2,7 +2,7 @@
 
 angular.module('app.rate').controller('workCtrl', WorkCtrl);
 
-function WorkCtrl($scope, $http, $filter, $timeout, $log, $interval, serviceRepository) {
+function WorkCtrl($scope, $http, $filter, $timeout, $log, $interval, workRepository) {
     var vm = this;
 
     vm.gridOptions = {
@@ -10,8 +10,8 @@ function WorkCtrl($scope, $http, $filter, $timeout, $log, $interval, serviceRepo
     };
 
 
-    serviceRepository.getAll().success(function (data) {
-        vm.gridOptions.data = data._embedded.service;
+    workRepository.getAll().success(function (data) {
+        vm.gridOptions.data = data._embedded.work;
     });
 
 
@@ -52,6 +52,6 @@ function WorkCtrl($scope, $http, $filter, $timeout, $log, $interval, serviceRepo
 
 
     function saveRow(rowEntity) {
-        vm.gridApi.rowEdit.setSavePromise(rowEntity, serviceRepository.save(rowEntity));
+        vm.gridApi.rowEdit.setSavePromise(rowEntity, workRepository.save(rowEntity));
     }
 }

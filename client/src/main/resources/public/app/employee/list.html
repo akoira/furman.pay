@@ -1,2 +1,9 @@
-<div id="employee-list" class="grid" ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns></div>
+<div id="employee-list" class="panel panel-info" ng-controller="employeeListCtrl as vm">
+    <div class="panel-heading">
+        Сотрудники
+    </div>
+    <div class="panel-body">
+        <div class="grid"
+             ui-grid="vm.gridOptions" ui-grid-selection ui-grid-resize-columns></div>
+    </div>
 </div>

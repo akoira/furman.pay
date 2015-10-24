@@ -1,59 +1,33 @@
 'use strict';
 
-angular.module('app.employee.edit', ['ui.grid', "ui.grid.selection"]).controller('EmployeeEditController', EmployeeEditController);
+angular.module('app.employee').controller('employeeEditCtrl', EmployeeEditCtrl);
 
-function EmployeeEditController($scope, $http, $log, EmployeeRepository) {
+function EmployeeEditCtrl($scope, $http, $log, employeeEditorService, employeeRepository) {
     var vm = this;
     vm.dataLoading = false;
-    vm.value = null;
+    vm.collapsed = true;
+    vm.employee = null;
+    vm.save = save;
+    vm.reset = reset;
 
-    vm.gridOptions = {};
-
-    vm.isCollapsed = true;
-
-    vm.gridOptions.onRegisterApi = function (gridApi) {
-        //set gridApi on scope
-        vm.gridApi = gridApi;
-    };
-
-    $http.get('app/data/works.columns.json')
-        .success(function (data) {
-            vm.gridOptions.columnDefs = data;
-        });
-
-    $http.get('app/data/works.json')
-        .success(function (data) {
-            vm.gridOptions.data = data;
-        });
-
-    vm.save = function () {
-        vm.dataLoading = true;
-        if (vm.value._links) {
-            EmployeeRepository.save(vm.value);
-        } else {
-            EmployeeRepository.create(vm.value);
-            vm.$parent.$broadcast('employeeAdded', vm.value);
-        }
-        vm.dataLoading = false;
-    };
-
-    vm.$on('employeeSelected', function (event, data) {
-        $log.debug(event);
-        vm.value = data;
-        updateView();
+    employeeEditorService.addEmployeeSelectedListener(function (employee) {
+        vm.employee = employee;
+        vm.collapsed = false;
     });
 
-    var updateView = function () {
-        if (vm.value) {
-            angular.forEach(vm.value.works, function (id) {
-                var values = jQuery.grep(vm.gridOptions.data,
-                    function (e) {
-                        return e.id == id;
-                    });
-                if (values.length > 0) {
-                    vm.gridApi.selection.selectRow(values[0]);
-                }
-            })
+    function reset() {
+        vm.employee = null;
+    }
+
+    function save() {
+        vm.dataLoading = true;
+        if (vm.employee.id) {
+            employeeRepository.save(vm.employee);
+        } else {
+            employeeRepository.create(vm.employee);
+            employeeEditorService.employeeAdded(vm.employee);
         }
-    };
+        vm.employee = null;
+        vm.dataLoading = false;
+    }
 }
