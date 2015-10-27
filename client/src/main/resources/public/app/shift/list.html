@@ -1,1 +1,9 @@
-<div id="shift-list" class="grid" ui-grid="gridOptions" ui-grid-selection ui-grid-resize-columns></div>
+<div id="shift-list" class="panel panel-info" ng-controller="shiftListCtrl as vm">
+    <div class="panel-heading">
+        Заказы
+    </div>
+    <div class="panel-body">
+        <div class="grid"
+             ui-grid="vm.gridOptions" ui-grid-selection ui-grid-resize-columns></div>
+    </div>
+</div>

@@ -16,7 +16,6 @@ import javax.validation.constraints.NotNull;
 @Document
 public class ShiftValue {
 
-    @DBRef
     @NotNull
     private Shift shift;
 

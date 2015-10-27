@@ -9,10 +9,7 @@ var app = angular.module('app', [
     'app.rest',
     'app.dashboard',
     'app.employee',
-    'app.shift.edit',
-    'app.shift.list',
-    'app.orders',
-    'app.order.assign',
+    'app.shift',
     'app.version',
     'app.day',
     'app.home',
@@ -131,11 +128,9 @@ var app = angular.module('app', [
                             },
                             'list@dashboard.shift': {
                                 templateUrl: 'app/shift/list.html',
-                                controller: 'ShiftListController'
                             },
                             'edit@dashboard.shift': {
                                 templateUrl: 'app/shift/edit.html',
-                                controller: 'ShiftEditController'
                             }
 
                         }
@@ -149,3 +144,4 @@ angular.module('app.rest', []);
 angular.module('app.day', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);
 angular.module('app.rate', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.collapse']);
 angular.module('app.employee', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
+angular.module('app.shift', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);

@@ -1,16 +1,17 @@
 'use strict';
 
-angular.module('app.shift.edit', ['ui.grid', "ui.grid.selection"]).controller('ShiftEditController', ShiftEditController);
+angular.module('app.shift').controller('shiftEditCtrl', ShiftEditCtrl);
 
-function ShiftEditController($scope, $http, $timeout, $location, $log, ShiftRepository, EmployeeRepository) {
+function ShiftEditCtrl($scope, $http, $timeout, $location, $log,
+                       employeeRepository, workRepository) {
 
-    $scope.editor = this;
-    $scope.dataLoading = false;
-    $scope.value = {};
+    var vm = this;
+    vm.shift = null;
+    vm.dataLoading = false;
+    vm.collapsed = false;
 
-    this.initServices = function () {
+    function initWorks() {
         var gridOptions = {};
-        var gridApi = {};
 
         gridOptions.onRegisterApi = function (api) {
             //set gridApi on scope
@@ -106,8 +107,6 @@ function ShiftEditController($scope, $http, $timeout, $location, $log, ShiftRepo
         $scope.gridApiE = gridApi;
     };
 
-    this.initServices();
-    this.initEmployees();
 
     $scope.save = function () {
         $scope.dataLoading = true;

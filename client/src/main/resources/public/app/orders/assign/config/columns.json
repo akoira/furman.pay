@@ -1,9 +1,0 @@
-[
-  {
-    "field": "order",
-    "displayName": "Заказ",
-    "enableCellEdit": false,
-    "cellTemplate": "<div>{{row.entity.number}}/{{row.entity.name}}</div>",
-    "width": 200
-  }
-]

@@ -1,41 +1,26 @@
 'use strict';
 
-angular.module('app.shift.list', ['ui.grid', "ui.grid.selection"]).controller('ShiftListController', ShiftListController);
+angular.module('app.shift').controller('shiftListCtrl', ShiftListCtrl);
 
-function ShiftListController($scope, $http, $log, ShiftRepository) {
-    $scope.gridOptions = {
+function ShiftListCtrl($scope, $http, $log, currentDayService) {
+    var vm = this;
+    vm.gridOptions = {
         enableRowSelection: true,
         enableRowHeaderSelection: false,
         multiSelect: false,
         modifierKeysToMultiSelect: false,
-        noUnselect: true
+        noUnselect: true,
+        data: currentDayService.day.orders
     };
 
-    $scope.gridOptions.onRegisterApi = function (gridApi) {
-        $scope.gridApi = gridApi;
+    vm.gridOptions.onRegisterApi = function (gridApi) {
+        vm.gridApi = gridApi;
         gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            $scope.$parent.$broadcast('shiftSelected', row.entity);
+            vm.$parent.$broadcast('shiftSelected', row.entity);
         });
     };
 
-    $scope.delete = function () {
+    vm.delete = function () {
         var rows = $scope.gridApi.selection.getSelectedRows();
-        if (rows.length) {
-            ShiftRepository.archive(rows[0]);
-            var index = $scope.gridOptions.data.indexOf(rows[0]);
-            $scope.gridOptions.data.splice(index, 1);
-        }
     };
-
-    $http.get('app/shift/list.columns.json')
-        .success(function (data) {
-            $scope.gridOptions.columnDefs = data;
-        });
-
-    ShiftRepository.getAll().success(function (data) {
-        $scope.gridOptions.data = data._embedded.shift;
-    }).error(function (data) {
-        $scope.gridOptions.data = [];
-        $log.log(data);
-    });
 }

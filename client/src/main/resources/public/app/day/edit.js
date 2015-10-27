@@ -1,16 +1,17 @@
 'use strict';
 
-angular.module('app.day').controller('DayEditController', DayEditController);
+angular.module('app.day').controller('dayEditCtrl', DayEditCtrl);
 
-function DayEditController($scope, $http, $log, $filter, dayEditorService, shiftRepository, currentDayService) {
+function DayEditCtrl($scope, $http, $log, $filter, dayEditorService, shiftRepository, currentDayService) {
     var vm = this;
+    vm.day = currentDayService.day;
+    vm.dayDate = currentDayService.getDate();
+    vm.save = save;
+
     vm.registerRowSelection = dayEditorService.registerRowSelection;
 
 
-    vm.day = currentDayService.day;
-    vm.dayDate = currentDayService.getDate();
 
-    vm.save = save;
 
     initShiftGrid();
 
