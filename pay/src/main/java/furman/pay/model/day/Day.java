@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import furman.pay.model.AObject;
-import furman.pay.model.Shift;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -32,7 +30,7 @@ public class Day extends AObject {
     private List<DayOrder> orders = new ArrayList<>();
 
     @DBRef
-    private List<Shift> shifts = new ArrayList<>();
+    private List<DayShift> shifts = new ArrayList<>();
 
     public LocalDate getDate() {
         return date;
@@ -42,11 +40,11 @@ public class Day extends AObject {
         this.date = date;
     }
 
-    public List<Shift> getShifts() {
+    public List<DayShift> getShifts() {
         return shifts;
     }
 
-    public void setShifts(List<Shift> shifts) {
+    public void setShifts(List<DayShift> shifts) {
         this.shifts = shifts;
     }
 

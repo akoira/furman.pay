@@ -22,6 +22,8 @@ public class DayOrder {
 
     private List<OrderValue> orderValues = new ArrayList<>();
 
+    private List<DayShift>
+
     public PayOrder getOrder() {
         return order;
     }

@@ -1,5 +1,8 @@
-package furman.pay.model;
+package furman.pay.model.day;
 
+import furman.pay.model.AObject;
+import furman.pay.model.Employee;
+import furman.pay.model.Work;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -8,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Document
-public class Shift extends AObject {
+public class DayShift extends AObject {
 
     @DBRef
     private List<Employee> employees;

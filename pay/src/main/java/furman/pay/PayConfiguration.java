@@ -1,8 +1,8 @@
 package furman.pay;
 
 import furman.pay.model.Employee;
-import furman.pay.model.Shift;
 import furman.pay.model.Work;
+import furman.pay.model.day.DayShift;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.mapping.event.ValidatingMongoEventListener;
@@ -20,7 +20,7 @@ public class PayConfiguration extends RepositoryRestConfigurerAdapter {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Shift.class,
+        config.exposeIdsFor(DayShift.class,
                 Employee.class,
                 Work.class);
     }
