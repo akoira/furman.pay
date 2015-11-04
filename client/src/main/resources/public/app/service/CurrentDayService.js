@@ -2,7 +2,7 @@
 
 angular.module('app.service').service('currentDayService', CurrentDayService);
 
-function CurrentDayService() {
+function CurrentDayService(dayOrderService) {
     var service = {};
     var listeners = [];
 
@@ -11,20 +11,24 @@ function CurrentDayService() {
     service.addListener = addListener;
     service.getDate = getDate;
     service.dateOf = dateOf;
+    service.dayOrders = [];
 
     function changeDay(newDay) {
         service.day = newDay;
+        service.dayOrders = dayOrderService.findAllForDay(newDay).then(function (data) {
+            service.dayOrders = data.data;
+        });
         listeners.forEach(function (l) {
             l(newDay);
         });
     }
 
     function getDate() {
-        return dateOf(service.day);
+        return dateOf(service.day.date);
     }
 
-    function dateOf(day) {
-        return moment({year: day.date[0], month: day.date[1] - 1, day: day.date[2]}).toDate();
+    function dateOf(date) {
+        return moment({year: date[0], month: date[1] - 1, day: date[2]}).toDate();
     }
 
 

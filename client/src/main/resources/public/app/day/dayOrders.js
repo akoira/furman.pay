@@ -8,7 +8,7 @@ function DayOrdersCtrl(dayService, currentDayService) {
 
     initGridOptions();
 
-    vm.gridOptions.data = dayService.dayOrders;
+    vm.gridOptions.data = currentDayService.dayOrders;
 
     function initGridOptions() {
         vm.gridOptions = {
@@ -23,7 +23,7 @@ function DayOrdersCtrl(dayService, currentDayService) {
                 "field": "order",
                 "displayName": "Заказ",
                 "enableCellEdit": false,
-                "cellTemplate": "<div>{{('0'+row.entity.order.createdDate[1]).slice(-2)}}-{{row.entity.order.number}}/{{row.entity.order.name}}</div>",
+                "cellTemplate": "<div>{{('0'+row.entity.payOrder.createdDate[1]).slice(-2)}}-{{row.entity.payOrder.number}}/{{row.entity.payOrder.name}}</div>",
                 "pinnedLeft": true,
                 "enableColumnMenu": false,
                 "enableSorting": false,

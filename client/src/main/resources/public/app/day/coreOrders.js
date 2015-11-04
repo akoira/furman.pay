@@ -5,10 +5,9 @@ angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, currentDayService) {
     var vm = this;
     vm.day = currentDayService.day;
-    vm.dayDate = currentDayService.getDate();
     vm.registerRowSelection = dayService.registerRowSelection;
     vm.moment = momentFrom;
-    vm.isCollapsed = true;
+    vm.isCollapsed = currentDayService.dayOrders.length > 0;
 
     initOrderDate();
 
@@ -37,6 +36,12 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, curr
                 startingDay: 1
             }
         };
+
+        dayService.getClosestWorkingDate().then(function (data) {
+            vm.orderDate.date = currentDayService.dateOf(data.data);
+            loadData();
+        });
+
 
         dayService.getOrderCountsPerDay().success(function (data) {
             vm.orderDate.orderCountsPerDay = data;
@@ -86,8 +91,6 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, curr
             }
         ];
 
-        loadData();
-
         vm.gridOptions.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
             vm.registerRowSelection($scope, gridApi, rowSelectionChanged);
@@ -114,8 +117,8 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, curr
     function addDayOrder(payOrder) {
         var dayOrder = getDayOrderBy(payOrder.orderId);
         if (!dayOrder) {
-            dayService.dayOrderService.createDayOrder(vm.day, payOrder).then(function (dayOrder) {
-                dayService.dayOrders.push(dayOrder);
+            dayService.dayOrderService.createDayOrder(vm.day, payOrder).then(function (data) {
+                currentDayService.dayOrders.push(data.data);
             });
         }
     }

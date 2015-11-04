@@ -143,7 +143,13 @@ var app = angular.module('app', [
 
 angular.module('app.rest', ['ngResource']);
 angular.module('app.service', []);
-angular.module('app.day', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);
+angular.module('app.day', ['ui.grid',
+    'ui.grid.autoResize',
+    'ui.grid.pinning',
+    'ui.grid.edit',
+    'ui.grid.cellNav',
+    'ui.bootstrap.datepicker',
+    'ui.bootstrap.collapse']);
 angular.module('app.rate', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.collapse']);
 angular.module('app.employee', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
 angular.module('app.shift', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);

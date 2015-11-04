@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -43,6 +44,20 @@ public class DayOrderService {
         }
     }
 
+    @RequestMapping("/dayOrderService/countForDay")
+    public long countForDay(@RequestParam(required = true) String dayId) {
+        Day day = dayRepository.findOne(dayId);
+        return dayOrderRepository.count(QDayOrder.dayOrder.day.eq(day));
+    }
+
+    @RequestMapping("/dayOrderService/findAllForDay")
+    public Iterable<DayOrder> findAllForDay(@RequestParam(required = true) String dayId) {
+        Day day = dayRepository.findOne(dayId);
+        Iterable<DayOrder> dayOrders = dayOrderRepository.findAll(QDayOrder.dayOrder.day.eq(day));
+        return dayOrders;
+    }
+
+
     @RequestMapping("/dayOrderService/createDayOrder")
     public DayOrder createDayOrder(@RequestParam(required = true) String dayId, @RequestParam String payOrderId) {
         DayOrder dayOrder = new DayOrder();
@@ -55,13 +70,13 @@ public class DayOrderService {
             orderValue.setWork(work);
             values.add(orderValue);
 
-            List<WorkValue> foundValues = dayOrder.getPayOrder().getWorkValues().stream().filter(value -> value.getWork().getId() == work.getId()).collect(Collectors.toList());
-            double result = 0.0;
-            for (WorkValue workValue : foundValues) {
-                result += workValue.getValue();
+            List<WorkValue> foundValues = dayOrder.getPayOrder().getWorkValues().stream().filter(value -> {
+                return Objects.equals(value.getWork().getId(), work.getId());
+            }).collect(Collectors.toList());
+            foundValues.forEach(value -> {
+                double result = orderValue.getValue() + value.getValue();
                 orderValue.setValue(result);
-            }
-            orderValue.setValue(0.0);
+            });
         });
         dayOrder.setOrderValues(values);
         dayOrderRepository.insert(dayOrder);

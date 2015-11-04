@@ -21,5 +21,7 @@ public class PredefinedEntities {
         mongoTemplate.insert(Work.valueOf("angle", "Угол. распил", "м.п.", 6));
         mongoTemplate.insert(Work.valueOf("patch", "Склейка", "м.кв.", 7));
         mongoTemplate.insert(Work.valueOf("cutoff", "Срез", "м.п.", 8));
+        mongoTemplate.insert(Work.valueOf("zfacadeService", "П-во Z-фасада", "шт.", 9));
+        mongoTemplate.insert(Work.valueOf("agtfacadeService", "П-во AGT-фасада", "шт.", 10));
     }
 }

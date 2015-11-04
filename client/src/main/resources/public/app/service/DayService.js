@@ -16,6 +16,7 @@ function DayService($http, $filter, dayRepository, workRepository, dayOrderServi
     service.createNewDay = createNewDay;
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.registerRowSelection = registerRowSelection;
+    service.getClosestWorkingDate = getClosestWorkingDate;
     service.round = round;
     service.dayOrderService = dayOrderService;
     service.dayOrders = [];
@@ -25,6 +26,11 @@ function DayService($http, $filter, dayRepository, workRepository, dayOrderServi
         /** @namespace data._embedded */
         service.works = data._embedded.work;
     });
+
+
+    function getClosestWorkingDate() {
+        return $http.get(baseUrl + "/getClosestWorkingDate");
+    }
 
     function createNewDay(date) {
         return $http.get(baseUrl + "/createNewDay?date=" +

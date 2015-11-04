@@ -11,8 +11,6 @@ function DayEditCtrl($scope, $http, $log, $filter, dayService, shiftRepository, 
     vm.registerRowSelection = dayService.registerRowSelection;
 
 
-
-
     initShiftGrid();
 
 

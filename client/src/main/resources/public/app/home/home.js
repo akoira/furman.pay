@@ -3,7 +3,7 @@
 angular.module('app.home', ['mwl.calendar', 'ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-function HomeController($scope, $location, $filter, $log, currentDayService, dayService) {
+function HomeController($scope, $location, $filter, $log, currentDayService, dayService, dayOrderService) {
 
     var vm = this;
 
@@ -56,16 +56,15 @@ function HomeController($scope, $location, $filter, $log, currentDayService, day
             deletable: false,
             draggable: false,
             resizable: false,
-            day: day,
-            isWarning: function () {
-                return ((this.day.shifts == null || this.day.shifts.length < 1) && (this.day.orders == null || this.day.orders.length < 1));
-            }
+            day: day
         };
-        var date = moment(currentDayService.dateOf(day));
+        var date = moment(currentDayService.dateOf(day.date));
         event.title = date.format('YYYY-MM-DD');
-        event.type = event.isWarning() ? 'warning' : 'info';
         event.startsAt = date.toDate();
         event.endAt = date.toDate();
+        dayOrderService.countForDay(day).then(function (data) {
+            event.type = data.data < 1 ? 'warning' : 'info';
+        });
         return event;
     }
 }

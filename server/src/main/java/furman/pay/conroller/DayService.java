@@ -13,6 +13,8 @@ import furman.pay.repository.day.DayOrderRepository;
 import furman.pay.repository.day.DayRepository;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +50,16 @@ public class DayService {
     @Autowired
     private PayCustomerRepository payCustomerRepository;
 
+    @RequestMapping("/dayService/getClosestWorkingDate")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    public LocalDate getClosestWorkingDate() {
+        Iterable<Order> orders = orderRepository.findAll(new PageRequest(0, 1, Sort.Direction.DESC, "workedDailySheet.date"));
+        try {
+            return orders.iterator().next().getWorkedDailySheet().getDate();
+        } catch (Exception e) {
+            return LocalDate.now();
+        }
+    }
 
     @RequestMapping("/dayService/getOrders")
     public Iterable<Order> getOrders(@RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
