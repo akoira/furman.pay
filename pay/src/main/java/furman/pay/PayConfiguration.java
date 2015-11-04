@@ -1,7 +1,10 @@
 package furman.pay;
 
 import furman.pay.model.Employee;
+import furman.pay.model.PayOrder;
 import furman.pay.model.Work;
+import furman.pay.model.day.Day;
+import furman.pay.model.day.DayOrder;
 import furman.pay.model.day.DayShift;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +25,10 @@ public class PayConfiguration extends RepositoryRestConfigurerAdapter {
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(DayShift.class,
                 Employee.class,
-                Work.class);
+                Work.class,
+                Day.class,
+                DayOrder.class,
+                PayOrder.class);
     }
 
     @Bean

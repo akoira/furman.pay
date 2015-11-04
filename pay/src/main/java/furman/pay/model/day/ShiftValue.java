@@ -1,7 +1,7 @@
 package furman.pay.model.day;
 
-import furman.pay.model.Work;
 import org.mongodb.morphia.annotations.Entity;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Document
 public class ShiftValue {
 
-    @NotNull
+    @DBRef
     private DayShift dayShift;
 
     @NotNull
@@ -28,11 +28,11 @@ public class ShiftValue {
         this.value = value;
     }
 
-    public Work getWork() {
-        return work;
+    public DayShift getDayShift() {
+        return dayShift;
     }
 
-    public void setWork(Work work) {
-        this.work = work;
+    public void setDayShift(DayShift dayShift) {
+        this.dayShift = dayShift;
     }
 }

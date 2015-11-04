@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app').service('currentDayService', CurrentDayService);
+angular.module('app.service').service('currentDayService', CurrentDayService);
 
 function CurrentDayService() {
     var service = {};

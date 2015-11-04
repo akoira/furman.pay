@@ -2,13 +2,13 @@
 
 angular.module('app.day').controller('dayEditCtrl', DayEditCtrl);
 
-function DayEditCtrl($scope, $http, $log, $filter, dayEditorService, shiftRepository, currentDayService) {
+function DayEditCtrl($scope, $http, $log, $filter, dayService, shiftRepository, currentDayService) {
     var vm = this;
     vm.day = currentDayService.day;
     vm.dayDate = currentDayService.getDate();
     vm.save = save;
 
-    vm.registerRowSelection = dayEditorService.registerRowSelection;
+    vm.registerRowSelection = dayService.registerRowSelection;
 
 
 
@@ -54,10 +54,10 @@ function DayEditCtrl($scope, $http, $log, $filter, dayEditorService, shiftReposi
             vm.gridOptionsS.data = data.data._embedded.shift;
             initEmployees(data);
         });
-    };
+    }
 
     function save() {
-        dayEditorService.save(vm.day);
+        dayService.save(vm.day);
     };
 }
 

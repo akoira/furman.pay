@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('app.day').service('dayEditorService', dayEditorService);
+angular.module('app.service').service('dayService', DayService);
 
-function dayEditorService($http, $filter, $log, dayRepository, workRepository) {
+function DayService($http, $filter, dayRepository, workRepository, dayOrderService) {
 
-    var baseUrl = "/api/pay/dayEditorService";
+    var baseUrl = "/api/pay/dayService";
     var service = {};
 
     service.getOrders = getOrders;
@@ -16,8 +16,10 @@ function dayEditorService($http, $filter, $log, dayRepository, workRepository) {
     service.createNewDay = createNewDay;
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.registerRowSelection = registerRowSelection;
-    service.convertPayOrder2DayOrder = convertPayOrder2DayOrder;
     service.round = round;
+    service.dayOrderService = dayOrderService;
+    service.dayOrders = [];
+
     workRepository.getAll().success(function (data) {
         /** @namespace data._embedded.work */
         /** @namespace data._embedded */
@@ -50,31 +52,10 @@ function dayEditorService($http, $filter, $log, dayRepository, workRepository) {
         return $http.get(baseUrl + '/getOrNewDay?date=' + moment(date).format("YYYY-MM-DD"));
     }
 
-    function convertPayOrder2DayOrder(payOrder) {
-        var dayOrder = {
-            order: payOrder,
-            orderValues: []
-        };
-        angular.forEach(service.works, function (work) {
-            var orderValue = {
-                work: work,
-                value: 0.0,
-                rate: service.rate
-            };
-            /** @namespace dayOrder.orderValues */
-            dayOrder.orderValues.push(orderValue);
-
-            var workValues = $filter('filter')(payOrder.workValues, {work: {type: work.type}});
-            angular.forEach(workValues, function (workValue) {
-                orderValue.value += service.round(workValue.value, 3);
-            });
-        });
-        return dayOrder;
-    }
-
     function save(day) {
 
         day = jQuery.extend(true, {}, day);
+        dayOrderService.deleteByDay(day);
 
         angular.forEach(day.orders, function (order) {
             order.order = "/api/pay/payOrder/" + order.order.id;

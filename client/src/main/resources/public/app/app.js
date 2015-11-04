@@ -7,6 +7,7 @@ var app = angular.module('app', [
     'ui.router',
     'ngResource',
     'app.rest',
+    'app.service',
     'app.dashboard',
     'app.employee',
     'app.shift',
@@ -73,13 +74,13 @@ var app = angular.module('app', [
                     .state('dashboard', {
                         abstract: true,
                         templateUrl: "app/dashboard/dashboard.html",
-                        resolve: {
-                            init: function ($q, currentDayService, dayEditorService) {
-                                dayEditorService.getOrNewDay(new Date()).success(function (day) {
-                                    currentDayService.changeDay(day);
-                                });
-                            }
-                        }
+                        //resolve: {
+                        //    init: function (currentDayService, dayService) {
+                        //        //dayService.getOrNewDay(new Date()).success(function (day) {
+                        //        //    currentDayService.changeDay(day);
+                        //        //});
+                        //    }
+                        //}
                     })
                     .state('dashboard.home', {
                         url: "/",
@@ -140,8 +141,16 @@ var app = angular.module('app', [
         }]);
 
 
-angular.module('app.rest', []);
+angular.module('app.rest', ['ngResource']);
+angular.module('app.service', []);
 angular.module('app.day', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.datepicker', 'ui.bootstrap.collapse']);
 angular.module('app.rate', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.collapse']);
 angular.module('app.employee', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
 angular.module('app.shift', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
+
+
+app.run(function (currentDayService, dayService) {
+    dayService.getOrNewDay(new Date()).success(function (day) {
+        currentDayService.changeDay(day);
+    });
+});

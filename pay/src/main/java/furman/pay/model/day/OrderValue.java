@@ -23,9 +23,6 @@ public class OrderValue {
     @NotNull
     private Double value;
 
-    @NotNull
-    private Double rate;
-
     private List<ShiftValue> shiftValues = new ArrayList<>();
 
     public Work getWork() {
@@ -42,21 +39,5 @@ public class OrderValue {
 
     public void setValue(Double value) {
         this.value = value;
-    }
-
-    public Double getRate() {
-        return rate;
-    }
-
-    public void setRate(Double rate) {
-        this.rate = rate;
-    }
-
-    public List<ShiftValue> getShiftValues() {
-        return shiftValues;
-    }
-
-    public void setShiftValues(List<ShiftValue> shiftValues) {
-        this.shiftValues = shiftValues;
     }
 }

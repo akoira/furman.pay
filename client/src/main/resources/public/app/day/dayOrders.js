@@ -2,13 +2,13 @@
 
 angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 
-function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, dayEditorService, currentDayService) {
+function DayOrdersCtrl(dayService, currentDayService) {
     var vm = this;
-    vm.round = dayEditorService.round;
+    vm.round = dayService.round;
 
     initGridOptions();
 
-    vm.gridOptions.data = currentDayService.day.orders;
+    vm.gridOptions.data = dayService.dayOrders;
 
     function initGridOptions() {
         vm.gridOptions = {
@@ -31,7 +31,7 @@ function DayOrdersCtrl($scope, $http, $log, $filter, uiGridConstants, dayEditorS
             }
         );
 
-        angular.forEach(dayEditorService.works, function (work) {
+        angular.forEach(dayService.works, function (work) {
             vm.gridOptions.columnDefs.push(createColumnDef(work));
         });
 

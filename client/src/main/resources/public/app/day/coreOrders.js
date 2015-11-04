@@ -2,11 +2,11 @@
 
 angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 
-function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayEditorService, currentDayService) {
+function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, currentDayService) {
     var vm = this;
     vm.day = currentDayService.day;
     vm.dayDate = currentDayService.getDate();
-    vm.registerRowSelection = dayEditorService.registerRowSelection;
+    vm.registerRowSelection = dayService.registerRowSelection;
     vm.moment = momentFrom;
     vm.isCollapsed = true;
 
@@ -38,7 +38,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayEditorService
             }
         };
 
-        dayEditorService.getOrderCountsPerDay().success(function (data) {
+        dayService.getOrderCountsPerDay().success(function (data) {
             vm.orderDate.orderCountsPerDay = data;
         }).error(function (data) {
             $log.log(data);
@@ -103,7 +103,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayEditorService
 
     function rowSelectionChanged(row) {
         if (row.isSelected) {
-            dayEditorService.getOrNewPayOrder(row.entity).success(function (order) {
+            dayService.getOrNewPayOrder(row.entity).success(function (order) {
                 addDayOrder(order);
             });
         } else {
@@ -114,18 +114,19 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayEditorService
     function addDayOrder(payOrder) {
         var dayOrder = getDayOrderBy(payOrder.orderId);
         if (!dayOrder) {
-            dayOrder = dayEditorService.convertPayOrder2DayOrder(payOrder);
-            vm.day.orders.push(dayOrder);
+            dayService.dayOrderService.createDayOrder(vm.day, payOrder).then(function (dayOrder) {
+                dayService.dayOrders.push(dayOrder);
+            });
         }
     }
 
     function getDayOrderBy(coreOrderId) {
-        var found = $filter('filter')(vm.day.orders, {order: {orderId: coreOrderId}});
+        var found = $filter('filter')(dayService.dayOrders, {order: {orderId: coreOrderId}});
         return found.length > 0 ? found[0] : null;
     };
 
     function loadData() {
-        dayEditorService.getOrders(vm.orderDate.date).success(function (data) {
+        dayService.getOrders(vm.orderDate.date).success(function (data) {
             vm.gridOptions.data = data;
             $timeout(function () {
                 angular.forEach(vm.gridOptions.data, function (order) {

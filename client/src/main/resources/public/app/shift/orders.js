@@ -2,11 +2,19 @@
 
 angular.module('app.shift').controller('shiftOrderListCtrl', ShiftOrderListCtrl);
 
-function ShiftOrderListCtrl(currentDayService) {
+function ShiftOrderListCtrl($scope, currentDayService, shiftEditorService) {
     var vm = this;
     vm.gridOptions = {
         data: []
     };
+
+    vm.gridOptions.onRegisterApi = function (gridApi) {
+        vm.gridApi = gridApi;
+        vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+            shiftEditorService.addOrder(row.entity);
+        });
+    };
+
     vm.gridOptions.columnDefs = [
         {
             "field": "order",

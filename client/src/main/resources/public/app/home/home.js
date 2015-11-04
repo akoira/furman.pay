@@ -3,12 +3,12 @@
 angular.module('app.home', ['mwl.calendar', 'ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-function HomeController($scope, $location, $filter, $log, currentDayService, dayEditorService) {
+function HomeController($scope, $location, $filter, $log, currentDayService, dayService) {
 
     var vm = this;
 
     if (!currentDayService.day) {
-        dayEditorService.getOrNewDay(new Date()).success(function (day) {
+        dayService.getOrNewDay(new Date()).success(function (day) {
             currentDayService.changeDay(day);
         });
     }
@@ -18,7 +18,7 @@ function HomeController($scope, $location, $filter, $log, currentDayService, day
         day: currentDayService.day ? currentDayService.getDate() : new Date(),
         events: [],
         createNewDay: function (calendarDate) {
-            dayEditorService.getOrNewDay(calendarDate).success(function (day) {
+            dayService.getOrNewDay(calendarDate).success(function (day) {
                 currentDayService.changeDay(day);
                 var query = {day: {id: day.id}};
                 var event = $filter('filter')(vm.calendar.events, query);
@@ -42,7 +42,7 @@ function HomeController($scope, $location, $filter, $log, currentDayService, day
 
     function loadAllDays(date) {
         vm.calendar.events = [];
-        dayEditorService.getDays(moment(date).startOf('month'),
+        dayService.getDays(moment(date).startOf('month'),
             moment(date).endOf('month')).success(function (days) {
                 angular.forEach(days, function (day) {
                     vm.calendar.events.push(day2Event(day));

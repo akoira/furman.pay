@@ -1,5 +1,6 @@
 package furman.pay.model.day;
 
+import furman.pay.model.AObject;
 import furman.pay.model.PayOrder;
 import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -14,22 +15,24 @@ import java.util.List;
  */
 @Entity
 @Document
-public class DayOrder {
+public class DayOrder extends AObject {
 
     @DBRef
     @NotNull
-    private PayOrder order;
+    private PayOrder payOrder;
+
+    @DBRef
+    @NotNull
+    private Day day;
 
     private List<OrderValue> orderValues = new ArrayList<>();
 
-    private List<DayShift>
-
-    public PayOrder getOrder() {
-        return order;
+    public PayOrder getPayOrder() {
+        return payOrder;
     }
 
-    public void setOrder(PayOrder order) {
-        this.order = order;
+    public void setPayOrder(PayOrder payOrder) {
+        this.payOrder = payOrder;
     }
 
     public List<OrderValue> getOrderValues() {
@@ -38,5 +41,13 @@ public class DayOrder {
 
     public void setOrderValues(List<OrderValue> orderValues) {
         this.orderValues = orderValues;
+    }
+
+    public Day getDay() {
+        return day;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
     }
 }

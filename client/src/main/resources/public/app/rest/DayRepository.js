@@ -2,44 +2,19 @@
 
 angular.module('app.rest').service('dayRepository', DayRepository);
 
-function DayRepository($http, $log) {
-    var basePath = '/api/pay/day';
-    var service = {};
-
-    service.create = create;
-    service.getAll = getAll;
-    service.save = save;
-    service.archive = archive;
-
-    function archive(day) {
-        day.archived = true;
-        return $http.patch(basePath + "/" + day.id, day).then(handleSuccess, handleError('Ошибка'));
-    }
-
-    function save(day) {
-        return $http.patch(basePath + "/" + day.id, day).then(handleSuccess, handleError('Ошибка'));
-    }
-
-    function create(employee) {
-        return $http.post(basePath, employee).then(handleSuccess, handleError('Ошибка'));
-    }
-
-    function getAll() {
-        return $http.get(basePath + '?archived=false');
-    }
-
-    // private functions
-
-    function handleSuccess(data) {
-        return data;
-    }
-
-    function handleError(error) {
-        return function () {
-            $log.log(error);
-            return error;
-        };
-    }
-
+function DayRepository($resource, $log) {
+    var basePath = '/api/pay/day/:id';
+    var service = $resource(basePath, {}, {
+        'getAll': {method: 'GET', isArray: true},
+        'get': {method: 'GET'},
+        'save': {method: 'POST'},
+        'update': {method: 'PUT'},
+        'archive': {
+            method: 'PUT',
+            transformRequest: function (data, headersGetter) {
+                data.archived = true;
+            }
+        }
+    });
     return service;
 }

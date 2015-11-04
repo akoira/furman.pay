@@ -2,11 +2,20 @@
 
 angular.module('app.shift').controller('shiftWorkListCtrl', ShiftWorkListCtrl);
 
-function ShiftWorkListCtrl(workRepository) {
+function ShiftWorkListCtrl($scope, workRepository, shiftEditorService) {
     var vm = this;
     vm.gridOptions = {
         data: []
     };
+
+    vm.gridOptions.onRegisterApi = function (gridApi) {
+        vm.gridApi = gridApi;
+        vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
+            shiftEditorService.addWork(row.entity);
+        });
+    };
+
+
     vm.gridOptions.columnDefs = [
         {
             field: "name",
