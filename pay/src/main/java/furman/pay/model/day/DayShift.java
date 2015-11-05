@@ -7,6 +7,8 @@ import org.mongodb.morphia.annotations.Entity;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,13 +16,17 @@ import java.util.List;
 public class DayShift extends AObject {
 
     @DBRef
-    private List<Employee> employees;
+    @NotNull
+    private Day day;
 
     @DBRef
-    private List<Work> works;
+    private List<Employee> employees = new ArrayList<>();
 
     @DBRef
-    private List<DayOrder> orders;
+    private List<Work> works = new ArrayList<>();
+
+    @DBRef
+    private List<DayOrder> orders = new ArrayList<>();
 
     public List<Employee> getEmployees() {
         return employees;
@@ -44,5 +50,13 @@ public class DayShift extends AObject {
 
     public void setOrders(List<DayOrder> orders) {
         this.orders = orders;
+    }
+
+    public Day getDay() {
+        return day;
+    }
+
+    public void setDay(Day day) {
+        this.day = day;
     }
 }

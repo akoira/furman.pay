@@ -1,6 +1,5 @@
 package furman.pay.repository;
 
-import furman.pay.model.Employee;
 import furman.pay.model.day.DayShift;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
@@ -11,5 +10,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
  */
 @RepositoryRestResource(collectionResourceRel = "shift", path = "shift")
 public interface ShiftRepository extends MongoRepository<DayShift, String>,
-        QueryDslPredicateExecutor<Employee> {
+        QueryDslPredicateExecutor<DayShift> {
 }

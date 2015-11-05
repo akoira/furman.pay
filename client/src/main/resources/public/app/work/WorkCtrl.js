@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.rate').controller('workCtrl', WorkCtrl);
+angular.module('app.work').controller('workCtrl', WorkCtrl);
 
 function WorkCtrl($scope, $http, $filter, $timeout, $log, $interval, workRepository) {
     var vm = this;

@@ -2,7 +2,7 @@
 
 angular.module('app.service').service('currentDayService', CurrentDayService);
 
-function CurrentDayService(dayOrderService) {
+function CurrentDayService(dayOrderService, dayShiftService) {
     var service = {};
     var listeners = [];
 
@@ -12,11 +12,15 @@ function CurrentDayService(dayOrderService) {
     service.getDate = getDate;
     service.dateOf = dateOf;
     service.dayOrders = [];
+    service.dayShifts = [];
 
     function changeDay(newDay) {
         service.day = newDay;
         service.dayOrders = dayOrderService.findAllForDay(newDay).then(function (data) {
             service.dayOrders = data.data;
+        });
+        service.dayShifts = dayShiftService.findAllForDay(newDay).then(function (data) {
+            service.dayShifts = data.data;
         });
         listeners.forEach(function (l) {
             l(newDay);

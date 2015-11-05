@@ -1,4 +1,11 @@
-<div class="well-sm">
-    <div ui-view="edit"></div>
-    <div ui-view="list"></div>
+<div class="well-sm" ng-controller="dayShiftsCtrl as vm">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            Смены на {{(vm.dayDate | date:'yyyy-MM-dd')}}
+            <button ng-click="vm.createNewShift()" class="btn btn-success btn-sm fa fa-plus"></button>
+        </div>
+    </div>
+    <div ng-repeat="shift in vm.dayShifts">
+        {{shift.name}}
+    </div>
 </div>

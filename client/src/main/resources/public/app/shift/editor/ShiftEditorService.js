@@ -2,7 +2,7 @@
 
 angular.module('app.shift').service('shiftEditorService', ShiftEditorService);
 
-function ShiftEditorService($log, currentDayService, dayService) {
+function ShiftEditorService($log, shiftRepository, currentDayService) {
     var service = {};
 
     var shift = {
@@ -36,16 +36,12 @@ function ShiftEditorService($log, currentDayService, dayService) {
 
     function addOrder(order) {
         shift.orders.push("/api/pay/dayOrder/" + order.id);
-        $log.log(shift);
-
         fireOrderAdded(order);
     }
 
 
     function addWork(work) {
-        shift.orders.push("/api/pay/work/" + work.id);
-        $log.log(shift);
-
+        shift.works.push("/api/pay/work/" + work.id);
         fireWorkAdded(work);
     }
 
@@ -70,8 +66,8 @@ function ShiftEditorService($log, currentDayService, dayService) {
 
 
     function save() {
-        currentDayService.day.shifts.push(shift);
-        dayService.save(currentDayService.day);
+        shift = shiftRepository.save(shift);
+        currentDayService.dayShifts.push(shift);
     }
 
     return service;

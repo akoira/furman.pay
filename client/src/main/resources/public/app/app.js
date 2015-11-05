@@ -14,7 +14,7 @@ var app = angular.module('app', [
     'app.version',
     'app.day',
     'app.home',
-    'app.rate'
+    'app.work'
 ]).
     config(['eehNavigationProvider',
         '$stateProvider',
@@ -127,13 +127,12 @@ var app = angular.module('app', [
                             '': {
                                 templateUrl: 'app/shift/main.html'
                             },
-                            'list@dashboard.shift': {
-                                templateUrl: 'app/shift/list.html',
-                            },
-                            'edit@dashboard.shift': {
-                                templateUrl: 'app/shift/edit.html',
-                            }
-
+                            //'list@dashboard.shift': {
+                            //    templateUrl: 'app/shift/list.html',
+                            //},
+                            //'edit@dashboard.shift': {
+                            //    templateUrl: 'app/shift/editor/main.html'
+                            //}
                         }
                     })
             }
@@ -150,7 +149,12 @@ angular.module('app.day', ['ui.grid',
     'ui.grid.cellNav',
     'ui.bootstrap.datepicker',
     'ui.bootstrap.collapse']);
-angular.module('app.rate', ['ui.grid', 'ui.grid.autoResize', 'ui.bootstrap.collapse']);
+angular.module('app.work', ['ui.grid',
+    'ui.grid.autoResize',
+    'ui.grid.pinning',
+    'ui.grid.edit',
+    'ui.grid.rowEdit',
+    'ui.grid.cellNav', 'ui.bootstrap.collapse']);
 angular.module('app.employee', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
 angular.module('app.shift', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
 

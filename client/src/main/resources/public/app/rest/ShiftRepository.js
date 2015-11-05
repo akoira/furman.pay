@@ -2,50 +2,14 @@
 
 angular.module('app.rest').factory('shiftRepository', ShiftRepository);
 
-function ShiftRepository($http) {
-    var baseUri = '/api/pay/shift';
-
-    var service = {};
-
-    service.create = create;
-    service.getAll = getAll;
-    service.save = save;
-    service.archive = archive;
-    service.getEmployees = getEmployees;
-
-    // private functions
-
-    function handleSuccess(data) {
-        return data;
-    }
-
-    function handleError(error) {
-        return function () {
-            return {success: false, message: error};
-        };
-    }
-
-    function getEmployees(shift) {
-        var url = "/api/pay/shift/" + shift.id + "/employees";
-        return $http.get(url);
-    }
-
-    function archive(shift) {
-        shift.archived = true;
-        return $http.patch(shift._links.self.href, employee).then(handleSuccess, handleError);
-    }
-
-    function save(employee) {
-        return $http.patch(employee._links.self.href, employee).then(handleSuccess, handleError);
-    }
-
-    function create(employee) {
-        return $http.post(baseUri, employee).then(handleSuccess, handleError);
-    }
-
-    function getAll() {
-        return $http.get(baseUri + '?archived=false');
-    }
-
+function ShiftRepository($resource) {
+    var basePath = '/api/pay/shift:id';
+    var service = $resource(basePath, {}, {
+        'getAll': {method: 'GET', isArray: true},
+        'get': {method: 'GET'},
+        'save': {method: 'POST'},
+        'update': {method: 'PUT'},
+        'remove': {method: 'DELETE'}
+    });
     return service;
 }
