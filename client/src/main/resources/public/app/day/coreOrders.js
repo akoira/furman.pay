@@ -5,6 +5,7 @@ angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, currentDayService) {
     var vm = this;
     vm.day = currentDayService.day;
+    vm.dayOrders = currentDayService.dayOrders;
     vm.registerRowSelection = dayService.registerRowSelection;
     vm.moment = momentFrom;
     vm.isCollapsed = currentDayService.dayOrders.length > 0;
@@ -124,7 +125,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, curr
     }
 
     function getDayOrderBy(coreOrderId) {
-        var found = $filter('filter')(dayService.dayOrders, {order: {orderId: coreOrderId}});
+        var found = $filter('filter')(currentDayService.dayOrders, {payOrder: {orderId: coreOrderId}});
         return found.length > 0 ? found[0] : null;
     };
 
