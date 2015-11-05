@@ -20,10 +20,10 @@ function ShiftOrderListCtrl($scope, currentDayService, shiftEditorService) {
             "field": "order",
             "displayName": "Заказ",
             "enableCellEdit": false,
-            "cellTemplate": "<div>{{('0'+row.entity.order.createdDate[1]).slice(-2)}}-{{row.entity.order.number}}/{{row.entity.order.name}}</div>",
+            "cellTemplate": "<div>{{('0'+row.entity.payOrder.createdDate[1]).slice(-2)}}-{{row.entity.payOrder.number}}/{{row.entity.payOrder.name}}</div>",
             "enableColumnMenu": false
         }
     ];
-    vm.gridOptions.data = currentDayService.day.orders;
+    vm.gridOptions.data = currentDayService.dayOrders;
 }
 
