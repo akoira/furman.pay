@@ -7,6 +7,7 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
 
     var shift = {
         name: "",
+        day: "/api/pay/employee/" + currentDayService.day.id,
         employees: [],
         works: [],
         orders: []
@@ -16,7 +17,8 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
     var listeners = {
         employees: [],
         works: [],
-        orders: []
+        orders: [],
+        shift: []
     };
 
     service.shift = shift;
@@ -26,11 +28,16 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
     service.addEmployee = addEmployee;
     service.addWork = addWork;
     service.addOrder = addOrder;
+    service.setShift = setShift;
+
+
+    function setShift(shift) {
+        service.shift = shift;
+        fireShiftChanged(shift);
+    }
 
     function addEmployee(employee) {
         shift.employees.push("/api/pay/employee/" + employee.id);
-        $log.log(shift);
-
         fireEmployeeAdded(employee);
     }
 
@@ -43,6 +50,12 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
     function addWork(work) {
         shift.works.push("/api/pay/work/" + work.id);
         fireWorkAdded(work);
+    }
+
+    function fireShiftChanged(shift) {
+        angular.forEach(listeners.shift, function (listener) {
+            listener(shift);
+        });
     }
 
     function fireOrderAdded(order) {

@@ -4,8 +4,17 @@
             Смены на {{(vm.dayDate | date:'yyyy-MM-dd')}}
             <button ng-click="vm.createNewShift()" class="btn btn-success btn-sm fa fa-plus"></button>
         </div>
-    </div>
-    <div ng-repeat="shift in vm.dayShifts">
-        {{shift.name}}
+        <div class="panel-body">
+            <div class="col-md-2">
+                <div class="list-group">
+                    <div ng-repeat="shift in vm.dayShifts">
+                        <shift-item shift="shift" active="vm.isActive(shift)" select="vm.select"></shift-item>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <ng-include src="'app/shift/editor/main.html'"/>
+            </div>
+        </div>
     </div>
 </div>

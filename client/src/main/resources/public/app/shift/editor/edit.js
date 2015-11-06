@@ -8,16 +8,17 @@ function ShiftEditCtrl($scope, shiftEditorService) {
 
     vm.dataLoading = false;
     vm.collapsed = false;
+    vm.shift = shiftEditorService.shift;
+
+    shiftEditorService.listeners.shift.push(shiftChanged);
+
+    function shiftChanged(shift) {
+        vm.shift = shift;
+    }
 
     vm.save = function () {
         vm.dataLoading = true;
         shiftEditorService.save();
         $scope.dataLoading = false;
     };
-
-    $scope.$on('shiftSelected', function (event, data) {
-        $scope.value = data;
-        $scope.gridOptionsS.updateView();
-        $scope.gridOptionsE.updateView();
-    });
 }

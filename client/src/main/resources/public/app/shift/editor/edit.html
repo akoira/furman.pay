@@ -13,7 +13,7 @@
                 <div ng-show="error" class="alert alert-danger">{{error}}</div>
                 <div class="form-group" ng-class="{ 'has-error': form.name.$dirty && form.name.$error.required }">
                     <label for="name">Имя</label>
-                    <input type="text" name="name" id="name" class="form-control" ng-model="value.name"
+                    <input type="text" name="name" id="name" class="form-control" ng-model="vm.shift.name"
                            required/>
                 <span ng-show="form.name.$dirty && form.name.$error.required"
                       class="help-block">Обязательное поле</span>
@@ -21,13 +21,13 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-4">
-                            <ng-include src="'app/shift/employees.html'"></ng-include>
+                            <ng-include src="'app/shift/editor/employees.html'"></ng-include>
                         </div>
                         <div class="col-md-4">
-                            <ng-include src="'app/shift/works.html'"></ng-include>
+                            <ng-include src="'app/shift/editor/works.html'"></ng-include>
                         </div>
                         <div class="col-md-4">
-                            <ng-include src="'app/shift/orders.html'"></ng-include>
+                            <ng-include src="'app/shift/editor/orders.html'"></ng-include>
                         </div>
                     </div>
                 </div>
