@@ -28,6 +28,8 @@ public class DayShift extends AObject {
     @DBRef
     private List<DayOrder> orders = new ArrayList<>();
 
+    private List<ShiftValue> values = new ArrayList<>();
+
     public List<Employee> getEmployees() {
         return employees;
     }
@@ -58,5 +60,13 @@ public class DayShift extends AObject {
 
     public void setDay(Day day) {
         this.day = day;
+    }
+
+    public List<ShiftValue> getValues() {
+        return values;
+    }
+
+    public void setValues(List<ShiftValue> values) {
+        this.values = values;
     }
 }

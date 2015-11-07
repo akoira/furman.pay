@@ -2,18 +2,19 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             Смены на {{(vm.dayDate | date:'yyyy-MM-dd')}}
-            <button ng-click="vm.createNewShift()" class="btn btn-success btn-sm fa fa-plus"></button>
+            <button ng-click="vm.addNew()" class="btn btn-success btn-sm fa fa-plus"></button>
         </div>
         <div class="panel-body">
             <div class="col-md-2">
                 <div class="list-group">
                     <div ng-repeat="shift in vm.dayShifts">
-                        <shift-item shift="shift" active="vm.isActive(shift)" select="vm.select"></shift-item>
+                        <shift-item shift="shift" active="vm.isActive(shift)" select="vm.select"
+                                    remove="vm.remove"></shift-item>
                     </div>
                 </div>
             </div>
             <div class="col-md-10">
-                <ng-include src="'app/shift/editor/main.html'"/>
+                <ng-include src="'app/shift/editor/main.html'"></ng-include>
             </div>
         </div>
     </div>

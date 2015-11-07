@@ -2,7 +2,7 @@
 
 angular.module('app.shift').controller('shiftOrderListCtrl', ShiftOrderListCtrl);
 
-function ShiftOrderListCtrl($scope, currentDayService, shiftEditorService) {
+function ShiftOrderListCtrl($scope, commonUtils, currentDayService, shiftEditorService) {
     var vm = this;
     vm.gridOptions = {
         data: []
@@ -25,5 +25,11 @@ function ShiftOrderListCtrl($scope, currentDayService, shiftEditorService) {
         }
     ];
     vm.gridOptions.data = currentDayService.dayOrders;
+
+    shiftEditorService.listeners.shift.push(shiftChanged);
+
+    function shiftChanged(shift) {
+        commonUtils.selectEntityRows(shift.orders, vm.gridOptions, vm.gridApi);
+    }
 }
 

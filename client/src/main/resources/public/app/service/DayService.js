@@ -2,7 +2,7 @@
 
 angular.module('app.service').service('dayService', DayService);
 
-function DayService($http, $filter, dayRepository, workRepository, dayOrderService) {
+function DayService($http, dayRepository, workRepository, dayOrderService) {
 
     var baseUrl = "/api/pay/dayService";
     var service = {};
@@ -15,7 +15,6 @@ function DayService($http, $filter, dayRepository, workRepository, dayOrderServi
     service.getDays = getDays;
     service.createNewDay = createNewDay;
     service.getOrNewPayOrder = getOrNewPayOrder;
-    service.registerRowSelection = registerRowSelection;
     service.getClosestWorkingDate = getClosestWorkingDate;
     service.round = round;
     service.dayOrderService = dayOrderService;
@@ -87,18 +86,6 @@ function DayService($http, $filter, dayRepository, workRepository, dayOrderServi
         return function () {
             return {success: false, message: error.cause.message};
         };
-    }
-
-
-    function registerRowSelection($scope, gridApi, rowSelectionChanged) {
-        gridApi.selection.on.rowSelectionChangedBatch($scope, function (rows) {
-            angular.forEach(rows, function (row) {
-                rowSelectionChanged(row);
-            });
-        });
-        gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            rowSelectionChanged(row);
-        });
     }
 
     function round(value, decimal) {

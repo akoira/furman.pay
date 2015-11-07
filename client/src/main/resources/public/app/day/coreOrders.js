@@ -2,11 +2,10 @@
 
 angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 
-function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, currentDayService) {
+function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, dayService, currentDayService) {
     var vm = this;
     vm.day = currentDayService.day;
     vm.dayOrders = currentDayService.dayOrders;
-    vm.registerRowSelection = dayService.registerRowSelection;
     vm.moment = momentFrom;
     vm.isCollapsed = currentDayService.dayOrders.length > 0;
 
@@ -94,7 +93,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, dayService, curr
 
         vm.gridOptions.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
-            vm.registerRowSelection($scope, gridApi, rowSelectionChanged);
+            commonUtils.registerRowSelection($scope, gridApi, rowSelectionChanged);
         };
     }
 

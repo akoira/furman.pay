@@ -2,7 +2,7 @@
 
 angular.module('app.shift').controller('shiftWorkListCtrl', ShiftWorkListCtrl);
 
-function ShiftWorkListCtrl($scope, workRepository, shiftEditorService) {
+function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorService) {
     var vm = this;
     vm.gridOptions = {
         data: []
@@ -29,8 +29,14 @@ function ShiftWorkListCtrl($scope, workRepository, shiftEditorService) {
         }
     ];
 
+    shiftEditorService.listeners.shift.push(shiftChanged);
 
     initData();
+
+
+    function shiftChanged(shift) {
+        commonUtils.selectEntityRows(shift.works, vm.gridOptions, vm.gridApi);
+    }
 
     function initData() {
         workRepository.getAll().success(function (data) {

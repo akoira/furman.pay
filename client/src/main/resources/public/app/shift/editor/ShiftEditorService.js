@@ -5,23 +5,21 @@ angular.module('app.shift').service('shiftEditorService', ShiftEditorService);
 function ShiftEditorService($log, shiftRepository, currentDayService) {
     var service = {};
 
-    var shift = {
-        name: "",
-        day: "/api/pay/employee/" + currentDayService.day.id,
-        employees: [],
-        works: [],
-        orders: []
-    };
-
-
     var listeners = {
         employees: [],
         works: [],
         orders: [],
-        shift: []
+        shift: [],
+        clean: function clean() {
+            listeners.shift.length = 0;
+            listeners.orders.length = 0;
+            listeners.employees.length = 0;
+            listeners.works.length = 0;
+        }
     };
 
-    service.shift = shift;
+    service.shift = null;
+
     service.listeners = listeners;
 
     service.save = save;
@@ -29,6 +27,11 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
     service.addWork = addWork;
     service.addOrder = addOrder;
     service.setShift = setShift;
+    service.refreshView = refreshView;
+
+    function refreshView() {
+        fireShiftChanged(service.shift);
+    }
 
 
     function setShift(shift) {
@@ -37,18 +40,18 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
     }
 
     function addEmployee(employee) {
-        shift.employees.push("/api/pay/employee/" + employee.id);
+        service.shift.employees.push(employee);
         fireEmployeeAdded(employee);
     }
 
     function addOrder(order) {
-        shift.orders.push("/api/pay/dayOrder/" + order.id);
+        service.shift.orders.push(order);
         fireOrderAdded(order);
     }
 
 
     function addWork(work) {
-        shift.works.push("/api/pay/work/" + work.id);
+        service.shift.works.push(work);
         fireWorkAdded(work);
     }
 
@@ -79,8 +82,33 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
 
 
     function save() {
-        shift = shiftRepository.save(shift);
-        currentDayService.dayShifts.push(shift);
+        if (service.shift.id) {
+            shiftRepository.update(prepareToSave(service.shift));
+        } else {
+            var saved = shiftRepository.save(prepareToSave(service.shift))
+            service.shift.id = saved.id;
+            currentDayService.dayShifts.push(service.shift);
+            setShift(service.shift);
+        }
+    }
+
+    function prepareToSave(shift) {
+        var toSave = jQuery.extend(true, {}, shift);
+
+        angular.forEach(shift.employees, function (employee, index) {
+            toSave.employees[index] = "/api/pay/employee/" + employee.id;
+        });
+
+        angular.forEach(shift.works, function (work, index) {
+            toSave.works[index] = "/api/pay/work/" + work.id;
+        });
+
+        angular.forEach(shift.orders, function (order, index) {
+            toSave.orders[index] = "/api/pay/order/" + order.id;
+        });
+
+        toSave.day = "/api/pay/day/" + shift.day.id;
+        return toSave;
     }
 
     return service;

@@ -6,8 +6,6 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by akoiro on 10/18/15.
@@ -22,8 +20,6 @@ public class OrderValue {
 
     @NotNull
     private Double value;
-
-    private List<ShiftValue> shiftValues = new ArrayList<>();
 
     public Work getWork() {
         return work;

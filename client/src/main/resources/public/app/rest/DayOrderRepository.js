@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.rest').service('dayOrderRepository', DayOrderRepository);
+angular.module('app.rest').factory('dayOrderRepository', DayOrderRepository);
 
 function DayOrderRepository($resource) {
     var basePath = '/api/pay/dayOrder/:id';

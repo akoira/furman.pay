@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.rest').service('workRepository', WorkRepository);
+angular.module('app.rest').factory('workRepository', WorkRepository);
 
 function WorkRepository($http, $log) {
     var basePath = '/api/pay/work';
