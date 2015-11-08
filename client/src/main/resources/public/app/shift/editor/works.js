@@ -4,6 +4,7 @@ angular.module('app.shift').controller('shiftWorkListCtrl', ShiftWorkListCtrl);
 
 function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorService) {
     var vm = this;
+
     vm.gridOptions = {
         data: []
     };

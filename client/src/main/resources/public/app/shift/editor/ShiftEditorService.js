@@ -5,6 +5,8 @@ angular.module('app.shift').service('shiftEditorService', ShiftEditorService);
 function ShiftEditorService($log, shiftRepository, currentDayService) {
     var service = {};
 
+    var refreshData = false;
+
     var listeners = {
         employees: [],
         works: [],
@@ -35,24 +37,33 @@ function ShiftEditorService($log, shiftRepository, currentDayService) {
 
 
     function setShift(shift) {
+        refreshData = true;
         service.shift = shift;
+
         fireShiftChanged(shift);
+        refreshData = false;
     }
 
     function addEmployee(employee) {
-        service.shift.employees.push(employee);
-        fireEmployeeAdded(employee);
+        if (!refreshData) {
+            service.shift.employees.push(employee);
+            fireEmployeeAdded(employee);
+        }
     }
 
     function addOrder(order) {
-        service.shift.orders.push(order);
-        fireOrderAdded(order);
+        if (!refreshData) {
+            service.shift.orders.push(order);
+            fireOrderAdded(order);
+        }
     }
 
 
     function addWork(work) {
-        service.shift.works.push(work);
-        fireWorkAdded(work);
+        if (!refreshData) {
+            service.shift.works.push(work);
+            fireWorkAdded(work);
+        }
     }
 
     function fireShiftChanged(shift) {
