@@ -50,7 +50,7 @@ html, body {
     text-align: right;
 }
 
-#day-orders .grid .ui-grid-header-cell .ui-grid-cell-contents {
+.values-editor .grid .ui-grid-header-cell .ui-grid-cell-contents {
     height: 64px;
     white-space: normal;
     -ms-text-overflow: clip;

@@ -14,14 +14,6 @@ function DayShiftsCtrl($scope, $log, $timeout, currentDayService, shiftEditorSer
     vm.remove = remove;
     vm.addNew = addNew;
 
-    $timeout(function () {
-        if (shiftEditorService.shift) {
-            shiftEditorService.refreshView();
-        } else {
-            initSelected();
-        }
-    });
-
     function addNew() {
         var shift = create();
         shiftEditorService.setShift(shift);
