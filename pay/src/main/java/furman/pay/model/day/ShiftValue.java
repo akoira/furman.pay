@@ -17,7 +17,7 @@ public class ShiftValue {
 
     @DBRef
     @NotNull
-    private DayOrder dayOrder;
+    private DayOrder order;
 
     @DBRef
     @NotNull
@@ -34,19 +34,19 @@ public class ShiftValue {
         this.value = value;
     }
 
-    public DayOrder getDayOrder() {
-        return dayOrder;
-    }
-
-    public void setDayOrder(DayOrder dayOrder) {
-        this.dayOrder = dayOrder;
-    }
-
     public Work getWork() {
         return work;
     }
 
     public void setWork(Work work) {
         this.work = work;
+    }
+
+    public DayOrder getOrder() {
+        return order;
+    }
+
+    public void setOrder(DayOrder order) {
+        this.order = order;
     }
 }

@@ -71,6 +71,9 @@ function DayService($http, dayRepository, workRepository, dayOrderService) {
         return dayRepository.save(day);
     }
 
+    function prepareToSave(day) {
+    }
+
     function getOrNewPayOrder(order) {
         return $http.get(baseUrl + '/getOrNewPayOrder?orderId=' + order.id);
     }

@@ -6,6 +6,7 @@ function CommonUtils($filter) {
     var factory = this;
     factory.selectEntityRows = selectEntityRows;
     factory.registerRowSelection = registerRowSelection;
+    factory.removeFromArrayByFilter = removeFromArrayByFilter;
 
     function selectEntityRows(entitiesToSelect, gridOptions, gridApi) {
         gridApi.selection.clearSelectedRows();
@@ -28,6 +29,12 @@ function CommonUtils($filter) {
         });
     }
 
+    function removeFromArrayByFilter(dataArray, filter) {
+        var founds = $filter('filter')(dataArray, filter);
+        founds.forEach(function (found) {
+            dataArray.splice(dataArray.indexOf(found), 1);
+        })
+    }
 
     return factory;
 }

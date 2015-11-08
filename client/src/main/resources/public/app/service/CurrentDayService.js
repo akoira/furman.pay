@@ -16,7 +16,7 @@ function CurrentDayService(dayOrderService, dayShiftService) {
 
     function changeDay(newDay) {
         service.day = newDay;
-        service.dayOrders = dayOrderService.findAllForDay(newDay).then(function (data) {
+        dayOrderService.findAllForDay(newDay).then(function (data) {
             service.dayOrders = data.data;
         });
         dayShiftService.findAllForDay(newDay).then(function (data) {

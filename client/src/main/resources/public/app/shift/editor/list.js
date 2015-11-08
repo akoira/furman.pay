@@ -2,12 +2,17 @@
 
 angular.module('app.shift').controller('shiftValuesCtrl', ShiftValuesCtrl);
 
-function ShiftValuesCtrl($filter, shiftEditorService, dayService) {
+function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorService, dayService) {
     var vm = this;
     vm.gridOptions = {
         data: [],
         columnDefs: []
     };
+
+    vm.gridOptions.onRegisterApi = function (gridApi) {
+        vm.gridApi = gridApi;
+    };
+
 
     vm.gridOptions.columnDefs.push({
         "name": "order",
@@ -33,7 +38,8 @@ function ShiftValuesCtrl($filter, shiftEditorService, dayService) {
         })
 
         vm.gridOptions.columnDefs.push({
-            name: work.type + ".value",
+            name: work.type,
+            field: work.type + ".value",
             displayName: work.name + ' (смена)',
             enableCellEdit: true,
             enableColumnMenu: false,
@@ -46,8 +52,58 @@ function ShiftValuesCtrl($filter, shiftEditorService, dayService) {
 
 
     shiftEditorService.listeners.shift.push(shiftChanged);
-    shiftEditorService.listeners.orderAdded.push();
-    shiftEditorService.listeners.orderRemoved.push();
+    shiftEditorService.listeners.orderAdded.push(addOrder);
+    shiftEditorService.listeners.orderRemoved.push(removeOrder);
+
+    shiftEditorService.listeners.workAdded.push(addWork);
+    shiftEditorService.listeners.workRemoved.push(removeWork);
+
+
+    function removeOrder(shift, order) {
+        commonUtils.removeFromArrayByFilter(vm.gridOptions.data, {order: {id: order.id}});
+    }
+
+    function addOrder(shift, order) {
+        var row = {
+            order: order
+        };
+        angular.forEach(shift.works, function (work) {
+            addRowValues(row, shift, work);
+        });
+        vm.gridOptions.data.push(row);
+
+    }
+
+    function addRowValues(row, shift, work) {
+        var orderValue = $filter('filter')(row.order.orderValues, {work: {id: work.id}})[0];
+        row["order_" + work.type] = orderValue;
+        var shiftValue = $filter('filter')(shift.values, {work: {id: work.id}, order: {id: row.order.id}})[0];
+        row[work.type] = shiftValue;
+    }
+
+    function addWork(shift, work) {
+        vm.gridOptions.data.forEach(function (row) {
+            addRowValues(row, shift, work);
+        });
+        var founds = $filter('filter')(vm.gridOptions.columnDefs, {work: {id: work.id}});
+        founds.forEach(function (columnDef) {
+            columnDef.visible = true;
+        });
+        vm.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
+    }
+
+    function removeWork(shift, work) {
+        vm.gridOptions.data.forEach(function (row) {
+            row[work.type] = null;
+            row["order_" + work.type] = null;
+        });
+
+        var founds = $filter('filter')(vm.gridOptions.columnDefs, {work: {id: work.id}});
+        founds.forEach(function (columnDef) {
+            columnDef.visible = false;
+        });
+        vm.gridApi.core.notifyDataChange(uiGridConstants.dataChange.COLUMN);
+    }
 
 
     function shiftChanged(shift) {
@@ -61,16 +117,7 @@ function ShiftValuesCtrl($filter, shiftEditorService, dayService) {
 
 
         angular.forEach(shift.orders, function (order) {
-            var row = {
-                order: order,
-            };
-            angular.forEach(shift.works, function (work) {
-                var orderValue = $filter('filter')(order.orderValues, {work: {id: work.id}})[0];
-                row["order_" + work.type] = $filter('filter')(order.orderValues, {work: {id: work.id}})[0];
-                var shiftValue = $filter('filter')(shift.values, {work: {id: work.id}, order: {id: order.id}})[0];
-                row[work.type] = shiftValue;
-            });
-            vm.gridOptions.data.push(row);
+            addOrder(shift, order);
         })
     }
 
