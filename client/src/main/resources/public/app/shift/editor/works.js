@@ -12,7 +12,11 @@ function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorServi
     vm.gridOptions.onRegisterApi = function (gridApi) {
         vm.gridApi = gridApi;
         vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            shiftEditorService.addWork(row.entity);
+            if (row.isSelected) {
+                shiftEditorService.addWork(row.entity);
+            } else {
+                shiftEditorService.removeWork(row.entity);
+            }
         });
     };
 

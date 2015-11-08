@@ -11,7 +11,11 @@ function ShiftEmployeeListCtrl($scope, $log, commonUtils, employeeRepository, sh
     vm.gridOptions.onRegisterApi = function (gridApi) {
         vm.gridApi = gridApi;
         vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            shiftEditorService.addEmployee(row.entity);
+            if (row.isSelected) {
+                shiftEditorService.addEmployee(row.entity);
+            } else {
+                shiftEditorService.removeEmployee(row.entity);
+            }
         });
     };
 

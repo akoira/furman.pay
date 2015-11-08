@@ -37,7 +37,8 @@ function DayShiftsCtrl($scope, $log, $timeout, currentDayService, shiftEditorSer
             day: currentDayService.day,
             employees: [],
             works: [],
-            orders: []
+            orders: [],
+            values: []
         }
     }
 

@@ -11,7 +11,11 @@ function ShiftOrderListCtrl($scope, commonUtils, currentDayService, shiftEditorS
     vm.gridOptions.onRegisterApi = function (gridApi) {
         vm.gridApi = gridApi;
         vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            shiftEditorService.addOrder(row.entity);
+            if (row.isSelected) {
+                shiftEditorService.addOrder(row.entity);
+            } else {
+                shiftEditorService.removeOrder(row.entity);
+            }
         });
     };
 
