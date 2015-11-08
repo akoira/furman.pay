@@ -2,7 +2,7 @@
 
 angular.module('app.shift').service('shiftEditorService', ShiftEditorService);
 
-function ShiftEditorService($filter, $log, commonUtils, shiftRepository, currentDayService) {
+function ShiftEditorService($filter, $log, commonUtils, shiftRepository, currentDayService, dayShiftService) {
     var service = {};
 
     var listeners = {
@@ -64,8 +64,7 @@ function ShiftEditorService($filter, $log, commonUtils, shiftRepository, current
 
     function removeOrder(order) {
         if (listeners.enable) {
-            service.shift.orders.splice(service.shift.orders.indexOf(order), 1);
-            commonUtils.removeFromArrayByFilter(service.shift.values, {order: {id: order.id}});
+            dayShiftService.removeDayOrderFromDayShift(order, service.shift);
             listeners.orderRemoved.forEach(function (l) {
                 l(service.shift, order);
             })

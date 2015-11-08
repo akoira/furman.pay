@@ -2,17 +2,23 @@
 
 angular.module('app.service').service('currentDayService', CurrentDayService);
 
-function CurrentDayService(dayOrderService, dayShiftService) {
+function CurrentDayService($filter, commonUtils, dayOrderRepository, dayOrderService, dayShiftService) {
     var service = {};
     var listeners = [];
 
     service.day = null;
-    service.changeDay = changeDay;
     service.addListener = addListener;
     service.getDate = getDate;
     service.dateOf = dateOf;
     service.dayOrders = [];
     service.dayShifts = [];
+
+    service.addPayOrder = addPayOrder;
+    service.addDayOrder = addDayOrder;
+    service.getDayOrderByCoreOrderId = getDayOrderByCoreOrderId;
+    service.removeDayOrder = removeDayOrder;
+    service.changeDay = changeDay;
+
 
     function changeDay(newDay) {
         service.day = newDay;
@@ -24,6 +30,35 @@ function CurrentDayService(dayOrderService, dayShiftService) {
         });
         listeners.forEach(function (l) {
             l(newDay);
+        });
+    }
+
+    function getDayOrderByCoreOrderId(coreOrderId) {
+        var found = $filter('filter')(service.dayOrders, {payOrder: {orderId: coreOrderId}});
+        return found.length > 0 ? found[0] : null;
+    }
+
+
+    function addPayOrder(payOrder) {
+        var dayOrder = getDayOrderByCoreOrderId(payOrder.orderId);
+        if (!dayOrder) {
+            dayOrderService.createDayOrder(service.day, payOrder).then(function (data) {
+                addDayOrder(data.data);
+            });
+        }
+    }
+
+    function addDayOrder(dayOrder) {
+        service.dayOrders.push(dayOrder);
+    }
+
+    function removeDayOrder(dayOrder) {
+        service.dayOrders.splice(service.dayOrders.indexOf(dayOrder), 1);
+        $filter('filter')(service.dayShifts, function (dayShift) {
+            dayShiftService.removeDayOrderFromDayShift(dayOrder, dayShift);
+        });
+        dayOrderRepository.remove({
+            id: dayOrder.id
         });
     }
 

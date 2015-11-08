@@ -4,8 +4,7 @@ angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 
 function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, dayService, currentDayService) {
     var vm = this;
-    vm.day = currentDayService.day;
-    vm.dayOrders = currentDayService.dayOrders;
+    var dataLoading = false;
     vm.moment = momentFrom;
     vm.isCollapsed = currentDayService.dayOrders.length > 0;
 
@@ -19,7 +18,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
 
     function initOrderDate() {
         vm.orderDate = {
-            date: vm.dayDate,
+            date: currentDayService.getDate(),
             opened: false,
             format: 'dd-MM-yyyy',
             open: function ($event) {
@@ -97,48 +96,33 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
         };
     }
 
-    function removeDayOrder(row) {
-        var dayOrder = getDayOrderBy(row.entity.id);
-        if (dayOrder) {
-            vm.day.orders.splice(vm.day.orders.indexOf(dayOrder), 1);
-        }
-    }
-
     function rowSelectionChanged(row) {
+        if (dataLoading) {
+            return;
+        }
         if (row.isSelected) {
             dayService.getOrNewPayOrder(row.entity).success(function (order) {
-                addDayOrder(order);
+                currentDayService.addPayOrder(order);
             });
         } else {
-            removeDayOrder(row);
+            currentDayService.removeDayOrder(row);
         }
     }
 
-    function addDayOrder(payOrder) {
-        var dayOrder = getDayOrderBy(payOrder.orderId);
-        if (!dayOrder) {
-            dayService.dayOrderService.createDayOrder(vm.day, payOrder).then(function (data) {
-                currentDayService.dayOrders.push(data.data);
-            });
-        }
-    }
-
-    function getDayOrderBy(coreOrderId) {
-        var found = $filter('filter')(currentDayService.dayOrders, {payOrder: {orderId: coreOrderId}});
-        return found.length > 0 ? found[0] : null;
-    };
 
     function loadData() {
+        dataLoading = true;
         dayService.getOrders(vm.orderDate.date).success(function (data) {
             vm.gridOptions.data = data;
             $timeout(function () {
                 angular.forEach(vm.gridOptions.data, function (order) {
-                    var dayOrder = getDayOrderBy(order.id);
+                    var dayOrder = currentDayService.getDayOrderByCoreOrderId(order.id);
                     if (dayOrder) {
                         vm.gridApi.selection.selectRow(order);
                     }
                 });
             });
+            dataLoading = false;
         }).error(function (data) {
             $log.log(data);
         });
