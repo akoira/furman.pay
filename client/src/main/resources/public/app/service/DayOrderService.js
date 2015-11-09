@@ -38,6 +38,10 @@ function DayOrderService($http, dayOrderRepository) {
 
         toSave.day = "/api/pay/day/" + dayOrder.day.id;
         toSave.payOrder = "/api/pay/payOrder/" + dayOrder.payOrder.id;
+
+        toSave.orderValues.forEach(function (orderValue) {
+            orderValue.work = "/api/pay/work/" + orderValue.work.id;
+        });
         return toSave;
     }
 

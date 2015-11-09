@@ -155,9 +155,9 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
 
     function save() {
         if (service.shift.id) {
-            dayShiftRepository.update(prepareToSave(service.shift));
+            dayShiftService.update(service.shift);
         } else {
-            var saved = dayShiftRepository.save(prepareToSave(service.shift));
+            var saved = dayShiftService.save(service.shift);
             saved.$promise.then(function (result) {
                 service.shift.id = result.id;
                 dayEditorService.dayShifts.push(service.shift);
@@ -165,31 +165,6 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
             });
         }
     }
-
-    function prepareToSave(shift) {
-        var toSave = jQuery.extend(true, {}, shift);
-
-        shift.employees.forEach(function (employee, index) {
-            toSave.employees[index] = "/api/pay/employee/" + employee.id;
-        });
-
-        shift.works.forEach(function (work, index) {
-            toSave.works[index] = "/api/pay/work/" + work.id;
-        });
-
-        shift.orders.forEach(function (order, index) {
-            toSave.orders[index] = "/api/pay/order/" + order.id;
-        });
-
-        shift.values.forEach(function (value, index) {
-            toSave.values[index].order = "/api/pay/order/" + value.order.id;
-            toSave.values[index].work = "/api/pay/work/" + value.work.id;
-        });
-
-        toSave.day = "/api/pay/day/" + shift.day.id;
-        return toSave;
-    }
-
     return service;
 
 }

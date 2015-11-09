@@ -65,8 +65,9 @@ function DayEditorService($filter, commonUtils, dayOrderRepository, dayService, 
 
     function removeDayOrder(dayOrder) {
         service.dayOrders.splice(service.dayOrders.indexOf(dayOrder), 1);
-        $filter('filter')(service.dayShifts, function (dayShift) {
-            dayShiftService.removeDayOrderFromDayShift(dayOrder, dayShift);
+        var founds = $filter('filter')(service.dayShifts, {orders: {id: dayOrder.id}});
+        founds.forEach(function (found) {
+            dayShiftService.removeDayOrderFromDayShift(dayOrder, found);
         });
         dayOrderRepository.remove({
             id: dayOrder.id
