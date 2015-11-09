@@ -2,13 +2,14 @@
 
 angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 
-function DayOrdersCtrl(dayService, currentDayService) {
+function DayOrdersCtrl($scope, $log, dayOrderService, dayService, dayEditorService) {
     var vm = this;
     vm.round = dayService.round;
 
     initGridOptions();
 
-    vm.gridOptions.data = currentDayService.dayOrders;
+    vm.gridOptions.data = dayEditorService.dayOrders;
+
 
     function initGridOptions() {
         vm.gridOptions = {
@@ -37,6 +38,11 @@ function DayOrdersCtrl(dayService, currentDayService) {
 
         vm.gridOptions.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
+
+            vm.gridApi.edit.on.afterCellEdit($scope, function (rowEntity, colDef, newValue, oldValue) {
+                $log.log(rowEntity);
+                dayOrderService.update(rowEntity);
+            });
         };
     }
 

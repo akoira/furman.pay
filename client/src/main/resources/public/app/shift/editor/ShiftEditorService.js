@@ -2,7 +2,7 @@
 
 angular.module('app.shift').service('shiftEditorService', ShiftEditorService);
 
-function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, currentDayService, dayShiftService) {
+function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayEditorService, dayShiftService) {
     var service = {};
 
     var listeners = {
@@ -160,7 +160,7 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, curr
             var saved = dayShiftRepository.save(prepareToSave(service.shift));
             saved.$promise.then(function (result) {
                 service.shift.id = result.id;
-                currentDayService.dayShifts.push(service.shift);
+                dayEditorService.dayShifts.push(service.shift);
                 setShift(service.shift);
             });
         }

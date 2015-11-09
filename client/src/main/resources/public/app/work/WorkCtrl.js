@@ -2,7 +2,7 @@
 
 angular.module('app.work').controller('workCtrl', WorkCtrl);
 
-function WorkCtrl($scope, $http, $filter, $timeout, $log, $interval, workRepository) {
+function WorkCtrl($scope, workRepository) {
     var vm = this;
 
     vm.gridOptions = {

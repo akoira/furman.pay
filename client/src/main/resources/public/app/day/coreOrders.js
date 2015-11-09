@@ -2,11 +2,11 @@
 
 angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 
-function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, dayService, currentDayService) {
+function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, dayService, dayEditorService) {
     var vm = this;
     var dataLoading = false;
     vm.moment = momentFrom;
-    vm.isCollapsed = currentDayService.dayOrders.length > 0;
+    vm.isCollapsed = dayEditorService.dayOrders.length > 0;
 
     initOrderDate();
 
@@ -18,7 +18,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
 
     function initOrderDate() {
         vm.orderDate = {
-            date: currentDayService.getDate(),
+            date: dayEditorService.getDate(),
             opened: false,
             format: 'dd-MM-yyyy',
             open: function ($event) {
@@ -37,7 +37,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
         };
 
         dayService.getClosestWorkingDate().then(function (data) {
-            vm.orderDate.date = currentDayService.dateOf(data.data);
+            vm.orderDate.date = dayEditorService.dateOf(data.data);
             loadData();
         });
 
@@ -101,11 +101,9 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
             return;
         }
         if (row.isSelected) {
-            dayService.getOrNewPayOrder(row.entity).success(function (order) {
-                currentDayService.addPayOrder(order);
-            });
+            dayEditorService.selectCoreOrder(row.entity);
         } else {
-            currentDayService.removeDayOrder(row);
+            dayEditorService.deselectCoreOrder(row.entity);
         }
     }
 
@@ -116,7 +114,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
             vm.gridOptions.data = data;
             $timeout(function () {
                 angular.forEach(vm.gridOptions.data, function (order) {
-                    var dayOrder = currentDayService.getDayOrderByCoreOrderId(order.id);
+                    var dayOrder = dayEditorService.getDayOrderByCoreOrderId(order.id);
                     if (dayOrder) {
                         vm.gridApi.selection.selectRow(order);
                     }
@@ -125,6 +123,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
             dataLoading = false;
         }).error(function (data) {
             $log.log(data);
+            dataLoading = false;
         });
     }
 }

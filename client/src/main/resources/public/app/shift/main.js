@@ -7,11 +7,11 @@ angular.module('app.shift').directive('shiftItem', ShiftItemDirective);
 
 function DayShiftsCtrl($scope, $log, $timeout,
                        dayShiftRepository,
-                       currentDayService,
+                       dayEditorService,
                        shiftEditorService) {
     var vm = this;
-    vm.dayDate = currentDayService.getDate();
-    vm.dayShifts = currentDayService.dayShifts;
+    vm.dayDate = dayEditorService.getDate();
+    vm.dayShifts = dayEditorService.dayShifts;
     vm.isActive = isActive;
     vm.select = shiftEditorService.setShift;
     vm.remove = remove;
@@ -23,8 +23,8 @@ function DayShiftsCtrl($scope, $log, $timeout,
     }
 
     function initSelected() {
-        if (currentDayService.dayShifts.length > 0) {
-            shiftEditorService.setShift(currentDayService.dayShifts[0]);
+        if (dayEditorService.dayShifts.length > 0) {
+            shiftEditorService.setShift(dayEditorService.dayShifts[0]);
         } else {
             shiftEditorService.setShift(create());
         }
@@ -36,8 +36,8 @@ function DayShiftsCtrl($scope, $log, $timeout,
 
     function create() {
         return {
-            name: "Смена " + (currentDayService.dayShifts.length + 1),
-            day: currentDayService.day,
+            name: "Смена " + (dayEditorService.dayShifts.length + 1),
+            day: dayEditorService.day,
             employees: [],
             works: [],
             orders: [],
@@ -46,7 +46,7 @@ function DayShiftsCtrl($scope, $log, $timeout,
     }
 
     function remove(shift) {
-        currentDayService.dayShifts.splice(currentDayService.dayShifts.indexOf(shift), 1);
+        dayEditorService.dayShifts.splice(dayEditorService.dayShifts.indexOf(shift), 1);
         initSelected();
         dayShiftRepository.remove({
             id: shift.id

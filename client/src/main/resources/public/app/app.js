@@ -146,6 +146,7 @@ angular.module('app.day', ['ui.grid',
     'ui.grid.autoResize',
     'ui.grid.pinning',
     'ui.grid.edit',
+    'ui.grid.rowEdit',
     'ui.grid.cellNav',
     'ui.bootstrap.datepicker',
     'ui.bootstrap.collapse']);
@@ -159,8 +160,8 @@ angular.module('app.employee', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.co
 angular.module('app.shift', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
 
 
-app.run(function (currentDayService, dayService) {
+app.run(function (dayEditorService, dayService) {
     dayService.getOrNewDay(new Date()).success(function (day) {
-        currentDayService.changeDay(day);
+        dayEditorService.changeDay(day);
     });
 });

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.service').service('dayOrderService', DayOrderService);
+angular.module('app.service').factory('dayOrderService', DayOrderService);
 
 function DayOrderService($http, dayOrderRepository) {
     var baseUrl = "/api/pay/dayOrderService";
@@ -11,6 +11,7 @@ function DayOrderService($http, dayOrderRepository) {
     service.createDayOrder = createDayOrder;
     service.findAllForDay = findAllForDay;
     service.countForDay = countForDay;
+    service.update = update;
 
     function deleteByDay(day) {
         $http.put(baseUrl + "/deleteByDay", day);
@@ -26,6 +27,18 @@ function DayOrderService($http, dayOrderRepository) {
 
     function countForDay(day) {
         return $http.get(baseUrl + "/countForDay?dayId=" + day.id);
+    }
+
+    function update(dayOrder) {
+        return dayOrderRepository.update(prepareToSave(dayOrder));
+    }
+
+    function prepareToSave(dayOrder) {
+        var toSave = jQuery.extend(true, {}, dayOrder);
+
+        toSave.day = "/api/pay/day/" + dayOrder.day.id;
+        toSave.payOrder = "/api/pay/payOrder/" + dayOrder.payOrder.id;
+        return toSave;
     }
 
     return service;

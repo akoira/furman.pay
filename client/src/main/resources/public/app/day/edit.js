@@ -2,11 +2,13 @@
 
 angular.module('app.day').controller('dayEditCtrl', DayEditCtrl);
 
-function DayEditCtrl(dayService, currentDayService) {
+function DayEditCtrl(dayService, dayEditorService) {
     var vm = this;
-    vm.day = currentDayService.day;
-    vm.dayDate = currentDayService.getDate();
+    vm.day = dayEditorService.day;
+    vm.dayDate = dayEditorService.getDate();
     vm.save = save;
+    vm.dayOrders = dayEditorService.dayOrders;
+    vm.dayShifts = dayEditorService.dayShifts;
 
     function save() {
         dayService.save(vm.day);

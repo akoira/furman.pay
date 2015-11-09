@@ -3,13 +3,13 @@
 angular.module('app.dashboard', [])
     .controller('dashboardCtrl', DashboardCtrl);
 
-function DashboardCtrl($scope, currentDayService) {
+function DashboardCtrl($scope, dayEditorService) {
     var vm = this;
-    if (currentDayService.day) {
-        vm.currentDate = currentDayService.getDate();
+    if (dayEditorService.day) {
+        vm.currentDate = dayEditorService.getDate();
     }
 
-    currentDayService.addListener(function (day) {
-        vm.currentDate = currentDayService.getDate();
+    dayEditorService.addListener(function (day) {
+        vm.currentDate = dayEditorService.getDate();
     });
 }

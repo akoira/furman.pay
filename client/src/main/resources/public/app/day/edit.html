@@ -1,9 +1,9 @@
 <div class="well-sm" ng-controller="dayEditCtrl as vm">
     <div class="panel panel-info">
         <div class="panel-heading">
-            Заказы на {{(vm.dayDate | date:'yyyy-MM-dd')}}
-            <button ng-click="vm.save()" ng-disabled="vm.day.orders.length < 1"
-                    class="btn btn-success btn-sm fa fa-save"></button>
+            <h4><span class="label label-primary">{{(vm.dayDate | date:'yyyy-MM-dd')}}</span></h4>
+            Заказы: <span class="badge">{{vm.dayOrders.length}}</span>
+            Смены: <span class="badge">{{vm.dayShifts.length}}</span>
         </div>
     </div>
     <div class="row">

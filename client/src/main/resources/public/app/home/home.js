@@ -3,23 +3,23 @@
 angular.module('app.home', ['mwl.calendar', 'ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-function HomeController($scope, $location, $filter, $log, currentDayService, dayService, dayOrderService) {
+function HomeController($scope, $location, $filter, $log, dayEditorService, dayService, dayOrderService) {
 
     var vm = this;
 
-    if (!currentDayService.day) {
+    if (!dayEditorService.day) {
         dayService.getOrNewDay(new Date()).success(function (day) {
-            currentDayService.changeDay(day);
+            dayEditorService.changeDay(day);
         });
     }
 
     vm.calendar = {
         view: "month",
-        day: currentDayService.day ? currentDayService.getDate() : new Date(),
+        day: dayEditorService.day ? dayEditorService.getDate() : new Date(),
         events: [],
         createNewDay: function (calendarDate) {
             dayService.getOrNewDay(calendarDate).success(function (day) {
-                currentDayService.changeDay(day);
+                dayEditorService.changeDay(day);
                 var query = {day: {id: day.id}};
                 var event = $filter('filter')(vm.calendar.events, query);
                 if (event.length == 0) {
@@ -58,7 +58,7 @@ function HomeController($scope, $location, $filter, $log, currentDayService, day
             resizable: false,
             day: day
         };
-        var date = moment(currentDayService.dateOf(day.date));
+        var date = moment(dayEditorService.dateOf(day.date));
         event.title = date.format('YYYY-MM-DD');
         event.startsAt = date.toDate();
         event.endAt = date.toDate();
