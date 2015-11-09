@@ -3,7 +3,7 @@ package furman.pay.conroller;
 import furman.pay.model.day.Day;
 import furman.pay.model.day.DayShift;
 import furman.pay.model.day.QDayShift;
-import furman.pay.repository.ShiftRepository;
+import furman.pay.repository.DayShiftRepository;
 import furman.pay.repository.day.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DayShiftService {
     @Autowired
-    private ShiftRepository shiftRepository;
+    private DayShiftRepository dayShiftRepository;
 
     @Autowired
     private DayRepository dayRepository;
@@ -24,7 +24,7 @@ public class DayShiftService {
     @RequestMapping("/dayShiftService/findAllForDay")
     public Iterable<DayShift> findAllForDay(@RequestParam(required = true) String dayId) {
         Day day = dayRepository.findOne(dayId);
-        Iterable<DayShift> result = shiftRepository.findAll(QDayShift.dayShift.day.eq(day));
+        Iterable<DayShift> result = dayShiftRepository.findAll(QDayShift.dayShift.day.eq(day));
         return result;
     }
 }

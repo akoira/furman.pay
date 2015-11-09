@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('app.rest').factory('shiftRepository', ShiftRepository);
+angular.module('app.rest').factory('dayShiftRepository', DayShiftRepository);
 
-function ShiftRepository($resource) {
-    var basePath = '/api/pay/shift/:id';
+function DayShiftRepository($resource) {
+    var basePath = '/api/pay/dayShift/:id';
     var service = $resource(basePath, {id: '@id'}, {
         'getAll': {method: 'GET', isArray: true},
         'get': {method: 'GET'},

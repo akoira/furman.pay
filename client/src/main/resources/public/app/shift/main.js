@@ -5,7 +5,10 @@ angular.module('app.shift').controller('dayShiftsCtrl', DayShiftsCtrl);
 
 angular.module('app.shift').directive('shiftItem', ShiftItemDirective);
 
-function DayShiftsCtrl($scope, $log, $timeout, currentDayService, shiftEditorService, shiftRepository) {
+function DayShiftsCtrl($scope, $log, $timeout,
+                       dayShiftRepository,
+                       currentDayService,
+                       shiftEditorService) {
     var vm = this;
     vm.dayDate = currentDayService.getDate();
     vm.dayShifts = currentDayService.dayShifts;
@@ -45,7 +48,7 @@ function DayShiftsCtrl($scope, $log, $timeout, currentDayService, shiftEditorSer
     function remove(shift) {
         currentDayService.dayShifts.splice(currentDayService.dayShifts.indexOf(shift), 1);
         initSelected();
-        shiftRepository.remove({
+        dayShiftRepository.remove({
             id: shift.id
         });
     }

@@ -8,7 +8,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 /**
  * Created by akoiro on 9/19/15.
  */
-@RepositoryRestResource(collectionResourceRel = "shift", path = "shift")
-public interface ShiftRepository extends MongoRepository<DayShift, String>,
+@RepositoryRestResource(collectionResourceRel = "dayShift", path = "dayShift")
+public interface DayShiftRepository extends MongoRepository<DayShift, String>,
         QueryDslPredicateExecutor<DayShift> {
 }
