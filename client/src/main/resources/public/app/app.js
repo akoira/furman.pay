@@ -162,7 +162,10 @@ angular.module('app.shift', ['ui.grid',
     'ui.grid.pinning',
     'ui.grid.edit',
     'ui.grid.rowEdit',
-    'ui.grid.cellNav', 'ui.bootstrap.collapse']);
+    'ui.grid.cellNav', 'ui.bootstrap.collapse', 'blockUI']);
+angular.module('app.shift').config(function (blockUIConfig) {
+    blockUIConfig.message = '...';
+});
 
 
 app.run(function (dayEditorService, dayService) {

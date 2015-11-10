@@ -34,8 +34,9 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
             name: "order_" + work.type,
             field: "order_" + work.type + ".value",
             displayName: work.name + ' (заказ)',
-            cellTemplate: "<div class=\"ui-grid-cell-contents\" title=\"TOOLTIP\">{{grid.appScope.round(COL_FIELD) CUSTOM_FILTERS}}</div>",
-            //cellTemplate: "<div>{{grid.appScope.round(row.entity.order_" + work.type + ".value, 3)}}</div>",
+            cellTemplate: "<div class=\"ui-grid-cell-contents\" title=\"TOOLTIP\">{{grid.appScope.round(COL_FIELD, 3) CUSTOM_FILTERS}}</div>",
+            //cellTemplate: "<div >{{grid.appScope.round(COL_FIELD) CUSTOM_FILTERS}}</div>",
+            //cellTemplate: "<div class=\"ui-grid-cell-contents\" title=\"TOOLTIP\">{{grid.appScope.round(row.entity.order_" + work.type + ".value, 3)}}</div>",
             enableCellEdit: false,
             enableColumnMenu: false,
             enableSorting: false,
@@ -125,8 +126,7 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
             }
         });
 
-
-        angular.forEach(shift.orders, function (order) {
+        angular.forEach(shift ? shift.orders : [], function (order) {
             addOrder(shift, order);
         })
     }

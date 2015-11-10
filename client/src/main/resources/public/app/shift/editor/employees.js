@@ -4,6 +4,7 @@ angular.module('app.shift').controller('shiftEmployeeListCtrl', ShiftEmployeeLis
 
 function ShiftEmployeeListCtrl($scope, $log, commonUtils, employeeRepository, shiftEditorService) {
     var vm = this;
+    vm.sendEvents = true;
     vm.gridOptions = {
         data: []
     };
@@ -11,10 +12,12 @@ function ShiftEmployeeListCtrl($scope, $log, commonUtils, employeeRepository, sh
     vm.gridOptions.onRegisterApi = function (gridApi) {
         vm.gridApi = gridApi;
         vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            if (row.isSelected) {
-                shiftEditorService.addEmployee(row.entity);
-            } else {
-                shiftEditorService.removeEmployee(row.entity);
+            if (vm.sendEvents) {
+                if (row.isSelected) {
+                    shiftEditorService.addEmployee(row.entity);
+                } else {
+                    shiftEditorService.removeEmployee(row.entity);
+                }
             }
         });
     };
@@ -38,7 +41,9 @@ function ShiftEmployeeListCtrl($scope, $log, commonUtils, employeeRepository, sh
     initData();
 
     function shiftChanged(shift) {
+        vm.sendEvents = false;
         commonUtils.selectEntityRows(shift ? shift.employees : [], vm.gridOptions, vm.gridApi);
+        vm.sendEvents = true;
     }
 
     function initData() {

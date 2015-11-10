@@ -6,8 +6,8 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
     var service = {};
 
     var listeners = {
-        enable: true,
-        employees: [],
+        employeeAdded: [],
+        employeeRemoved: [],
         works: [],
         orderAdded: [],
         orderRemoved: [],
@@ -18,7 +18,8 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
             listeners.shift.length = 0;
             listeners.orderAdded.length = 0;
             listeners.orderRemoved.length = 0;
-            listeners.employees.length = 0;
+            listeners.employeeAdded.length = 0;
+            listeners.employeeRemoved.length = 0;
             listeners.workAdded.length = 0;
             listeners.workRemoved.length = 0;
         }
@@ -44,62 +45,54 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
 
 
     function setShift(shift) {
-        listeners.enable = false;
         service.shift = shift;
-
         fireShiftChanged(shift);
-        listeners.enable = true;
     }
 
     function addEmployee(employee) {
-        if (listeners.enable) {
-            service.shift.employees.push(employee);
-            fireEmployeeAdded(employee);
-        }
+        service.shift.employees.push(employee);
+        listeners.employeeAdded.forEach(function (l) {
+            l(service.shift, employee);
+        })
     }
 
     function removeEmployee(employee) {
-
+        service.shift.employees.splice(service.shift.employees.indexOf(employee), 1);
+        listeners.employeeRemoved.forEach(function (l) {
+            l(service.shift, employee);
+        })
     }
 
     function removeOrder(order) {
-        if (listeners.enable) {
-            dayShiftService.removeDayOrderFromDayShift(order, service.shift);
-            listeners.orderRemoved.forEach(function (l) {
-                l(service.shift, order);
-            })
-        }
+        dayShiftService.removeDayOrderFromDayShift(order, service.shift);
+        listeners.orderRemoved.forEach(function (l) {
+            l(service.shift, order);
+        })
     }
 
     function addOrder(order) {
-        if (listeners.enable) {
-            service.shift.orders.push(order);
-            addValuesForOrder(order);
-            listeners.orderAdded.forEach(function (l) {
-                l(service.shift, order);
-            })
-        }
+        service.shift.orders.push(order);
+        addValuesForOrder(order);
+        listeners.orderAdded.forEach(function (l) {
+            l(service.shift, order);
+        })
     }
 
     function removeWork(work) {
-        if (listeners.enable) {
-            service.shift.works.splice(service.shift.works.indexOf(work), 1);
-            commonUtils.removeFromArrayByFilter(service.shift.values, {work: {id: work.id}});
-            listeners.workRemoved.forEach(function (l) {
-                l(service.shift, work);
-            })
-        }
+        service.shift.works.splice(service.shift.works.indexOf(work), 1);
+        commonUtils.removeFromArrayByFilter(service.shift.values, {work: {id: work.id}});
+        listeners.workRemoved.forEach(function (l) {
+            l(service.shift, work);
+        })
     }
 
 
     function addWork(work) {
-        if (listeners.enable) {
-            service.shift.works.push(work);
-            addValuesForWork(work);
-            listeners.workAdded.forEach(function (l) {
-                l(service.shift, work);
-            })
-        }
+        service.shift.works.push(work);
+        addValuesForWork(work);
+        listeners.workAdded.forEach(function (l) {
+            l(service.shift, work);
+        })
     }
 
     function getValue(order, work) {
@@ -147,12 +140,6 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
     }
 
 
-    function fireEmployeeAdded(employee) {
-        angular.forEach(listeners.employees, function (listener) {
-            listener(employee);
-        });
-    }
-
     function save() {
         if (service.shift.id) {
             dayShiftService.update(service.shift);
@@ -165,6 +152,7 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
             });
         }
     }
+
     return service;
 
 }

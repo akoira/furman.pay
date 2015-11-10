@@ -5,6 +5,8 @@ angular.module('app.shift').controller('shiftWorkListCtrl', ShiftWorkListCtrl);
 function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorService) {
     var vm = this;
 
+    vm.sendEvents = true;
+
     vm.gridOptions = {
         data: []
     };
@@ -12,10 +14,12 @@ function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorServi
     vm.gridOptions.onRegisterApi = function (gridApi) {
         vm.gridApi = gridApi;
         vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            if (row.isSelected) {
-                shiftEditorService.addWork(row.entity);
-            } else {
-                shiftEditorService.removeWork(row.entity);
+            if (vm.sendEvents) {
+                if (row.isSelected) {
+                    shiftEditorService.addWork(row.entity);
+                } else {
+                    shiftEditorService.removeWork(row.entity);
+                }
             }
         });
     };
@@ -40,7 +44,9 @@ function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorServi
 
 
     function shiftChanged(shift) {
-        commonUtils.selectEntityRows(shift.works, vm.gridOptions, vm.gridApi);
+        vm.sendEvents = false;
+        commonUtils.selectEntityRows(shift ? shift.works : [], vm.gridOptions, vm.gridApi);
+        vm.sendEvents = true;
     }
 
     function initData() {

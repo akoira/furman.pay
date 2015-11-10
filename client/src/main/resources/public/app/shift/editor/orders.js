@@ -4,6 +4,9 @@ angular.module('app.shift').controller('shiftOrderListCtrl', ShiftOrderListCtrl)
 
 function ShiftOrderListCtrl($scope, commonUtils, dayEditorService, shiftEditorService) {
     var vm = this;
+
+    vm.sendEvents = true;
+
     vm.gridOptions = {
         data: []
     };
@@ -11,10 +14,12 @@ function ShiftOrderListCtrl($scope, commonUtils, dayEditorService, shiftEditorSe
     vm.gridOptions.onRegisterApi = function (gridApi) {
         vm.gridApi = gridApi;
         vm.gridApi.selection.on.rowSelectionChanged($scope, function (row) {
-            if (row.isSelected) {
-                shiftEditorService.addOrder(row.entity);
-            } else {
-                shiftEditorService.removeOrder(row.entity);
+            if (vm.sendEvents) {
+                if (row.isSelected) {
+                    shiftEditorService.addOrder(row.entity);
+                } else {
+                    shiftEditorService.removeOrder(row.entity);
+                }
             }
         });
     };
@@ -33,7 +38,9 @@ function ShiftOrderListCtrl($scope, commonUtils, dayEditorService, shiftEditorSe
     shiftEditorService.listeners.shift.push(shiftChanged);
 
     function shiftChanged(shift) {
+        vm.sendEvents = false;
         commonUtils.selectEntityRows(shift ? shift.orders : [], vm.gridOptions, vm.gridApi);
+        vm.sendEvents = true;
     }
 }
 

@@ -13,6 +13,7 @@ dependencies {
     compile 'org.webjars:angular-ui-router:0.2.15'
     compile 'org.webjars.bower:angular-ui-grid:3.0.7'
     compile 'org.webjars.bower:angular-bootstrap-calendar:0.15.5'
+    compile 'org.webjars.bower:angular-block-ui:0.2.0'
 
 
     compile 'org.webjars:momentjs:2.10.6'
