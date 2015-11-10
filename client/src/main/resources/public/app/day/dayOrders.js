@@ -2,9 +2,9 @@
 
 angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 
-function DayOrdersCtrl($scope, $log, dayOrderService, dayService, dayEditorService) {
+function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, dayEditorService) {
     var vm = this;
-    vm.round = dayService.round;
+    vm.round = commonUtils.round;
 
     initGridOptions();
 

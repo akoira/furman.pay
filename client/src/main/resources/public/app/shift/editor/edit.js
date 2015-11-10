@@ -7,7 +7,7 @@ function ShiftEditCtrl($scope, shiftEditorService, dayEditorService) {
     var vm = this;
 
     vm.dataLoading = false;
-    vm.collapsed = true;
+    vm.collapsed = false;
     vm.shift = null;
     vm.addNew = addNew;
     vm.save = save;

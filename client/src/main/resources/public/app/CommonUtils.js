@@ -7,6 +7,7 @@ function CommonUtils($filter) {
     factory.selectEntityRows = selectEntityRows;
     factory.registerRowSelection = registerRowSelection;
     factory.removeFromArrayByFilter = removeFromArrayByFilter;
+    factory.round = round;
 
     function selectEntityRows(entitiesToSelect, gridOptions, gridApi) {
         gridApi.selection.clearSelectedRows();
@@ -34,6 +35,11 @@ function CommonUtils($filter) {
         founds.forEach(function (found) {
             dataArray.splice(dataArray.indexOf(found), 1);
         })
+    }
+
+    function round(value, decimal) {
+        var m = Math.pow(10, decimal);
+        return Math.round(value * m) / m;
     }
 
     return factory;

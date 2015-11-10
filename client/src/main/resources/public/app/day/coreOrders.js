@@ -6,7 +6,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
     var vm = this;
     var dataLoading = false;
     vm.moment = momentFrom;
-    vm.isCollapsed = dayEditorService.dayOrders.length > 0;
+    vm.collapsed = dayEditorService.dayOrders.length > 0;
 
     initOrderDate();
 

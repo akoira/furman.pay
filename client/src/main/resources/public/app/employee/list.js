@@ -11,9 +11,6 @@ function EmployeeListCtrl($scope, $timeout, $log, employeeEditorService, employe
 
     employeeEditorService.addEmployeeAddedListener(function (employee) {
         vm.gridOptions.data.push(employee);
-        $timeout(function () {
-            vm.gridApi.selection.selectRow(employee);
-        });
     });
 
     function initGridOptions() {

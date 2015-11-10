@@ -157,7 +157,12 @@ angular.module('app.work', ['ui.grid',
     'ui.grid.rowEdit',
     'ui.grid.cellNav', 'ui.bootstrap.collapse']);
 angular.module('app.employee', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
-angular.module('app.shift', ['ui.grid', "ui.grid.selection", 'ui.bootstrap.collapse']);
+angular.module('app.shift', ['ui.grid',
+    'ui.grid.autoResize',
+    'ui.grid.pinning',
+    'ui.grid.edit',
+    'ui.grid.rowEdit',
+    'ui.grid.cellNav', 'ui.bootstrap.collapse']);
 
 
 app.run(function (dayEditorService, dayService) {

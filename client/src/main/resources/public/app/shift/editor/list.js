@@ -4,9 +4,13 @@ angular.module('app.shift').controller('shiftValuesCtrl', ShiftValuesCtrl);
 
 function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorService, dayService) {
     var vm = this;
+
+    vm.round = commonUtils.round;
+
     vm.gridOptions = {
         data: [],
-        columnDefs: []
+        columnDefs: [],
+        appScopeProvider: vm
     };
 
     vm.gridOptions.onRegisterApi = function (gridApi) {
@@ -30,9 +34,13 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
             name: "order_" + work.type,
             field: "order_" + work.type + ".value",
             displayName: work.name + ' (заказ)',
-            enableCellEdit: true,
+            cellTemplate: "<div class=\"ui-grid-cell-contents\" title=\"TOOLTIP\">{{grid.appScope.round(COL_FIELD) CUSTOM_FILTERS}}</div>",
+            //cellTemplate: "<div>{{grid.appScope.round(row.entity.order_" + work.type + ".value, 3)}}</div>",
+            enableCellEdit: false,
             enableColumnMenu: false,
             enableSorting: false,
+            enablePinning: false,
+            type: "number",
             width: 150,
             work: work
         })
@@ -44,6 +52,8 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
             enableCellEdit: true,
             enableColumnMenu: false,
             enableSorting: false,
+            enablePinning: false,
+            type: "number",
             width: 150,
             work: work
         })

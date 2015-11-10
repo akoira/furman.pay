@@ -16,7 +16,6 @@ function DayService($http, dayRepository, workRepository, dayOrderService) {
     service.createNewDay = createNewDay;
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.getClosestWorkingDate = getClosestWorkingDate;
-    service.round = round;
     service.dayOrderService = dayOrderService;
     service.dayOrders = [];
 
@@ -89,11 +88,6 @@ function DayService($http, dayRepository, workRepository, dayOrderService) {
         return function () {
             return {success: false, message: error.cause.message};
         };
-    }
-
-    function round(value, decimal) {
-        var m = Math.pow(10, decimal);
-        return Math.round(value * m) / m;
     }
 
     return service;
