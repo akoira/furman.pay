@@ -5,6 +5,8 @@
                 {{vm.shift.name}}
                 <button class="btn btn-success btn-sm fa fa-save" ng-click="vm.save()"
                         ng-disabled="form.$invalid || vm.dataLoading"></button>
+                <button type="button" class="btn btn-primary btn-sm fa fa-plus"
+                        ng-disabled="vm.dataLoading" ng-click="vm.addNew()"></button>
                 <i class="fa fa-chevron-circle-right pull-right"
                    ng-class="{'fa-chevron-circle-down': !vm.collapsed, 'fa-chevron-circle-right': vm.collapsed}"
                    ng-click="vm.collapsed = !vm.collapsed"></i>

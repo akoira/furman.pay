@@ -33,7 +33,7 @@ function ShiftOrderListCtrl($scope, commonUtils, dayEditorService, shiftEditorSe
     shiftEditorService.listeners.shift.push(shiftChanged);
 
     function shiftChanged(shift) {
-        commonUtils.selectEntityRows(shift.orders, vm.gridOptions, vm.gridApi);
+        commonUtils.selectEntityRows(shift ? shift.orders : [], vm.gridOptions, vm.gridApi);
     }
 }
 

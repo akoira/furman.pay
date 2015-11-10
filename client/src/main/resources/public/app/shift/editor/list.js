@@ -110,7 +110,7 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
         vm.gridOptions.data.splice(0, vm.gridOptions.data.length);
         vm.gridOptions.columnDefs.forEach(function (columnDef) {
             if (columnDef.name != 'order') {
-                var founds = $filter('filter')(shift.works, {id: columnDef.work.id})
+                var founds = $filter('filter')(shift ? shift.works : [], {id: columnDef.work.id})
                 columnDef.visible = (founds.length > 0);
             }
         });

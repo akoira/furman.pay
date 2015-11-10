@@ -38,7 +38,7 @@ function ShiftEmployeeListCtrl($scope, $log, commonUtils, employeeRepository, sh
     initData();
 
     function shiftChanged(shift) {
-        commonUtils.selectEntityRows(shift.employees, vm.gridOptions, vm.gridApi);
+        commonUtils.selectEntityRows(shift ? shift.employees : [], vm.gridOptions, vm.gridApi);
     }
 
     function initData() {

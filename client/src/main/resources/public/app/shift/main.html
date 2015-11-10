@@ -1,13 +1,14 @@
 <div class="well-sm" ng-controller="dayShiftsCtrl as vm">
     <div class="panel panel-info">
         <div class="panel-heading">
-            Смены на {{(vm.dayDate | date:'yyyy-MM-dd')}}
-            <button ng-click="vm.addNew()" class="btn btn-success btn-sm fa fa-plus"></button>
+            <h4><span class="label label-primary">{{(vm.dayEditorService.getDate() | date:'yyyy-MM-dd')}}</span></h4>
+            Заказы: <span class="badge">{{vm.dayEditorService.dayOrders.length}}</span>
+            Смены: <span class="badge">{{vm.dayEditorService.dayShifts.length}}</span>
         </div>
         <div class="panel-body">
             <div class="col-md-2">
                 <div class="list-group">
-                    <div ng-repeat="shift in vm.dayShifts">
+                    <div ng-repeat="shift in vm.dayEditorService.dayShifts">
                         <shift-item shift="shift" active="vm.isActive(shift)" select="vm.select"
                                     remove="vm.remove"></shift-item>
                     </div>

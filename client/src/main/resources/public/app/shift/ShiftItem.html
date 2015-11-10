@@ -1,11 +1,12 @@
 <div class="list-group-item" ng-class="{active: active}" ng-click="select(shift)">
     <div class="list-group-item-heading">
         {{shift.name}}
-        <span class="label label-primary">Заказы: {{shift.orders.length}}</span>
-        <span class="label label-primary">Сотрудники: {{shift.employees.length}}</span>
-        <span class="label label-primary">Работы: {{shift.works.length}}</span>
-        <span class="label label-primary">Значения: {{shift.values.length}}</span>
-
         <button class="btn btn-danger btn-xs fa fa-trash-o pull-right" ng-click="remove(shift)"></button>
+        <ul>
+            <li class="">Заказы: {{shift.orders.length}}</li>
+            <li class="">Сотрудники: {{shift.employees.length}}</li>
+            <li class="">Работы: {{shift.works.length}}</li>
+            <li class="">Значения: {{shift.values.length}}</li>
+        </ul>
     </div>
 </div>
