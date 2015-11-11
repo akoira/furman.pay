@@ -26,6 +26,8 @@ dependencies {
 
     compile 'mysql:mysql-connector-java:5.1.36'
 
+    compile "com.github.mongobee:mongobee:0.11"
+
     testCompile "junit:junit:4.12"
     testCompile "org.springframework:spring-test:4.1.7.RELEASE"
 }

@@ -1,0 +1,186 @@
+[
+  {
+    "name": "Распил",
+    "type": "cutting",
+    "unit": "м.п.",
+    "index": 0,
+    "rate": 0.0,
+    "commonDataType": "cutting",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "Оклейка прямолинейная 18мм",
+    "type": "directGlueing18",
+    "unit": "м.п.",
+    "index": 1,
+    "rate": 0.0,
+    "commonDataType": "directGlueing",
+    "commonDataNames": [
+      "1х22",
+      "2х22"
+    ]
+  },
+  {
+    "name": "Оклейка прямолинейная 36мм",
+    "type": "directGlueing36",
+    "unit": "м.п.",
+    "index": 2,
+    "rate": 0.0,
+    "commonDataType": "directGlueing",
+    "commonDataNames": [
+      "1х32",
+      "1х42",
+      "2х32",
+      "2х42"
+    ]
+  },
+  {
+    "name": "Оклейка криволинейная 18мм",
+    "type": "curveGlueing18",
+    "unit": "м.п.",
+    "index": 3,
+    "rate": 0.0,
+    "commonDataType": "curveGlueing",
+    "commonDataNames": [
+      "1х22",
+      "2х22"
+    ]
+  },
+  {
+    "name": "Оклейка криволинейная 36мм",
+    "type": "curveGlueing36",
+    "unit": "м.п.",
+    "index": 4,
+    "rate": 0.0,
+    "commonDataType": "curveGlueing",
+    "commonDataNames": [
+      "1х32",
+      "1х42",
+      "2х32",
+      "2х42"
+    ]
+  },
+  {
+    "name": "Фрезеровка 18мм",
+    "type": "milling18",
+    "unit": "м.п.",
+    "index": 5,
+    "rate": 0.0,
+    "commonDataType": "milling",
+    "commonDataNames": [
+      "ДВП.*",
+      "ДСП 10.*",
+      "ДСП 16.*",
+      "ДСП 18.*",
+      "ЛМДФ 10.*",
+      "ЛМДФ 19.*"
+    ]
+  },
+  {
+    "name": "Фрезеровка 36мм",
+    "type": "milling36",
+    "unit": "м.п.",
+    "index": 6,
+    "rate": 0.0,
+    "commonDataType": "milling",
+    "commonDataNames": [
+      "ДСП 28.*",
+      "ДСП 36.*",
+      "Постворминг 38.*",
+      "Постформинг 28.*",
+      "Постформинг 38.*",
+      "Скинали"
+    ]
+  },
+  {
+    "name": "Фрезеровка под петли",
+    "type": "drilling",
+    "unit": "шт.",
+    "index": 7,
+    "rate": 0.0,
+    "commonDataType": "drilling",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "Фрезеровка под ручки",
+    "type": "drillingForHandle",
+    "unit": "шт.",
+    "index": 8,
+    "rate": 0.0,
+    "commonDataType": "",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "Паз",
+    "type": "groove",
+    "unit": "м.п.",
+    "index": 9,
+    "rate": 0.0,
+    "commonDataType": "groove",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "Угол. распил",
+    "type": "angle",
+    "unit": "м.п.",
+    "index": 10,
+    "rate": 0.0,
+    "commonDataType": "angle",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "Склейка",
+    "type": "patch",
+    "unit": "м.кв.",
+    "index": 11,
+    "rate": 0.0,
+    "commonDataType": "patch",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "Срез",
+    "type": "cutoff",
+    "unit": "м.п.",
+    "index": 12,
+    "rate": 0.0,
+    "commonDataType": "cutoff",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "П-во Z-фасада",
+    "type": "zfacadeService",
+    "unit": "шт.",
+    "index": 13,
+    "rate": 0.0,
+    "commonDataType": "zfacadeService",
+    "commonDataNames": [
+      ".*"
+    ]
+  },
+  {
+    "name": "П-во AGT-фасада",
+    "type": "agtfacadeService",
+    "unit": "шт.",
+    "index": 14,
+    "rate": 0.0,
+    "commonDataType": "agtfacadeService",
+    "commonDataNames": [
+      ".*"
+    ]
+  }
+]
+

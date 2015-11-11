@@ -6,8 +6,6 @@ dependencies {
     compile 'com.mysema.querydsl:querydsl-mongodb:3.6.+'
 
     compile "org.apache.commons:commons-lang3:3.+"
-
-    compile "com.github.mongobee:mongobee:0.11"
 }
 
 querydsl {

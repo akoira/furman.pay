@@ -5,6 +5,7 @@ import org.mongodb.morphia.annotations.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * akoiro - 10/22/15.
@@ -27,6 +28,10 @@ public class Work extends AObject {
     private Double rate;
 
     private String description;
+
+    private String commonDataType;
+
+    private List<String> commonDataNames;
 
     public String getType() {
         return type;
@@ -62,21 +67,27 @@ public class Work extends AObject {
     }
 
 
-    public static Work valueOf(String type, String name, String unit, int index) {
-        Work work = new Work();
-        work.setType(type);
-        work.setName(name);
-        work.setUnit(unit);
-        work.setIndex(index);
-        work.setRate(0.0);
-        return work;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCommonDataType() {
+        return commonDataType;
+    }
+
+    public void setCommonDataType(String commonDataType) {
+        this.commonDataType = commonDataType;
+    }
+
+    public List<String> getCommonDataNames() {
+        return commonDataNames;
+    }
+
+    public void setCommonDataNames(List<String> commonDataNames) {
+        this.commonDataNames = commonDataNames;
     }
 }

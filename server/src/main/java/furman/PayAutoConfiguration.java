@@ -1,5 +1,6 @@
 package furman;
 
+import com.github.mongobee.Mongobee;
 import furman.pay.PayConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -16,6 +17,12 @@ import org.springframework.web.servlet.DispatcherServlet;
 public class PayAutoConfiguration extends AbstractModuleAutoConfiguration {
     public static final String SERVLET_NAME = "payServlet";
     public static final String REGISTRATION_NAME = "payRegistration";
+
+    @Value(value = "${furman.pay.mongoDbName}")
+    private String mongoDbName;
+
+    @Value(value = "${furman.pay.mongoDbHost}")
+    private String mongoDbHost;
 
     @Value("${furman.pay.path}")
     private String path;
@@ -44,4 +51,12 @@ public class PayAutoConfiguration extends AbstractModuleAutoConfiguration {
     protected Class getConfigurationClass() {
         return PayConfiguration.class;
     }
+
+    @Bean
+    public Mongobee mongobee() {
+        Mongobee runner = new Mongobee(String.format("mongodb://%s:27017/%s", mongoDbHost, mongoDbName));
+        runner.setChangeLogsScanPackage("furman.pay.changelogs");
+        return runner;
+    }
+
 }
