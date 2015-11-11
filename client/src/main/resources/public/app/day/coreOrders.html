@@ -1,6 +1,5 @@
 <div class="panel panel-info" ng-controller="coreOrdersCtrl as vm">
-    <div class="panel-heading">Выбрать заказы. Выбрано:
-        <span class="label" ng-class="{'label-primary': vm.dayOrders.length, 'label-warning': !vm.dayOrders.length}">{{vm.dayOrders.length}}</span>
+    <div class="panel-heading">Выбрать заказы.
         <i class="fa fa-chevron-circle-right pull-right"
            ng-class="{'fa-chevron-circle-down': !vm.collapsed, 'fa-chevron-circle-right': vm.collapsed}"
            ng-click="vm.collapsed = !vm.collapsed"></i>

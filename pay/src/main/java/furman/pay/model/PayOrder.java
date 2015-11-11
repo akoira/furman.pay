@@ -18,6 +18,8 @@ public class PayOrder extends AObject {
 
     private Long number;
 
+    private String status;
+
     private LocalDate createdDate;
 
     private LocalDate workedDate;
@@ -83,5 +85,13 @@ public class PayOrder extends AObject {
 
     public void setCustomer(PayCustomer customer) {
         this.customer = customer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

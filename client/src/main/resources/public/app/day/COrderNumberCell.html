@@ -1,0 +1,4 @@
+<div class='truncate'>
+    <i class="fa fa-circle {{grid.appScope.getStatusClass(row.entity.status)}}"></i>
+    {{('0'+row.entity.createdDailySheet.date[1]).slice(-2)}}-{{row.entity.orderNumber}}/{{row.entity.customer.name}}
+</div>

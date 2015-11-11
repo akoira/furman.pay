@@ -6,9 +6,11 @@ function ShiftOrderListCtrl($scope, commonUtils, dayEditorService, shiftEditorSe
     var vm = this;
 
     vm.sendEvents = true;
+    vm.getStatusClass = getStatusClass;
 
     vm.gridOptions = {
-        data: []
+        data: [],
+        appScopeProvider: vm
     };
 
     vm.gridOptions.onRegisterApi = function (gridApi) {
@@ -29,7 +31,7 @@ function ShiftOrderListCtrl($scope, commonUtils, dayEditorService, shiftEditorSe
             "field": "order",
             "displayName": "Заказ",
             "enableCellEdit": false,
-            "cellTemplate": "<div>{{('0'+row.entity.payOrder.createdDate[1]).slice(-2)}}-{{row.entity.payOrder.number}}/{{row.entity.payOrder.name}}</div>",
+            "cellTemplate": "app/day/POrderNumberCell.html",
             "enableColumnMenu": false
         }
     ];
@@ -41,6 +43,10 @@ function ShiftOrderListCtrl($scope, commonUtils, dayEditorService, shiftEditorSe
         vm.sendEvents = false;
         commonUtils.selectEntityRows(shift ? shift.orders : [], vm.gridOptions, vm.gridApi);
         vm.sendEvents = true;
+    }
+
+    function getStatusClass(status) {
+        return status == "design" ? "order-status-design" : "order-status-production";
     }
 }
 

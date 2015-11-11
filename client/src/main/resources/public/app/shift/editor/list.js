@@ -6,6 +6,7 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
     var vm = this;
 
     vm.round = commonUtils.round;
+    vm.getStatusClass = getStatusClass;
 
     vm.gridOptions = {
         data: [],
@@ -22,7 +23,7 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
         "name": "order",
         "displayName": "Заказ",
         "enableCellEdit": false,
-        "cellTemplate": "<div>{{('0'+row.entity.order.payOrder.createdDate[1]).slice(-2)}}-{{row.entity.order.payOrder.number}}/{{row.entity.order.payOrder.name}}</div>",
+        "cellTemplate": "app/shift/editor/OrderNumberCell.html",
         "pinnedLeft": true,
         "enableColumnMenu": false,
         "enableSorting": false,
@@ -131,4 +132,7 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
         })
     }
 
+    function getStatusClass(status) {
+        return status == "design" ? "order-status-design" : "order-status-production";
+    }
 }

@@ -29,12 +29,8 @@ function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorServi
         {
             field: "name",
             displayName: "Услуга",
-            enableColumnMenu: false
-        },
-        {
-            field: "unit",
-            displayName: "Единица изм.",
-            enableColumnMenu: false
+            enableColumnMenu: false,
+            cellTemplate: "<div class='truncate'>{{row.entity.name}} ({{row.entity.unit}})</div>"
         }
     ];
 

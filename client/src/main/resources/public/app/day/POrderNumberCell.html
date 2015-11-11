@@ -1,0 +1,4 @@
+<div class='truncate'>
+    <i class="fa fa-circle {{grid.appScope.getStatusClass(row.entity.payOrder.status)}}"></i>
+    {{('0'+row.entity.payOrder.createdDate[1]).slice(-2)}}-{{row.entity.payOrder.number}}/{{row.entity.payOrder.customer.name}}
+</div>

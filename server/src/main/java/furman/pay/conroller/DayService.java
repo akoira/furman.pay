@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * akoiro - 9/24/15.
@@ -64,7 +62,7 @@ public class DayService {
 
     @RequestMapping("/dayService/getOrders")
     public Iterable<Order> getOrders(@RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return orderRepository.findAll(QOrder.order.workedDailySheet.date.eq(date).and(QOrder.order.status.eq(OrderStatus.production)));
+        return orderRepository.findAll(QOrder.order.createdDailySheet.date.eq(date).and(QOrder.order.status.in(OrderStatus.design, OrderStatus.production)), QOrder.order.customer.name.asc());
     }
 
     @RequestMapping("/dayService/getOrderCountsPerDay")
@@ -118,31 +116,8 @@ public class DayService {
             customer = payCustomerRepository.save(customer);
             payOrder.setCustomer(customer);
 
-            ArrayList<WorkValue> values = new ArrayList<>();
-            Iterable<Work> works = workRepository.findAll(QWork.work.index.asc());
-            works.forEach(work -> {
-                WorkValue workValue = new WorkValue();
-                workValue.setType(work.getCommonDataType());
-                workValue.setDisplayName(work.getCommonDataType());
-                workValue.setName(work.getCommonDataType());
-                workValue.setValue(0.0);
-                workValue.setWork(work);
-                Iterable<CommonData> commonDatas = commonDataRepository.findAll(QCommonData.commonData.order.eq(order));
-                commonDatas.forEach(commonData -> {
-                    List<String> names = work.getCommonDataNames();
-                    names.forEach(name -> {
-                        if (commonData.getName().matches(name)) {
-                            workValue.setValue(workValue.getValue() + commonData.getCount());
-                            workValue.setType(commonData.getType());
-                            workValue.setDisplayName(commonData.getService());
-                            workValue.setName(commonData.getName());
-                        }
-                    });
-                });
-
-
-            });
-            payOrder.setWorkValues(values);
+            payOrder.setWorkValues(CreateWorkValues.valueOf(workRepository.findAll(QWork.work.index.asc()),
+                    commonDataRepository.findAll(QCommonData.commonData.order.eq(order))).create());
             payOrder = payOrderRepository.save(payOrder);
         }
         return payOrder;
@@ -155,8 +130,9 @@ public class DayService {
         payOrder.setNumber(order.getOrderNumber());
         payOrder.setName(order.getName());
         payOrder.setCreatedDate(order.getCreatedDailySheet().getDate());
-        payOrder.setWorkedDate(order.getWorkedDailySheet().getDate());
+        payOrder.setWorkedDate(order.getWorkedDailySheet() != null ? order.getWorkedDailySheet().getDate() : null);
         payOrder.setReadyDate(order.getReadyDate());
+        payOrder.setStatus(order.getStatus().name());
 
         return payOrder;
     }

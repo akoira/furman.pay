@@ -7,6 +7,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
     var dataLoading = false;
     vm.moment = momentFrom;
     vm.collapsed = dayEditorService.dayOrders.length > 0;
+    vm.getStatusClass = getStatusClass;
 
     initOrderDate();
 
@@ -64,29 +65,22 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
                 field: "orderNumber",
                 displayName: "Номер",
                 enableColumnMenu: false,
-                cellTemplate: "<div class='truncate'>{{('0'+row.entity.createdDailySheet.date[1]).slice(-2)}}-{{row.entity.orderNumber}}/{{row.entity.name}}</div>",
-                width: "40%"
+                cellTemplate: "app/day/COrderNumberCell.html",
+                width: "50%",
             },
             {
                 field: "createdDailySheet.date",
-                displayName: "Дата соз-я",
+                displayName: "Дата",
                 enableColumnMenu: false,
                 cellTemplate: "<div>{{grid.appScope.moment(row.entity.createdDailySheet.date).toDate() | date:'yyyy-MM-dd'}}</div>",
-                width: "20%"
+                width: "22%"
             },
             {
-                field: "createdDailySheet.date",
-                displayName: "Дата пр-ва",
+                field: "name",
+                displayName: "Название",
                 enableColumnMenu: false,
-                cellTemplate: "<div>{{grid.appScope.moment(row.entity.workedDailySheet.date).toDate() | date:'yyyy-MM-dd'}}</div>",
-                width: "20%"
-            },
-            {
-                field: "readyDate",
-                displayName: "Дата г-ти",
-                enableColumnMenu: false,
-                cellTemplate: "<div>{{grid.appScope.moment(row.entity.readyDate).toDate() | date:'yyyy-MM-dd'}}</div>",
-                width: "20%"
+                cellTemplate: "<div>{{row.entity.name}}</div>",
+                width: "25%"
             }
         ];
 
@@ -119,11 +113,15 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
                         vm.gridApi.selection.selectRow(order);
                     }
                 });
+                dataLoading = false;
             });
-            dataLoading = false;
         }).error(function (data) {
             $log.log(data);
             dataLoading = false;
         });
+    }
+
+    function getStatusClass(status) {
+        return status == "design" ? "order-status-design" : "order-status-production";
     }
 }

@@ -5,6 +5,7 @@ angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, dayEditorService) {
     var vm = this;
     vm.round = commonUtils.round;
+    vm.getStatusClass = getStatusClass;
 
     initGridOptions();
 
@@ -24,7 +25,7 @@ function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, d
                 "field": "order",
                 "displayName": "Заказ",
                 "enableCellEdit": false,
-                "cellTemplate": "<div>{{('0'+row.entity.payOrder.createdDate[1]).slice(-2)}}-{{row.entity.payOrder.number}}/{{row.entity.payOrder.name}}</div>",
+                "cellTemplate": "app/day/POrderNumberCell.html",
                 "pinnedLeft": true,
                 "enableColumnMenu": false,
                 "enableSorting": false,
@@ -74,5 +75,9 @@ function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, d
             enableSorting: false,
             width: 150
         };
+    }
+
+    function getStatusClass(status) {
+        return status == "design" ? "order-status-design" : "order-status-production";
     }
 }
