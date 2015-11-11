@@ -38,6 +38,7 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
     service.removeOrder = removeOrder;
     service.setShift = setShift;
     service.refreshView = refreshView;
+    service.updateForRow = updateForRow;
 
     function refreshView() {
         fireShiftChanged(service.shift);
@@ -139,6 +140,9 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
         });
     }
 
+    function updateForRow() {
+        return dayShiftService.update(service.shift).$promise;
+    }
 
     function save() {
         if (service.shift.id) {

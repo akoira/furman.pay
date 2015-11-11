@@ -2,11 +2,12 @@
 
 angular.module('app.shift').controller('shiftValuesCtrl', ShiftValuesCtrl);
 
-function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorService, dayService) {
+function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEditorService, dayService) {
     var vm = this;
 
     vm.round = commonUtils.round;
     vm.getStatusClass = getStatusClass;
+    vm.saveRow = saveRow;
 
     vm.gridOptions = {
         data: [],
@@ -16,6 +17,7 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
 
     vm.gridOptions.onRegisterApi = function (gridApi) {
         vm.gridApi = gridApi;
+        vm.gridApi.rowEdit.on.saveRow($scope, vm.saveRow);
     };
 
 
@@ -135,4 +137,9 @@ function ShiftValuesCtrl($filter, uiGridConstants, commonUtils, shiftEditorServi
     function getStatusClass(status) {
         return status == "design" ? "order-status-design" : "order-status-production";
     }
+
+    function saveRow(rowEntity) {
+        vm.gridApi.rowEdit.setSavePromise(rowEntity, shiftEditorService.updateForRow());
+    }
+
 }
