@@ -68,7 +68,7 @@ public class DayService {
 
     @RequestMapping("/dayService/getOrderCountsPerDay")
     public Iterable<DateWithOrderCount> getOrderCountsPerDay() {
-        return orderRepository.getCountsPerDay(OrderStatus.production);
+        return orderRepository.getCountsPerDay(OrderStatus.production, OrderStatus.design);
     }
 
     @RequestMapping("/dayService/getDay")

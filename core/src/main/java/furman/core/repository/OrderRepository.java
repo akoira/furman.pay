@@ -19,6 +19,6 @@ import org.springframework.stereotype.Repository;
 @RepositoryRestResource(collectionResourceRel = "order", path = "order")
 public interface OrderRepository extends JpaRepository<Order, Long>, QueryDslPredicateExecutor<Order>, JpaSpecificationExecutor {
 
-    @Query(value = "select new furman.core.model.DateWithOrderCount(count(o), date(o.workedDailySheet.date)) from Order o where o.status = :orderStatus group by date(o.workedDailySheet.date)")
-    Iterable<DateWithOrderCount> getCountsPerDay(@Param(value = "orderStatus") OrderStatus orderStatus);
+    @Query(value = "select new furman.core.model.DateWithOrderCount(count(o), date(o.workedDailySheet.date)) from Order o where o.status in :orderStatus group by date(o.workedDailySheet.date)")
+    Iterable<DateWithOrderCount> getCountsPerDay(@Param(value = "orderStatus") OrderStatus... orderStatus);
 }
