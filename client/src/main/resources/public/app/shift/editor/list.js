@@ -12,7 +12,10 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
     vm.gridOptions = {
         data: [],
         columnDefs: [],
-        appScopeProvider: vm
+        appScopeProvider: vm,
+        minRowsToShow: 15,
+        showGridFooter: true,
+        showColumnFooter: true
     };
 
     vm.gridOptions.onRegisterApi = function (gridApi) {
@@ -59,6 +62,9 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
             enablePinning: false,
             type: "number",
             width: 150,
+            footerCellTemplate: "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div> {{ col.getAggregationText() + ( col.getAggregationValue() CUSTOM_FILTERS )}}</div></div>",
+            aggregationType: aggregationType,
+            aggregationHideLabel: true,
             work: work
         })
 
@@ -72,6 +78,16 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
     shiftEditorService.listeners.workAdded.push(addWork);
     shiftEditorService.listeners.workRemoved.push(removeWork);
 
+
+    function aggregationType(visibleRows, self) {
+        var result = 0;
+        angular.forEach(visibleRows, function (row) {
+            var value = eval("row.entity." + self.colDef.field);
+            result += value;
+        });
+        result = vm.round(result, 3);
+        return result;
+    }
 
     function removeOrder(shift, order) {
         commonUtils.removeFromArrayByFilter(vm.gridOptions.data, {order: {id: order.id}});

@@ -14,9 +14,9 @@ apply plugin: 'war'
 apply plugin: 'spring-boot'
 
 dependencies {
-    compile project(':client')
     compile project(':core')
     compile project(':pay')
+    compile project(':client')
 
     //    compile "org.springframework.boot:spring-boot-starter-security:$springBootVersion"
 

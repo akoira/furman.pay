@@ -18,7 +18,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
  * Created by akoiro on 9/14/15.
  */
 @Configuration
-@EnableMongoRepositories(basePackages = "furman.pay.repository.")
+@EnableMongoRepositories(basePackages = {"furman.pay.repository", "furman.pay.repository.day"})
 public class PayConfiguration extends RepositoryRestConfigurerAdapter {
 
     @Override

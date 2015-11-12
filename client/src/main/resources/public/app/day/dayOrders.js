@@ -16,7 +16,7 @@ function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, d
         vm.gridOptions = {
             data: [],
             appScopeProvider: vm,
-            minRowsToShow: 20,
+            minRowsToShow: 15,
             showGridFooter: true,
             showColumnFooter: true
         };

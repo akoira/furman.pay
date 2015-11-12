@@ -19,7 +19,7 @@ hibernate:
   ejb:
     naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
 
-#logging:
-#  file: mongodb.log
-#  level:
-#    org.springframework.data.mongodb.repository: 'DEBUG'
+logging:
+  file: mongodb.log
+  level:
+    org.springframework.data.mongodb.repository: 'WARN'

@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  * Created by akoiro on 9/14/15.
  */
 @Configuration
-@EnableJpaRepositories(basePackages = "furman.core.repository.", entityManagerFactoryRef = "mysqlEntityManager")
+@EnableJpaRepositories(basePackages = "furman.core.repository", entityManagerFactoryRef = "mysqlEntityManager")
 public class CoreConfiguration extends RepositoryRestMvcConfiguration{
 
     @Bean
