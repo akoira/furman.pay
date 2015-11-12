@@ -112,7 +112,8 @@ function ShiftEditorService($filter, $log, commonUtils, dayShiftRepository, dayE
                 value = {
                     work: work,
                     order: order,
-                    value: $filter('filter')(order.orderValues, {work: {id: work.id}})[0].value
+                    //value: $filter('filter')(order.orderValues, {work: {id: work.id}})[0].value
+                    value: 0.0
                 }
                 service.shift.values.push(value);
             }
