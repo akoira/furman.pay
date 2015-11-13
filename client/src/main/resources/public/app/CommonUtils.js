@@ -2,7 +2,7 @@
 
 angular.module('app').factory('commonUtils', CommonUtils);
 
-function CommonUtils($filter) {
+function CommonUtils($timeout, $filter) {
     var factory = this;
     factory.selectEntityRows = selectEntityRows;
     factory.registerRowSelection = registerRowSelection;
@@ -13,9 +13,16 @@ function CommonUtils($filter) {
         gridApi.selection.clearSelectedRows();
         angular.forEach(entitiesToSelect, function (entity) {
             var founds = $filter('filter')(gridOptions.data, {id: entity.id});
-            angular.forEach(founds, function (found) {
-                gridApi.selection.selectRow(found);
-            })
+            if (founds.length > 0) {
+                angular.forEach(founds, function (found) {
+                    gridApi.selection.selectRow(found);
+                })
+            } else {
+                gridOptions.data.unshift(entity);
+                $timeout(function () {
+                    gridApi.selection.selectRow(entity);
+                }, 100);
+            }
         });
     }
 

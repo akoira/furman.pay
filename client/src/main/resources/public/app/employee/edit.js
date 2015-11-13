@@ -22,12 +22,17 @@ function EmployeeEditCtrl($scope, $http, $log, employeeEditorService, employeeRe
     function save() {
         vm.dataLoading = true;
         if (vm.employee.id) {
-            employeeRepository.save(vm.employee);
+            employeeRepository.update(vm.employee).$promise.then(function (data) {
+                vm.dataLoading = false;
+                vm.employee = null;
+            });
         } else {
-            employeeRepository.create(vm.employee);
-            employeeEditorService.employeeAdded(vm.employee);
+            employeeRepository.save(vm.employee).$promise.then(function (data) {
+                vm.employee.id = data.id;
+                employeeEditorService.employeeAdded(vm.employee);
+                vm.dataLoading = false;
+                vm.employee = null;
+            });
         }
-        vm.employee = null;
-        vm.dataLoading = false;
     }
 }

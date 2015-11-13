@@ -47,9 +47,9 @@ function ShiftEmployeeListCtrl($scope, $log, commonUtils, employeeRepository, sh
     }
 
     function initData() {
-        employeeRepository.getAll().success(function (data) {
+        employeeRepository.getAllVisible().$promise.then(function (data) {
             vm.gridOptions.data = data._embedded.employee;
-        }).error(function (data) {
+        }, function (data) {
             $log.log(data);
         });
     }

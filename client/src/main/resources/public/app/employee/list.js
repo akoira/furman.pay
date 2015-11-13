@@ -20,7 +20,11 @@ function EmployeeListCtrl($scope, $timeout, $log, employeeEditorService, employe
             enableRowHeaderSelection: false,
             multiSelect: false,
             modifierKeysToMultiSelect: false,
-            noUnselect: true
+            noUnselect: true,
+            minRowsToShow: 15,
+            //paginationPageSizes: [20],
+            //paginationPageSize: 20,
+            //useExternalPagination: true
         };
         vm.gridOptions.onRegisterApi = function (gridApi) {
             vm.gridApi = gridApi;
@@ -60,16 +64,18 @@ function EmployeeListCtrl($scope, $timeout, $log, employeeEditorService, employe
     function remove() {
         var rows = vm.gridApi.selection.getSelectedRows();
         if (rows.length) {
-            employeeRepository.archive(rows[0]);
-            var index = vm.gridOptions.data.indexOf(rows[0]);
-            vm.gridOptions.data.splice(index, 1);
+            rows[0].archived = true;
+            employeeRepository.archive(rows[0]).$promise.then(function (data) {
+                var index = vm.gridOptions.data.indexOf(rows[0]);
+                vm.gridOptions.data.splice(index, 1);
+            });
         }
     }
 
     function initData() {
-        employeeRepository.getAll().success(function (data) {
+        employeeRepository.getAllVisible().$promise.then(function (data) {
             vm.gridOptions.data = data._embedded.employee;
-        }).error(function (data) {
+        }, function (data) {
             $log.log(data);
         });
     }

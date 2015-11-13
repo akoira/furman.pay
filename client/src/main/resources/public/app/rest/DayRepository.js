@@ -8,9 +8,9 @@ function DayRepository($resource, $log) {
         'getAll': {method: 'GET', isArray: true},
         'get': {method: 'GET'},
         'save': {method: 'POST'},
-        'update': {method: 'PUT'},
+        'update': {method: 'PATCH'},
         'archive': {
-            method: 'PUT',
+            method: 'PATCH',
             transformRequest: function (data, headersGetter) {
                 data.archived = true;
             }
