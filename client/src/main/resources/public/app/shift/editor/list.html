@@ -1,4 +1,5 @@
-<div class="values-editor panel panel-info" ng-controller="shiftValuesCtrl as vm">
+<div class="values-editor panel panel-info" ng-controller="shiftValuesCtrl as vm"
+     ng-class="{'hidden': vm.isNew(), 'show': !vm.isNew()}">
     <div class="panel-heading">
         Заказы
     </div>

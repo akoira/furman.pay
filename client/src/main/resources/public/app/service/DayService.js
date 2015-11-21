@@ -17,6 +17,7 @@ function DayService($http, dayRepository, workRepository, dayOrderService) {
     service.getOrNewPayOrder = getOrNewPayOrder;
     service.getClosestWorkingDate = getClosestWorkingDate;
     service.dayOrderService = dayOrderService;
+    service.getPayOrderInfo = getPayOrderInfo;
     service.dayOrders = [];
 
     workRepository.getAll().success(function (data) {
@@ -75,6 +76,10 @@ function DayService($http, dayRepository, workRepository, dayOrderService) {
 
     function getOrNewPayOrder(order) {
         return $http.get(baseUrl + '/getOrNewPayOrder?orderId=' + order.id);
+    }
+
+    function getPayOrderInfo(payOrderId) {
+        return $http.get(baseUrl + '/getPayOrderInfo?payOrderId=' + payOrderId);
     }
 
 

@@ -8,6 +8,7 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
     vm.round = commonUtils.round;
     vm.getStatusClass = getStatusClass;
     vm.saveRow = saveRow;
+    vm.isNew = isNew;
 
     vm.gridOptions = {
         data: [],
@@ -78,6 +79,10 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
     shiftEditorService.listeners.workAdded.push(addWork);
     shiftEditorService.listeners.workRemoved.push(removeWork);
 
+
+    function isNew() {
+        return shiftEditorService.isNew();
+    }
 
     function aggregationType(visibleRows, self) {
         var result = 0;

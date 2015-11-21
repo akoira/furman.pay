@@ -8,6 +8,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
     vm.moment = momentFrom;
     vm.collapsed = dayEditorService.dayOrders.length > 0;
     vm.getStatusClass = getStatusClass;
+    vm.openCoreOrderDetails = openCoreOrderDetails;
 
     initOrderDate();
 
@@ -123,5 +124,9 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
 
     function getStatusClass(status) {
         return status == "design" ? "order-status-design" : "order-status-production";
+    }
+
+    function openCoreOrderDetails(entity) {
+        $log.log(entity);
     }
 }

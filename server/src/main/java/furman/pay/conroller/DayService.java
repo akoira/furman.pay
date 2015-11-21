@@ -4,8 +4,8 @@ import furman.core.model.*;
 import furman.core.repository.CommonDataRepository;
 import furman.core.repository.OrderRepository;
 import furman.pay.model.*;
-import furman.pay.model.day.Day;
-import furman.pay.model.day.QDay;
+import furman.pay.model.day.*;
+import furman.pay.repository.DayShiftRepository;
 import furman.pay.repository.PayCustomerRepository;
 import furman.pay.repository.PayOrderRepository;
 import furman.pay.repository.WorkRepository;
@@ -45,6 +45,9 @@ public class DayService {
 
     @Autowired
     private WorkRepository workRepository;
+
+    @Autowired
+    private DayShiftRepository dayShiftRepository;
 
     @Autowired
     private PayCustomerRepository payCustomerRepository;
@@ -122,6 +125,24 @@ public class DayService {
         }
         return payOrder;
     }
+
+    @RequestMapping("/dayService/getPayOrderInfo")
+    public PayOrderInfo getPayOrderInfo(@RequestParam(value = "payOrderId") String payOrderId) {
+        PayOrderInfo payOrderInfo = new PayOrderInfo();
+        PayOrder payOrder = payOrderRepository.findOne(payOrderId);
+        payOrderInfo.setPayOrder(payOrder);
+        Iterable<DayOrder> dayOrders = dayOrderRepository.findAll(QDayOrder.dayOrder.payOrder.eq(payOrder), QDayOrder.dayOrder.day.date.asc());
+        dayOrders.forEach(dayOrder -> {
+            payOrderInfo.getDayOrders().add(dayOrder);
+            Iterable<DayShift> dayShifts = dayShiftRepository.findAll(QDayShift.dayShift.orders.contains(dayOrder));
+            dayShifts.forEach(dayShift -> {
+                payOrderInfo.getDayShifts().add(dayShift);
+            });
+
+        });
+        return payOrderInfo;
+    }
+
 
     private PayOrder convert(Order order) {
         PayOrder payOrder = new PayOrder();

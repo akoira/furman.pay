@@ -14,7 +14,8 @@ var app = angular.module('app', [
     'app.version',
     'app.day',
     'app.home',
-    'app.work'
+    'app.work',
+    'app.order'
 ]).
     config(['eehNavigationProvider',
         '$stateProvider',
@@ -33,7 +34,7 @@ var app = angular.module('app', [
 
             initLeftMenu();
 
-            $urlRouterProvider.otherwise('/');
+            $urlRouterProvider.otherwise('/order');
 
             initStates();
 
@@ -71,9 +72,18 @@ var app = angular.module('app', [
 
             function initStates() {
                 $stateProvider
+                    .state('order', {
+                        url: "/order",
+                        views: {
+                            '': {
+                                templateUrl: 'app/order/main.html'
+
+                            }
+                        }
+                    })
                     .state('dashboard', {
                         abstract: true,
-                        templateUrl: "app/dashboard/dashboard.html",
+                        templateUrl: "app/dashboard/dashboard.html"
                         //resolve: {
                         //    init: function (currentDayService, dayService) {
                         //        //dayService.getOrNewDay(new Date()).success(function (day) {
@@ -149,7 +159,8 @@ angular.module('app.day', ['ui.grid',
     'ui.grid.rowEdit',
     'ui.grid.cellNav',
     'ui.bootstrap.datepicker',
-    'ui.bootstrap.collapse']);
+    'ui.bootstrap.collapse',
+    'ui.bootstrap.modal']);
 angular.module('app.work', ['ui.grid',
     'ui.grid.autoResize',
     'ui.grid.pinning',
@@ -163,6 +174,13 @@ angular.module('app.shift', ['ui.grid',
     'ui.grid.edit',
     'ui.grid.rowEdit',
     'ui.grid.cellNav', 'ui.bootstrap.collapse', 'blockUI']);
+angular.module('app.order', ['ui.grid',
+    'ui.grid.autoResize',
+    'ui.grid.pinning',
+    'ui.grid.edit',
+    'ui.grid.rowEdit',
+    'ui.grid.cellNav', 'ui.bootstrap.collapse', 'blockUI']);
+
 angular.module('app.shift').config(function (blockUIConfig) {
     blockUIConfig.message = '...';
 });
