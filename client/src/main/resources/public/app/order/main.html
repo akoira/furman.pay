@@ -1,11 +1,27 @@
-<div id="pay-order-info" ng-controller="payOrderInfoCtrl as vm">
-    <div>
-        {{('0'+vm.service.payOrderInfo.payOrder.createdDate[1]).slice(-2)}}-{{vm.service.payOrderInfo.payOrder.number}}/{{vm.service.payOrderInfo.payOrder.customer.name}}
+<div class="well-sm" id="pay-order-info" ng-controller="payOrderInfoCtrl as vm">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <span ng-if="vm.service.payOrderInfo">
+                <div>
+                    {{('0'+vm.service.payOrderInfo.payOrder.createdDate[1]).slice(-2)}}-{{vm.service.payOrderInfo.payOrder.number}}/{{vm.service.payOrderInfo.payOrder.customer.name}}
+                </div>
+                <div>{{vm.service.payOrderInfo.payOrder.name}}</div>
+                <div>{{vm.service.payOrderInfo.payOrder.createdDate}}</div>
+            </span>
+            <span ng-if="!vm.service.payOrderInfo">
+                <div>Выбирете заказ</div>
+            </span>
+        </div>
+        <div class="panel-body">
+            <span ng-if="vm.service.payOrderInfo">
+                <div class="grid" ui-grid="vm.gridOptions" ui-grid-pinning ui-grid-edit ui-grid-row-edit ui-grid-cellnav
+                     ui-grid-resize-columns></div>
+                <div>Таблица с одной строчкой для core ордера со списком услуг</div>
+                <div>Таблица дата и список услуг</div>
+            </span>
+            <span ng-if="!vm.service.payOrderInfo">
+
+            </span>
+        </div>
     </div>
-    <div>{{vm.service.payOrderInfo.payOrder.name}}</div>
-    <div>{{vm.service.payOrderInfo.payOrder.createdDate}}</div>
-    <div class="grid" ui-grid="vm.gridOptions" ui-grid-pinning ui-grid-edit ui-grid-row-edit ui-grid-cellnav
-         ui-grid-resize-columns></div>
-    <div>Таблица с одной строчкой для core ордера со списком услуг</div>
-    <div>Таблица дата и список услуг</div>
 </div>

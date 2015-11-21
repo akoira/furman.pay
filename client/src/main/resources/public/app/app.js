@@ -34,7 +34,7 @@ var app = angular.module('app', [
 
             initLeftMenu();
 
-            $urlRouterProvider.otherwise('/order');
+            $urlRouterProvider.otherwise('/');
 
             initStates();
 
@@ -57,6 +57,12 @@ var app = angular.module('app', [
                         state: 'dashboard.shift',
                         weight: 0
                     })
+                    .menuItem('leftMenu.order', {
+                        text: 'Заказ',
+                        iconClass: 'fa fa-calculator fa-2',
+                        state: 'dashboard.order',
+                        weight: 0
+                    })
                     .menuItem('leftMenu.employees', {
                         text: 'Работники',
                         iconClass: 'fa fa-users fa-2',
@@ -72,15 +78,6 @@ var app = angular.module('app', [
 
             function initStates() {
                 $stateProvider
-                    .state('order', {
-                        url: "/order",
-                        views: {
-                            '': {
-                                templateUrl: 'app/order/main.html'
-
-                            }
-                        }
-                    })
                     .state('dashboard', {
                         abstract: true,
                         templateUrl: "app/dashboard/dashboard.html"
@@ -112,7 +109,15 @@ var app = angular.module('app', [
                         url: "/day",
                         views: {
                             '': {
-                                templateUrl: 'app/day/edit.html',
+                                templateUrl: 'app/day/edit.html'
+                            }
+                        }
+                    })
+                    .state('dashboard.order', {
+                        url: '/order',
+                        views: {
+                            '': {
+                                templateUrl: 'app/order/main.html'
                             }
                         }
                     })
@@ -123,10 +128,10 @@ var app = angular.module('app', [
                                 templateUrl: 'app/employee/main.html'
                             },
                             'list@dashboard.employee': {
-                                templateUrl: 'app/employee/list.html',
+                                templateUrl: 'app/employee/list.html'
                             },
                             'edit@dashboard.employee': {
-                                templateUrl: 'app/employee/edit.html',
+                                templateUrl: 'app/employee/edit.html'
                             }
 
                         }
@@ -179,7 +184,9 @@ angular.module('app.order', ['ui.grid',
     'ui.grid.pinning',
     'ui.grid.edit',
     'ui.grid.rowEdit',
-    'ui.grid.cellNav', 'ui.bootstrap.collapse', 'blockUI']);
+    'ui.grid.cellNav',
+    'ui.bootstrap.collapse',
+    'ui.bootstrap.dropdown', 'blockUI']);
 
 angular.module('app.shift').config(function (blockUIConfig) {
     blockUIConfig.message = '...';

@@ -7,6 +7,7 @@ function PayOrderInfoCtrl(commonUtils, dayService, payOrderInfoService) {
     var vm = this;
     vm.service = payOrderInfoService;
     vm.round = commonUtils.round;
+    vm.isopen = false;
     vm.gridOptions = {
         data: [],
         columnDefs: [{

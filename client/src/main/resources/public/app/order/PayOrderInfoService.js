@@ -7,10 +7,6 @@ function PayOrderInfoService(dayService) {
         payOrderInfo: null
     };
 
-    if (service.payOrderInfo == null) {
-        load("5644ca78fb0a0f146a5a1e0f");
-    }
-
     service.load = load;
     service.addListener = addListener;
 
