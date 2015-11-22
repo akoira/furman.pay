@@ -8,6 +8,8 @@ function CommonUtils($timeout, $filter) {
     factory.registerRowSelection = registerRowSelection;
     factory.removeFromArrayByFilter = removeFromArrayByFilter;
     factory.round = round;
+    factory.localDate2Date = localDate2Date;
+    factory.localDate2Moment = localDate2Moment;
 
     function selectEntityRows(entitiesToSelect, gridOptions, gridApi) {
         gridApi.selection.clearSelectedRows();
@@ -47,6 +49,14 @@ function CommonUtils($timeout, $filter) {
     function round(value, decimal) {
         var m = Math.pow(10, decimal);
         return Math.round(value * m) / m;
+    }
+
+    function localDate2Date(localDate) {
+        return localDate2Moment(localDate).toDate();
+    }
+
+    function localDate2Moment(localDate) {
+        return moment({year: localDate[0], month: localDate[1] - 1, day: localDate[2]});
     }
 
     return factory;

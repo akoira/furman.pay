@@ -2,13 +2,14 @@
 
 angular.module('app.shift').controller('shiftValuesCtrl', ShiftValuesCtrl);
 
-function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEditorService, dayService) {
+function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEditorService, dayService, payOrderInfoService) {
     var vm = this;
 
     vm.round = commonUtils.round;
     vm.getStatusClass = getStatusClass;
     vm.saveRow = saveRow;
     vm.isNew = isNew;
+    vm.payOrderInfoService = payOrderInfoService;
 
     vm.gridOptions = {
         data: [],
@@ -86,11 +87,13 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
 
     function aggregationType(visibleRows, self) {
         var result = 0;
-        angular.forEach(visibleRows, function (row) {
-            var value = eval("row.entity." + self.colDef.field);
-            result += value;
-        });
-        result = vm.round(result, 3);
+        if (self.colDef.visible) {
+            angular.forEach(visibleRows, function (row) {
+                var value = eval("row.entity." + self.colDef.field);
+                result += value;
+            });
+            result = vm.round(result, 3);
+        }
         return result;
     }
 

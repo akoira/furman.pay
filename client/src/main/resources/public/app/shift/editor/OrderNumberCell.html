@@ -1,4 +1,6 @@
 <div class='truncate'>
     <i class="fa fa-circle {{grid.appScope.getStatusClass(row.entity.order.payOrder.status)}}"></i>
-    {{('0'+row.entity.order.payOrder.createdDate[1]).slice(-2)}}-{{row.entity.order.payOrder.number}}/{{row.entity.order.payOrder.customer.name}}
+    <a href="/#/order" ng-click="grid.appScope.payOrderInfoService.load(row.entity.order.payOrder.id)">
+        <pay-order-title order="row.entity.order.payOrder"></pay-order-title>
+    </a>
 </div>

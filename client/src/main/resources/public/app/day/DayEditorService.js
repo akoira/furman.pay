@@ -9,7 +9,7 @@ function DayEditorService($filter, commonUtils, dayOrderRepository, dayService, 
     service.day = null;
     service.addListener = addListener;
     service.getDate = getDate;
-    service.dateOf = dateOf;
+    service.dateOf = commonUtils.localDate2Date;
     service.dayOrders = [];
     service.dayShifts = [];
 
@@ -75,7 +75,7 @@ function DayEditorService($filter, commonUtils, dayOrderRepository, dayService, 
     }
 
     function getDate() {
-        return dateOf(service.day.date);
+        return commonUtils.localDate2Date(service.day.date);
     }
 
     function dateOf(date) {

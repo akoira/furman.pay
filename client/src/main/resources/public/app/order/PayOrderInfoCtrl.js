@@ -3,16 +3,20 @@
 
 angular.module('app.order').controller('payOrderInfoCtrl', PayOrderInfoCtrl);
 
-function PayOrderInfoCtrl(commonUtils, dayService, payOrderInfoService) {
+function PayOrderInfoCtrl(commonUtils, dayService, dayEditorService, payOrderInfoService) {
     var vm = this;
     vm.service = payOrderInfoService;
+    vm.dayEditorService = dayEditorService;
     vm.round = commonUtils.round;
+    vm.localDate2Date = commonUtils.localDate2Date;
+
     vm.isopen = false;
     vm.gridOptions = {
         data: [],
         columnDefs: [{
             field: "day.date",
             displayName: "Дата",
+            cellTemplate: "<div class=\"ui-grid-cell-contents\" title=\"TOOLTIP\">{{grid.appScope.localDate2Date(COL_FIELD) CUSTOM_FILTERS}}</div>",
             enableCellEdit: false,
             enableColumnMenu: false,
             enableSorting: false,
@@ -25,7 +29,7 @@ function PayOrderInfoCtrl(commonUtils, dayService, payOrderInfoService) {
     dayService.works.forEach(function (work) {
         vm.gridOptions.columnDefs.push({
             name: work.type,
-            field: work.type,
+            field: work.type + ".value",
             displayName: work.name,
             cellTemplate: "<div class=\"ui-grid-cell-contents\" title=\"TOOLTIP\">{{grid.appScope.round(COL_FIELD, 3) CUSTOM_FILTERS}}</div>",
             enableCellEdit: false,
@@ -39,13 +43,19 @@ function PayOrderInfoCtrl(commonUtils, dayService, payOrderInfoService) {
     });
 
 
-    vm.service.addListener(function (payOrderInfo) {
+    if (vm.service.payOrderInfo) {
+        updateData(vm.service.payOrderInfo);
+    }
+
+    vm.service.addListener(updateData);
+
+    function updateData(payOrderInfo) {
         vm.gridOptions.data.splice(0, vm.gridOptions.data.length);
         var row = {
             day: null
         };
         payOrderInfo.payOrder.workValues.forEach(function (workValue) {
-            row[workValue.work.type] = workValue.value;
+            row[workValue.work.type] = workValue;
         });
         vm.gridOptions.data.push(row);
 
@@ -54,10 +64,9 @@ function PayOrderInfoCtrl(commonUtils, dayService, payOrderInfoService) {
                 day: dayOrder.day
             };
             dayOrder.orderValues.forEach(function (orderValue) {
-                row[orderValue.work.type] = orderValue.value;
+                row[orderValue.work.type] = orderValue;
             });
             vm.gridOptions.data.push(row);
         });
-    });
-
+    }
 }

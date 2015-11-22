@@ -2,10 +2,11 @@
 
 angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 
-function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, dayEditorService) {
+function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, dayEditorService, payOrderInfoService) {
     var vm = this;
     vm.round = commonUtils.round;
     vm.getStatusClass = getStatusClass;
+    vm.payOrderInfoService = payOrderInfoService;
 
     initGridOptions();
 
