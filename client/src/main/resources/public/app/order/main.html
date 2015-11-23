@@ -3,8 +3,8 @@
         <div class="panel-heading">
             <div ng-if="vm.service.payOrderInfo">
                 <pay-order-title order="vm.service.payOrderInfo.payOrder"></pay-order-title>
-                <div>{{vm.service.payOrderInfo.payOrder.name}}</div>
-                <div>{{vm.service.payOrderInfo.payOrder.createdDate}}</div>
+                , {{vm.service.payOrderInfo.payOrder.name}},
+                {{vm.localDate2Date(vm.service.payOrderInfo.payOrder.createdDate)|date:'yyyy-MM-dd'}}
             </div>
             <div ng-if="!vm.service.payOrderInfo">
                 <div>Выбирете заказ</div>
@@ -14,8 +14,6 @@
             <div ng-if="vm.service.payOrderInfo">
                 <div class="grid" ui-grid="vm.gridOptions" ui-grid-pinning ui-grid-edit ui-grid-row-edit ui-grid-cellnav
                      ui-grid-resize-columns></div>
-                <div>Таблица с одной строчкой для core ордера со списком услуг</div>
-                <div>Таблица дата и список услуг</div>
             </div>
             <div ng-if="!vm.service.payOrderInfo">
                 <div class="btn-block">

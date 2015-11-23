@@ -12,6 +12,7 @@ function DayShiftsCtrl($scope, $log, $timeout,
     var vm = this;
     vm.dayDate = dayEditorService.getDate();
     vm.dayEditorService = dayEditorService;
+    vm.shiftEditorService = shiftEditorService;
     vm.isActive = isActive;
     vm.select = shiftEditorService.setShift;
     vm.remove = remove;

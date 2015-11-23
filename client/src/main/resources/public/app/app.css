@@ -124,3 +124,15 @@ input[type="number"] {
 .order-status-production {
     color: orange !important;
 }
+
+.cell-payOrder {
+    background-color: #FFB6B6 !important;
+}
+
+.cell-dayOrder {
+    background-color: #94D094 !important;
+}
+
+.cell-dayShift {
+    background-color: #72A0A0 !important;
+}

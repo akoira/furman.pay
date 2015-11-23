@@ -178,7 +178,7 @@ angular.module('app.shift', ['ui.grid',
     'ui.grid.pinning',
     'ui.grid.edit',
     'ui.grid.rowEdit',
-    'ui.grid.cellNav', 'ui.bootstrap.collapse', 'blockUI']);
+    'ui.grid.cellNav', 'ui.bootstrap.collapse']);
 angular.module('app.order', ['ui.grid',
     'ui.grid.autoResize',
     'ui.grid.pinning',
@@ -186,11 +186,11 @@ angular.module('app.order', ['ui.grid',
     'ui.grid.rowEdit',
     'ui.grid.cellNav',
     'ui.bootstrap.collapse',
-    'ui.bootstrap.dropdown', 'blockUI']);
+    'ui.bootstrap.dropdown']);
 
-angular.module('app.shift').config(function (blockUIConfig) {
-    blockUIConfig.message = '...';
-});
+//angular.module('app.shift').config(function (blockUIConfig) {
+//    blockUIConfig.message = '...';
+//});
 
 
 app.run(function (dayEditorService, dayService) {

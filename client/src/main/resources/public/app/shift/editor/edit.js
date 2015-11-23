@@ -2,7 +2,7 @@
 
 angular.module('app.shift').controller('shiftEditCtrl', ShiftEditCtrl);
 
-function ShiftEditCtrl($scope, blockUI, shiftEditorService, dayEditorService) {
+function ShiftEditCtrl($scope, shiftEditorService, dayEditorService) {
 
     var vm = this;
 
@@ -11,8 +11,7 @@ function ShiftEditCtrl($scope, blockUI, shiftEditorService, dayEditorService) {
     vm.shift = null;
     vm.addNew = addNew;
     vm.save = save;
-    var blocker = blockUI.instances.get('shift-editor-block');
-    blocker.start();
+    vm.shiftEditorService = shiftEditorService;
 
     shiftEditorService.listeners.shift.push(shiftChanged);
 
@@ -33,11 +32,6 @@ function ShiftEditCtrl($scope, blockUI, shiftEditorService, dayEditorService) {
     }
 
     function shiftChanged(shift) {
-        if (shift) {
-            blocker.stop();
-        } else {
-            blocker.start();
-        }
         vm.shift = shift;
         vm.collapsed = shift != null && shift.employees.length > 0 &&
             shift.works.length > 0 &&
