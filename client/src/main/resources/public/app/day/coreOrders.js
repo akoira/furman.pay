@@ -106,21 +106,24 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, ord
         }
     }
 
+    function updateSelection() {
+        dataLoading = true;
+        $timeout(function () {
+            angular.forEach(vm.gridOptions.data, function (order) {
+                var dayOrder = dayEditorService.getDayOrderByCoreOrderId(order.id);
+                if (dayOrder) {
+                    vm.gridApi.selection.selectRow(order);
+                }
+            });
+            dataLoading = false;
+        });
+    }
 
     function loadData() {
         dataLoading = true;
         dayService.getOrders(vm.orderDate.date).success(function (data) {
             vm.gridOptions.data = data;
-            $log.log(data);
-            $timeout(function () {
-                angular.forEach(vm.gridOptions.data, function (order) {
-                    var dayOrder = dayEditorService.getDayOrderByCoreOrderId(order.id);
-                    if (dayOrder) {
-                        vm.gridApi.selection.selectRow(order);
-                    }
-                });
-                dataLoading = false;
-            });
+            updateSelection();
         }).error(function (data) {
             $log.log(data);
             dataLoading = false;
@@ -136,12 +139,13 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, ord
     }
 
     function searchOrders() {
-
+        dataLoading = true;
         orderRepository.getByOrderNumber(vm.search.orderNumber).then(function (data) {
-            data.data._embedded.order.forEach(function (order) {
-                $log.log(order.id);
-            });
             vm.gridOptions.data = data.data._embedded.order;
+            updateSelection();
+            dataLoading = false;
+        }, function (data) {
+            $log.log(data)
         })
     }
 }
