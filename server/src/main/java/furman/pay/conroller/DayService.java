@@ -65,7 +65,7 @@ public class DayService {
 
     @RequestMapping("/dayService/getOrders")
     public Iterable<Order> getOrders(@RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return orderRepository.findAll(QOrder.order.createdDailySheet.date.eq(date).and(QOrder.order.status.in(OrderStatus.design, OrderStatus.production)), QOrder.order.customer.name.asc());
+        return orderRepository.findAll(QOrder.order.createdDailySheet.date.eq(date).and(QOrder.order.status.in(OrderStatus.design, OrderStatus.production)), QOrder.order.orderNumber.asc());
     }
 
     @RequestMapping("/dayService/getOrderCountsPerDay")

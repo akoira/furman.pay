@@ -23,14 +23,14 @@ function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, d
         };
         vm.gridOptions.columnDefs = [];
         vm.gridOptions.columnDefs.push({
-                "field": "order",
-                "displayName": "Заказ",
-                "enableCellEdit": false,
-                "cellTemplate": "app/day/POrderNumberCell.html",
-                "pinnedLeft": true,
-                "enableColumnMenu": false,
-                "enableSorting": false,
-                "width": 200
+                field: "order",
+                displayName: "Заказ",
+                enableCellEdit: false,
+                cellTemplate: "app/day/POrderNumberCell.html",
+                pinnedLeft: true,
+                enableColumnMenu: false,
+                enableSorting: false,
+                width: 200
             }
         );
 

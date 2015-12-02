@@ -136,3 +136,8 @@ input[type="number"] {
 .cell-dayShift {
     background-color: #72A0A0 !important;
 }
+
+.cell-order-number {
+    text-align: left;
+    margin-left: 5px;
+}

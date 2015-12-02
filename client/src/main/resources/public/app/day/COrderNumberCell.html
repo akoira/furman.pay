@@ -1,4 +1,4 @@
-<div class='truncate'>
+<div class='truncate cell-order-number'>
     <i class="fa fa-circle {{grid.appScope.getStatusClass(row.entity.status)}}"></i>
     <a href="#" ng-click="grid.appScope.openCoreOrderDetails(row.entity)">
         {{('0'+row.entity.createdDailySheet.date[1]).slice(-2)}}-{{row.entity.orderNumber}}/{{row.entity.customer.name}}

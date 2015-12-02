@@ -53,7 +53,7 @@ public class DayOrderService {
     @RequestMapping("/dayOrderService/findAllForDay")
     public Iterable<DayOrder> findAllForDay(@RequestParam(required = true) String dayId) {
         Day day = dayRepository.findOne(dayId);
-        Iterable<DayOrder> dayOrders = dayOrderRepository.findAll(QDayOrder.dayOrder.day.eq(day));
+        Iterable<DayOrder> dayOrders = dayOrderRepository.findAll(QDayOrder.dayOrder.day.eq(day), QDayOrder.dayOrder.payOrder.number.asc());
         return dayOrders;
     }
 
