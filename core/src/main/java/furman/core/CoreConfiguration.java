@@ -53,9 +53,11 @@ public class CoreConfiguration extends RepositoryRestMvcConfiguration{
         }
     }
 
-    @Override
-    public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(Order.class);
-    }
 
+    @Override
+    public RepositoryRestConfiguration config() {
+        RepositoryRestConfiguration configuration = super.config();
+        configuration.exposeIdsFor(Order.class);
+        return configuration;
+    }
 }
