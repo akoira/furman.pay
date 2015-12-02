@@ -2,7 +2,7 @@
 
 angular.module('app.day').controller('DayOrdersCtrl', DayOrdersCtrl);
 
-function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, dayEditorService, payOrderInfoService) {
+function DayOrdersCtrl($scope, $log, uiGridConstants, commonUtils, dayOrderService, dayService, dayEditorService, payOrderInfoService) {
     var vm = this;
     vm.round = commonUtils.round;
     vm.getStatusClass = getStatusClass;
@@ -19,7 +19,8 @@ function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, d
             appScopeProvider: vm,
             minRowsToShow: 15,
             showGridFooter: true,
-            showColumnFooter: true
+            showColumnFooter: true,
+            enableSorting: true
         };
         vm.gridOptions.columnDefs = [];
         vm.gridOptions.columnDefs.push({
@@ -30,7 +31,13 @@ function DayOrdersCtrl($scope, $log, commonUtils, dayOrderService, dayService, d
                 pinnedLeft: true,
                 enableColumnMenu: false,
                 enableSorting: false,
-                width: 200
+                width: 200,
+                sort: {
+                    direction: uiGridConstants.ASC,
+                },
+                sortingAlgorithm: function (a, b, rowA, rowB, direction) {
+                    return rowA.entity.payOrder.number > rowB.entity.payOrder.number ? 1 : -1;
+                }
             }
         );
 
