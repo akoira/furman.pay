@@ -5,21 +5,35 @@
            ng-click="vm.collapsed = !vm.collapsed"></i>
     </div>
     <div class="panel-body" collapse="vm.collapsed">
-        <p class="input-group input-group-sm">
-            <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
-                   ng-model="vm.orderDate.date"
-                   is-open="vm.orderDate.opened" min-date="vm.orderDate.minDate"
-                   max-date="vm.orderDate.maxDate"
-                   datepicker-options="vm.orderDate.options"
-                   date-disabled="vm.orderDate.disabled(date, mode)"
-                   ng-required="true"
-                   close-text="Закрыть" ng-change="vm.dateChanged()"
-                   custom-class="vm.orderDate.getDayClass(date, mode)"/>
+        <div class="row">
+            <div class="col-sm-6">
+                <p class="input-group input-group-sm">
+                    <input type="text" class="form-control" datepicker-popup="{{vm.orderDate.format}}"
+                           ng-model="vm.orderDate.date"
+                           is-open="vm.orderDate.opened" min-date="vm.orderDate.minDate"
+                           max-date="vm.orderDate.maxDate"
+                           datepicker-options="vm.orderDate.options"
+                           date-disabled="vm.orderDate.disabled(date, mode)"
+                           ng-required="true"
+                           close-text="Закрыть" ng-change="vm.dateChanged()"
+                           custom-class="vm.orderDate.getDayClass(date, mode)"/>
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default" ng-click="vm.orderDate.open($event)"><i
                                 class="glyphicon glyphicon-calendar"></i></button>
                     </span>
-        </p>
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <p class="input-group input-group-sm">
+                    <input type="text" class="form-control" placeholder="Номер заказа"
+                           ng-model="vm.search.orderNumber"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.searchOrders()"><i
+                                class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </p>
+            </div>
+        </div>
         <div class="grid" ui-grid="vm.gridOptions" ui-grid-selection ui-grid-auto-resize></div>
     </div>
 </div>

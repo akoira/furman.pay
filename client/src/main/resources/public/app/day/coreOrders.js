@@ -2,13 +2,17 @@
 
 angular.module('app.day').controller('coreOrdersCtrl', CoreOrdersCtrl);
 
-function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, dayService, dayEditorService) {
+function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, orderRepository, dayService, dayEditorService) {
     var vm = this;
     var dataLoading = false;
     vm.moment = momentFrom;
     vm.collapsed = dayEditorService.dayOrders.length > 0;
     vm.getStatusClass = getStatusClass;
     vm.openCoreOrderDetails = openCoreOrderDetails;
+    vm.search = {
+        orderNumber: null
+    };
+    vm.searchOrders = searchOrders;
 
     initOrderDate();
 
@@ -107,6 +111,7 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
         dataLoading = true;
         dayService.getOrders(vm.orderDate.date).success(function (data) {
             vm.gridOptions.data = data;
+            $log.log(data);
             $timeout(function () {
                 angular.forEach(vm.gridOptions.data, function (order) {
                     var dayOrder = dayEditorService.getDayOrderByCoreOrderId(order.id);
@@ -128,5 +133,15 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, day
 
     function openCoreOrderDetails(entity) {
         $log.log(entity);
+    }
+
+    function searchOrders() {
+
+        orderRepository.getByOrderNumber(vm.search.orderNumber).then(function (data) {
+            data.data._embedded.order.forEach(function (order) {
+                $log.log(order.id);
+            });
+            vm.gridOptions.data = data.data._embedded.order;
+        })
     }
 }

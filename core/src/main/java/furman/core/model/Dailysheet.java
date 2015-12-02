@@ -11,6 +11,10 @@
  */
 package furman.core.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.Column;
@@ -26,6 +30,8 @@ public class Dailysheet extends AObject
 {
     @Column(name = "DATE", nullable = false)
     @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
     public void setDate(LocalDate date)
