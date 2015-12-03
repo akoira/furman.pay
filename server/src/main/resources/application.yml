@@ -13,6 +13,8 @@ furman:
       username: root
       password: whatsup
       driver-class-name: com.mysql.jdbc.Driver
+      testOnBorrow: true
+      validationQuery: SELECT 1
     path: core
 
 hibernate:
