@@ -20,6 +20,7 @@ function DayEditCtrl($modal, dayService, dayEditorService) {
             animation: true,
             templateUrl: 'app/day/PrintOrders.html',
             controller: 'printOrderCtrl as vm',
+            size: 'lg',
             resolve: {
                 day: function () {
                     return vm.day;

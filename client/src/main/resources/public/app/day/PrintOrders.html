@@ -1,74 +1,36 @@
-<div class="panel">
+<div class="">
     <div class="modal-header">
-        Список заказов на: {{vm.dayDate}}
+        <button class="btn btn-primary" print-btn>Печать</button>
     </div>
     <div class="modal-body">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Номер</th>
-                <th>Название</th>
-                <th>Заказчик</th>
-                <th>Дата гт-ти</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="active">
-                <th scope="row">1</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="success">
-                <th scope="row">3</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr>
-                <th scope="row">4</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="info">
-                <th scope="row">5</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr>
-                <th scope="row">6</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="warning">
-                <th scope="row">7</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr>
-                <th scope="row">8</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            <tr class="danger">
-                <th scope="row">9</th>
-                <td>Column content</td>
-                <td>Column content</td>
-                <td>Column content</td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="panel" print-section>
+            <div class="panel-title h3 text-center">
+                Заказы на: {{vm.dayDate | date:'yyyy-MM-dd'}}
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped" print-table="orders">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Номер</th>
+                        <th>Название</th>
+                        <th>Заказчик</th>
+                        <th>Дата гт-ти</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="order in vm.dayOrders">
+                        <th scope="row">{{$index + 1}}</th>
+                        <td>
+                            <pay-order-title order="order.payOrder"></pay-order-title>
+                        </td>
+                        <td>{{order.payOrder.name}}</td>
+                        <td>{{order.payOrder.customer.name}}</td>
+                        <td>{{vm.localDate2Date(order.payOrder.readyDate) | date:'yyyy-MM-dd'}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
