@@ -2,20 +2,20 @@
     <div class="panel panel-info">
         <div class="panel-heading">
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <span class="btn btn-primary">{{(vm.dayDate | date:'yyyy-MM-dd')}}</span>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <div class="row">
-                        <div class="col-md-8 text-right">Заказы:</div>
-                        <div class="col-md-4 text-left">{{vm.dayOrders.length}}</div>
+                        <div class="col-sm-8 text-right">Заказы:</div>
+                        <div class="col-sm-4 text-left">{{vm.dayOrders.length}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-md-8 text-right">Смены:</div>
-                        <div class="col-md-4 text-left">{{vm.dayShifts.length}}</div>
+                        <div class="col-sm-8 text-right">Смены:</div>
+                        <div class="col-sm-4 text-left">{{vm.dayShifts.length}}</div>
                     </div>
                 </div>
-                <div class="col-md-1 text-center span">
+                <div class="col-md-1 text-center">
                     <button class="btn btn-sm btn-info fa fa-print" ng-click="vm.printOrders()" ng-disabled="!vm.dayOrders.length" title="Печать списка заказов"></button>
                 </div>
             </div>
