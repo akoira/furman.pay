@@ -3,14 +3,14 @@ dependencies {
 
     compile 'org.mongodb.morphia:morphia:1.0.1'
 
-    compile 'com.mysema.querydsl:querydsl-mongodb:3.6.+'
+    compile 'com.mysema.querydsl:querydsl-mongodb:3.7.+'
 
     compile "org.apache.commons:commons-lang3:3.+"
 }
 
 querydsl {
     morphia = true
-    library = "com.mysema.querydsl:querydsl-apt:3.6.+"
+    library = "com.mysema.querydsl:querydsl-apt:3.7.+"
     //library = "com.querydsl:querydsl-apt:4.0.4"
     querydslSourcesDir = "src/querydsl/java"
 }

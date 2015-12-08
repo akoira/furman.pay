@@ -3,7 +3,7 @@
 angular.module('app.home', ['mwl.calendar', 'ui.bootstrap'])
     .controller('HomeController', HomeController);
 
-function HomeController($scope, $location, $filter, $log, dayEditorService, dayService, dayOrderService) {
+function HomeController($scope, $location, $filter, $log, $timeout, dayEditorService, dayService, dayOrderService) {
 
     var vm = this;
 
@@ -18,14 +18,16 @@ function HomeController($scope, $location, $filter, $log, dayEditorService, dayS
         day: dayEditorService.day ? dayEditorService.getDate() : new Date(),
         events: [],
         createNewDay: function (calendarDate) {
-            dayService.getOrNewDay(calendarDate).success(function (day) {
-                dayEditorService.changeDay(day);
-                var query = {day: {id: day.id}};
-                var event = $filter('filter')(vm.calendar.events, query);
-                if (event.length == 0) {
-                    vm.calendar.events.push(day2Event(day));
-                }
-            });
+            $timeout(function () {
+                dayService.getOrNewDay(calendarDate).success(function (day) {
+                    dayEditorService.changeDay(day);
+                    var query = {day: {id: day.id}};
+                    var event = $filter('filter')(vm.calendar.events, query);
+                    if (event.length == 0) {
+                        vm.calendar.events.push(day2Event(day));
+                    }
+                });
+            })
         },
         dayEdit: function (event) {
             $location.path('/day');

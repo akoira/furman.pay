@@ -47,11 +47,11 @@ project(":core") {
         compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
         compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
         compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
-        compile 'org.springframework.data:spring-data-rest-webmvc:2.4.0.RELEASE'
+        compile 'org.springframework.data:spring-data-rest-webmvc:2.4.1.RELEASE'
         compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.3'
 
         testCompile "junit:junit:4.12"
-        testCompile "org.springframework:spring-test:4.2.2.RELEASE"
+        testCompile "org.springframework:spring-test:4.2.3.RELEASE"
     }
 
     compileJava.dependsOn(processResources)
@@ -66,11 +66,11 @@ project(":pay") {
         compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
         compile "org.springframework.boot:spring-boot-starter-data-rest:$springBootVersion"
         compile "org.springframework.boot:spring-boot-configuration-processor:$springBootVersion"
-        compile 'org.springframework.data:spring-data-rest-webmvc:2.4.0.RELEASE'
+        compile 'org.springframework.data:spring-data-rest-webmvc:2.4.1.RELEASE'
         compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.6.3'
 
         testCompile "junit:junit:4.12"
-        testCompile "org.springframework:spring-test:4.2.2.RELEASE"
+        testCompile "org.springframework:spring-test:4.2.3.RELEASE"
 
     }
 

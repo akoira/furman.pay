@@ -193,8 +193,10 @@ angular.module('app.order', ['ui.grid',
 //});
 
 
-app.run(function (dayEditorService, dayService) {
+app.run(function ($timeout, dayEditorService, dayService) {
     dayService.getOrNewDay(new Date()).success(function (day) {
-        dayEditorService.changeDay(day);
+        $timeout(function () {
+            dayEditorService.changeDay(day);
+        })
     });
 });
