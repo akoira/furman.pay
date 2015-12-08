@@ -165,7 +165,7 @@ angular.module('app.day', ['ui.grid',
     'ui.grid.cellNav',
     'ui.bootstrap.datepicker',
     'ui.bootstrap.collapse',
-    'ui.bootstrap.modal', 'AngularPrint']);
+    'ui.bootstrap.modal']);
 angular.module('app.work', ['ui.grid',
     'ui.grid.autoResize',
     'ui.grid.pinning',
