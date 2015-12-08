@@ -1,19 +1,19 @@
 dependencies {
-    compile 'org.webjars:requirejs:2.1.20'
+    compile 'org.webjars:requirejs:2.1.22'
     compile 'org.webjars.bower:jquery:2.1.4'
 
-    compile 'org.webjars.bower:angular:1.4.7'
-    compile 'org.webjars.bower:angularjs:1.4.7'
-    compile 'org.webjars.bower:angular-i18n:1.4.7'
-    compile 'org.webjars.bower:angular-mocks:1.4.7'
-    compile 'org.webjars.bower:angular-resource:1.4.7'
+    compile 'org.webjars.bower:angular:1.4.8'
+    compile 'org.webjars.bower:angularjs:1.4.8'
+    compile 'org.webjars.bower:angular-i18n:1.4.8'
+    compile 'org.webjars.bower:angular-mocks:1.4.8'
+    compile 'org.webjars.bower:angular-resource:1.4.8'
 
     compile 'org.webjars:angular-translate:2.7.2'
     compile 'org.webjars:angular-ui-bootstrap:0.14.3'
     compile 'org.webjars:angular-ui-router:0.2.15'
     compile 'org.webjars.bower:angular-ui-grid:3.0.7'
-    compile 'org.webjars.bower:angular-bootstrap-calendar:0.15.5'
-    compile 'org.webjars.bower:angular-block-ui:0.2.0'
+    compile 'org.webjars.bower:angular-bootstrap-calendar:0.17.1'
+    compile 'org.webjars.bower:angular-block-ui:0.2.2'
 
 
     compile 'org.webjars:momentjs:2.10.6'
@@ -25,6 +25,6 @@ dependencies {
 
     compile 'org.webjars.bower:eeh-navigation:4.1.2'
 
-    compile 'org.webjars:font-awesome:4.4.0'
+    compile 'org.webjars:font-awesome:4.5.0'
 
 }

@@ -14,7 +14,6 @@ function PrintOrderCtrl($scope, $modalInstance, day, commonUtils, dayOrderServic
 
         var html = "<body>\n" + angular.element('#print-content').html() + "\n</body>";
         html = "<head><link rel='stylesheet' href='webjars/bootstrap/3.3.5/css/bootstrap.css'>\n" +
-            "<link rel='stylesheet' href='app/print.css'>\n" +
             "</head>" +
             html;
         iframe.contentWindow.document.write(html); //// write the HTML to be printed
