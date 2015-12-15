@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mongobee.changeset.ChangeLog;
 import com.github.mongobee.changeset.ChangeSet;
 import furman.pay.model.Work;
+import furman.pay.model.day.DayOrder;
+import furman.pay.model.day.OrderValue;
 import org.apache.commons.io.IOUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -63,4 +65,23 @@ public class PredefinedEntities {
             IOUtils.closeQuietly(inputStream);
         }
     }
+
+    @ChangeSet(order = "003", id = "addTouchWorkValues", author = "akoyro")
+    public void addTouchWorkValues(MongoTemplate mongoTemplate) {
+        Work work = mongoTemplate.findAll(Work.class)
+                .stream().filter(value -> value.getType().equals("touch")).findFirst().get();
+        mongoTemplate.findAll(DayOrder.class).forEach(dayOrder -> {
+            OrderValue value = dayOrder.getOrderValues().stream()
+                    .filter(orderValue -> orderValue.getWork().getType().equals("touch"))
+                    .findFirst().orElse(null);
+            if (value == null) {
+                value = new OrderValue();
+                value.setValue(0.0);
+                value.setWork(work);
+                dayOrder.getOrderValues().add(value);
+            }
+            mongoTemplate.save(dayOrder);
+        });
+    }
+
 }

@@ -1,7 +1,6 @@
 buildscript {
     ext {
         springBootVersion = '1.2.7.RELEASE'
-
         springDataMongoDbVersion = '1.8.0.RELEASE'
     }
     repositories {
@@ -19,6 +18,8 @@ plugins {
     id "com.github.ben-manes.versions" version "0.11.1"
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.5"
 }
+
+version = '0.0.2'
 
 allprojects {
     apply plugin: 'maven'

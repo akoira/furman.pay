@@ -70,9 +70,9 @@ public class DayOrderService {
             orderValue.setWork(work);
             values.add(orderValue);
 
-            List<WorkValue> foundValues = dayOrder.getPayOrder().getWorkValues().stream().filter(value -> {
-                return Objects.equals(value.getWork().getId(), work.getId());
-            }).collect(Collectors.toList());
+            List<WorkValue> foundValues = dayOrder.getPayOrder().getWorkValues().stream()
+                    .filter(value -> Objects.equals(value.getWork().getId(), work.getId()))
+                    .collect(Collectors.toList());
             foundValues.forEach(value -> {
                 double result = orderValue.getValue() + value.getValue();
                 orderValue.setValue(result);

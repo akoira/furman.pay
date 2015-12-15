@@ -35,9 +35,9 @@ dependencies {
 compileJava.dependsOn(processResources)
 
 jar {
-    version =  '0.0.1'
+    version = "${version}"
 }
 
 war {
-    version =  '0.0.1'
+    version =  "${version}"
 }
