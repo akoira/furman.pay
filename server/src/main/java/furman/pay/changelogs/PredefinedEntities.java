@@ -38,4 +38,29 @@ public class PredefinedEntities {
             IOUtils.closeQuietly(inputStream);
         }
     }
+
+    @ChangeSet(order = "002", id = "addTouchWork", author = "akoyro")
+    public void addTouchWork(MongoTemplate mongoTemplate) {
+
+        InputStream inputStream = null;
+        try {
+            inputStream = PredefinedEntities.class.getClassLoader().getResourceAsStream("works.json");
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(inputStream);
+            jsonNode.forEach(node -> {
+                try {
+                    Work work = objectMapper.treeToValue(node, Work.class);
+                    if (work.getType().equals("touch")) {
+                        mongoTemplate.insert(work);
+                    }
+                } catch (JsonProcessingException e) {
+                    throw new IllegalArgumentException(e);
+                }
+            });
+        } catch (Exception e) {
+            throw new IllegalArgumentException(e);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+        }
+    }
 }

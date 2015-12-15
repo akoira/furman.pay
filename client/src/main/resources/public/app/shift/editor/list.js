@@ -17,7 +17,8 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
         appScopeProvider: vm,
         minRowsToShow: 15,
         showGridFooter: true,
-        showColumnFooter: true
+        showColumnFooter: true,
+        enableSorting: true
     };
 
     vm.gridOptions.onRegisterApi = function (gridApi) {
@@ -34,7 +35,14 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
         "pinnedLeft": true,
         "enableColumnMenu": false,
         "enableSorting": false,
-        "width": 200
+        "width": 200,
+        sort: {
+            direction: uiGridConstants.ASC
+        },
+        sortingAlgorithm: function (a, b, rowA, rowB, direction) {
+            return rowA.entity.order.payOrder.number > rowB.entity.order.payOrder.number ? 1 : -1;
+        }
+
     });
 
     angular.forEach(dayService.works, function (work) {

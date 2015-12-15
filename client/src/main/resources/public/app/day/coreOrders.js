@@ -140,8 +140,8 @@ function CoreOrdersCtrl($scope, $http, $filter, $timeout, $log, commonUtils, ord
 
     function searchOrders() {
         dataLoading = true;
-        orderRepository.getByOrderNumber(vm.search.orderNumber).then(function (data) {
-            vm.gridOptions.data = data.data._embedded.order;
+        orderRepository.getAllBy({orderNumber: vm.search.orderNumber}, function (data) {
+            vm.gridOptions.data = data._embedded.order;
             updateSelection();
             dataLoading = false;
         }, function (data) {

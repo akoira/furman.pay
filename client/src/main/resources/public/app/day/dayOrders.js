@@ -33,10 +33,13 @@ function DayOrdersCtrl($scope, $log, uiGridConstants, commonUtils, dayOrderServi
                 enableSorting: false,
                 width: 200,
                 sort: {
-                    direction: uiGridConstants.ASC,
+                    direction: uiGridConstants.ASC
                 },
                 sortingAlgorithm: function (a, b, rowA, rowB, direction) {
-                    return rowA.entity.payOrder.number > rowB.entity.payOrder.number ? 1 : -1;
+                    if (rowA.entity.payOrder && rowB.entity.payOrder)
+                        return rowA.entity.payOrder.number > rowB.entity.payOrder.number ? 1 : -1;
+                    else
+                        return 0;
                 }
             }
         );

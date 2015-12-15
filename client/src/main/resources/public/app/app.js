@@ -200,3 +200,5 @@ app.run(function ($timeout, dayEditorService, dayService) {
         })
     });
 });
+
+app.value('version', '0.1');

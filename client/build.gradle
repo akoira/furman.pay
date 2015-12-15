@@ -1,3 +1,18 @@
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.eriwen:gradle-js-plugin:1.12.1"
+    }
+}
+
+apply plugin: "com.eriwen.gradle.js"
+
 dependencies {
     compile 'org.webjars:requirejs:2.1.22'
     compile 'org.webjars.bower:jquery:2.1.4'
@@ -26,5 +41,32 @@ dependencies {
     compile 'org.webjars.bower:eeh-navigation:4.1.2'
 
     compile 'org.webjars:font-awesome:4.5.0'
+}
 
+
+combineJs {
+//    encoding = "UTF-8"
+//    source = javascript.source.dev.js.files
+    dest = file("${buildDir}/all.js")
+}
+
+task parsejs(type: com.eriwen.gradle.js.tasks.CombineJsTask) {
+    File indexHtml = new File(projectDir, "src/main/resources/public/index.html")
+
+    Pattern pattern = ~/(<script src=")([a-zA-Z.\/\-0-9]*\.js)(.*)/
+
+    def jss = []
+    indexHtml.eachLine { line ->
+        line = line.trim()
+        if (!line.matches("<!--.*-->")) {
+            Matcher matcher = pattern.matcher(line)
+            if (matcher.matches()) {
+                jss.add("src/main/resources/public/" + matcher[0][2])
+            }
+        }
+    }
+
+    source = jss
+    dest = file("${buildDir}/resources/main/public/app/all.js")
+    println dest
 }

@@ -181,6 +181,17 @@
     "commonDataNames": [
       ".*"
     ]
+  },
+  {
+    "name": "Присадка",
+    "type": "touch",
+    "unit": "шт.",
+    "index": 15,
+    "rate": 0.0,
+    "commonDataType": "",
+    "commonDataNames": [
+      ".*"
+    ]
   }
 ]
 
