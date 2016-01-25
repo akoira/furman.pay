@@ -26,6 +26,7 @@ import java.time.LocalDate;
  * akoiro - 9/24/15.
  */
 @RestController
+@RequestMapping("/dayService")
 public class DayService {
 
     @Autowired
@@ -52,7 +53,7 @@ public class DayService {
     @Autowired
     private PayCustomerRepository payCustomerRepository;
 
-    @RequestMapping("/dayService/getClosestWorkingDate")
+    @RequestMapping("getClosestWorkingDate")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     public LocalDate getClosestWorkingDate() {
         Iterable<Order> orders = orderRepository.findAll(new PageRequest(0, 1, new QSort(QOrder.order.readyDate.desc())));
@@ -63,28 +64,28 @@ public class DayService {
         }
     }
 
-    @RequestMapping("/dayService/getOrders")
+    @RequestMapping("getOrders")
     public Iterable<Order> getOrders(@RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return orderRepository.findAll(QOrder.order.readyDate.eq(date).and(QOrder.order.status.in(OrderStatus.design, OrderStatus.production)), QOrder.order.orderNumber.asc());
     }
 
-    @RequestMapping("/dayService/getOrderCountsPerDay")
+    @RequestMapping("getOrderCountsPerDay")
     public Iterable<DateWithOrderCount> getOrderCountsPerDay() {
         return orderRepository.getCountsPerDay(OrderStatus.production, OrderStatus.design);
     }
 
-    @RequestMapping("/dayService/getDay")
+    @RequestMapping("getDay")
     public Day getDay(@RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return dayRepository.findOne(QDay.day.date.eq(date));
     }
 
-    @RequestMapping("/dayService/getDays")
+    @RequestMapping("getDays")
     public Iterable<Day> getDays(@RequestParam(value = "startDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
                                  @RequestParam(value = "endDate", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
         return dayRepository.findAll(QDay.day.date.goe(startDate).and(QDay.day.date.loe(endDate)));
     }
 
-    @RequestMapping("/dayService/createNewDay")
+    @RequestMapping("createNewDay")
     public Day createNewDay(@RequestParam(value = "date", required = true)
                             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                             LocalDate date) {
@@ -94,7 +95,7 @@ public class DayService {
         return dayRepository.save(day);
     }
 
-    @RequestMapping("/dayService/getOrNewDay")
+    @RequestMapping("getOrNewDay")
     public Day getOrNewDay(@RequestParam(value = "date", required = true)
                            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
                            LocalDate date) {
@@ -106,7 +107,7 @@ public class DayService {
         return day;
     }
 
-    @RequestMapping("/dayService/getOrNewPayOrder")
+    @RequestMapping("getOrNewPayOrder")
     public PayOrder getOrNewPayOrder(@RequestParam(value = "orderId", required = true)
                                      Long orderId) {
         PayOrder payOrder = payOrderRepository.findOne(QPayOrder.payOrder.orderId.eq(orderId));
@@ -126,7 +127,7 @@ public class DayService {
         return payOrder;
     }
 
-    @RequestMapping("/dayService/getPayOrderInfo")
+    @RequestMapping("getPayOrderInfo")
     public PayOrderInfo getPayOrderInfo(@RequestParam(value = "payOrderId") String payOrderId) {
         PayOrderInfo payOrderInfo = new PayOrderInfo();
         PayOrder payOrder = payOrderRepository.findOne(payOrderId);
