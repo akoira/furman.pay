@@ -14,7 +14,7 @@ import furman.pay.repository.day.DayRepository;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.querydsl.QSort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,9 +55,9 @@ public class DayService {
     @RequestMapping("/dayService/getClosestWorkingDate")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     public LocalDate getClosestWorkingDate() {
-        Iterable<Order> orders = orderRepository.findAll(new PageRequest(0, 1, Sort.Direction.DESC, "workedDailySheet.date"));
+        Iterable<Order> orders = orderRepository.findAll(new PageRequest(0, 1, new QSort(QOrder.order.readyDate.desc())));
         try {
-            return orders.iterator().next().getWorkedDailySheet().getDate();
+            return orders.iterator().next().getReadyDate();
         } catch (Exception e) {
             return LocalDate.now();
         }
@@ -65,7 +65,7 @@ public class DayService {
 
     @RequestMapping("/dayService/getOrders")
     public Iterable<Order> getOrders(@RequestParam(value = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return orderRepository.findAll(QOrder.order.createdDailySheet.date.eq(date).and(QOrder.order.status.in(OrderStatus.design, OrderStatus.production)), QOrder.order.orderNumber.asc());
+        return orderRepository.findAll(QOrder.order.readyDate.eq(date).and(QOrder.order.status.in(OrderStatus.design, OrderStatus.production)), QOrder.order.orderNumber.asc());
     }
 
     @RequestMapping("/dayService/getOrderCountsPerDay")
