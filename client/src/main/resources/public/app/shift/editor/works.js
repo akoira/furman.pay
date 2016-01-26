@@ -2,7 +2,7 @@
 
 angular.module('app.shift').controller('shiftWorkListCtrl', ShiftWorkListCtrl);
 
-function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorService) {
+function ShiftWorkListCtrl($scope, commonUtils, workRepository, dayService, shiftEditorService) {
     var vm = this;
 
     vm.sendEvents = true;
@@ -46,11 +46,7 @@ function ShiftWorkListCtrl($scope, commonUtils, workRepository, shiftEditorServi
     }
 
     function initData() {
-        workRepository.getAll().success(function (data) {
-            vm.gridOptions.data = data._embedded.work;
-        }).error(function (data) {
-            $log.log(data);
-        });
+        vm.gridOptions.data = dayService.works;
     }
 
 }

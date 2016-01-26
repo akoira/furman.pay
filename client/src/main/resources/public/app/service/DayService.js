@@ -6,6 +6,7 @@ function DayService($http, dayRepository, workRepository, dayOrderService) {
 
     var baseUrl = "/api/pay/dayService";
     var service = {};
+    var hiddenWorks = ['zfacadeService', 'agtfacadeService'];
 
     service.getOrders = getOrders;
     service.getOrderCountsPerDay = getOrderCountsPerDay;
@@ -21,9 +22,9 @@ function DayService($http, dayRepository, workRepository, dayOrderService) {
     service.dayOrders = [];
 
     workRepository.getAll().success(function (data) {
-        /** @namespace data._embedded.work */
-        /** @namespace data._embedded */
-        service.works = data._embedded.work;
+        service.works = data._embedded.work.filter(function (value) {
+            return hiddenWorks.indexOf(value.type) == -1
+        });
     });
 
 
