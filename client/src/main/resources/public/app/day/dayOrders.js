@@ -20,7 +20,9 @@ function DayOrdersCtrl($scope, $log, uiGridConstants, commonUtils, dayOrderServi
             minRowsToShow: 15,
             showGridFooter: true,
             showColumnFooter: true,
-            enableSorting: true
+            columnFooterHeight: 22,
+            enableSorting: true,
+            rowHeight: 22
         };
         vm.gridOptions.columnDefs = [];
         vm.gridOptions.columnDefs.push({
@@ -84,7 +86,7 @@ function DayOrdersCtrl($scope, $log, uiGridConstants, commonUtils, dayOrderServi
             enablePinning: false,
             enableColumnMenu: false,
             enableSorting: false,
-            width: 150
+            width: 90
         };
     }
 

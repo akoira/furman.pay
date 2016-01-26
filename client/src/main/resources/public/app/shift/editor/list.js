@@ -18,7 +18,9 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
         minRowsToShow: 15,
         showGridFooter: true,
         showColumnFooter: true,
-        enableSorting: true
+        columnFooterHeight: 22,
+        enableSorting: true,
+        rowHeight: 22
     };
 
     vm.gridOptions.onRegisterApi = function (gridApi) {
@@ -58,7 +60,7 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
             enableSorting: false,
             enablePinning: false,
             type: "number",
-            width: 150,
+            width: 90,
             work: work
         })
 
@@ -71,7 +73,7 @@ function ShiftValuesCtrl($scope, $filter, uiGridConstants, commonUtils, shiftEdi
             enableSorting: false,
             enablePinning: false,
             type: "number",
-            width: 150,
+            width: 90,
             footerCellTemplate: "<div class=\"ui-grid-cell-contents\" col-index=\"renderIndex\"><div> {{ col.getAggregationText() + ( col.getAggregationValue() CUSTOM_FILTERS )}}</div></div>",
             aggregationType: aggregationType,
             aggregationHideLabel: true,
