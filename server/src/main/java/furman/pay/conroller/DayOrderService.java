@@ -1,23 +1,20 @@
 package furman.pay.conroller;
 
-import furman.pay.model.WorkValue;
+import furman.pay.model.PayOrder;
 import furman.pay.model.day.Day;
 import furman.pay.model.day.DayOrder;
-import furman.pay.model.day.OrderValue;
 import furman.pay.model.day.QDayOrder;
 import furman.pay.repository.PayOrderRepository;
 import furman.pay.repository.WorkRepository;
 import furman.pay.repository.day.DayOrderRepository;
 import furman.pay.repository.day.DayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.querydsl.QSort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Iterator;
 
 /**
  * akoiro - 10/30/15.
@@ -63,23 +60,21 @@ public class DayOrderService {
         DayOrder dayOrder = new DayOrder();
         dayOrder.setDay(dayRepository.findOne(dayId));
         dayOrder.setPayOrder(payOrderRepository.findOne(payOrderId));
-        List<OrderValue> values = new ArrayList<>();
-        workRepository.findAll().forEach(work -> {
-            OrderValue orderValue = new OrderValue();
-            orderValue.setValue(0.0);
-            orderValue.setWork(work);
-            values.add(orderValue);
 
-            List<WorkValue> foundValues = dayOrder.getPayOrder().getWorkValues().stream()
-                    .filter(value -> Objects.equals(value.getWork().getId(), work.getId()))
-                    .collect(Collectors.toList());
-            foundValues.forEach(value -> {
-                double result = orderValue.getValue() + value.getValue();
-                orderValue.setValue(result);
-            });
-        });
-        dayOrder.setOrderValues(values);
+        dayOrder.setOrderValues(
+                CollectOrderValues.valueOf(dayOrder.getPayOrder(),
+                        getFirstDayOrderFor(dayOrder.getPayOrder()),
+                        workRepository.findAll()).collect());
         dayOrderRepository.insert(dayOrder);
         return dayOrder;
+    }
+
+    private DayOrder getFirstDayOrderFor(PayOrder payOrder) {
+        DayOrder firstDayOrder = null;
+        Iterator<DayOrder> iterator = dayOrderRepository.findAll(QDayOrder.dayOrder.payOrder.eq(payOrder), new QSort(QDayOrder.dayOrder.created.asc())).iterator();
+        if (iterator.hasNext()) {
+            firstDayOrder = iterator.next();
+        }
+        return firstDayOrder;
     }
 }
